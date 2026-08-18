@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { business, buildings, testimonials } from '../data/site';
 import OverlayHero from '../components/OverlayHero.astro';
 import FeatureCards from '../components/FeatureCards.astro';
+import QuoteForm from '../components/QuoteForm.astro';
 const b = business;
 const heroImg = "images/hero.jpg";
 ---
@@ -149,18 +150,7 @@ const heroImg = "images/hero.jpg";
         <p class="fineprint">{b.hours} · {b.address.street}, {b.address.city}, {b.address.region} {b.address.zip}</p>
       </div>
       <div>
-        {b.ghlFormEmbedUrl ? (
-          <div class="form-wrap">
-            <iframe src={b.ghlFormEmbedUrl} style="width:100%;height:640px;border:none;border-radius:14px;background:#fff" title="Get a free quote" loading="lazy"></iframe>
-            <script src="https://link.msgsndr.com/js/form_embed.js" is:inline defer></script>
-          </div>
-        ) : (
-          <div class="form-slot">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg>
-            <b>Your GoHighLevel quote form goes here</b>
-            <p>Paste the GHL form embed URL into <code>src/data/site.ts</code> and it appears here — leads flow straight into your CRM.<br />Fields: Name · Phone · Email · <b>Project location (KS / MO)</b> · Project type</p>
-          </div>
-        )}
+        <QuoteForm />
       </div>
     </div>
   </section>

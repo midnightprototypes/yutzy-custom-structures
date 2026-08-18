@@ -1,0 +1,93 @@
+---
+// Custom quote form with conditional logic. Submissions POST to
+// business.quoteWebhookUrl (a GoHighLevel inbound webhook) when it's set;
+// until then the form validates and shows a call-us fallback so no lead
+// is silently lost.
+import { business } from '../data/site';
+const b = business;
+---
+<form class="quote-form" id="quoteForm" novalidate>
+  <div class="qrow">
+    <label>Full name<input name="name" type="text" required autocomplete="name" /></label>
+  </div>
+  <div class="qrow two">
+    <label>Phone<input name="phone" type="tel" required autocomplete="tel" /></label>
+    <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+  </div>
+  <div class="qrow two">
+    <label>Project location
+      <select name="location" required>
+        <option value="">Choose…</option>
+        <option>Kansas</option>
+        <option>Missouri</option>
+      </select>
+    </label>
+    <label>Project type
+      <select name="type" id="qtype" required>
+        <option value="">Choose…</option>
+        <option>Pole Barn</option>
+        <option>Post-Frame Garage</option>
+        <option>Hobby Shop</option>
+        <option>Equestrian Barn</option>
+        <option>Barndominium</option>
+        <option>Slab Home</option>
+        <option>Not sure yet</option>
+      </select>
+    </label>
+  </div>
+  <div class="qrow" id="qsizeRow" hidden>
+    <label>Approx. finished size (sq ft)<input name="sqft" type="text" inputmode="numeric" placeholder="e.g. 2,400" /></label>
+  </div>
+  <div class="qrow">
+    <label>Tell us about your project<textarea name="message" rows="3" placeholder="Size, use, timeline, budget…"></textarea></label>
+  </div>
+  <button class="btn btn-red" type="submit">Get My Free Quote</button>
+  <p class="qfine">We'll only use your info to contact you about your quote.</p>
+  <p class="qmsg" id="qmsg" hidden></p>
+</form>
+
+<script is:inline define:vars={{ webhook: b.quoteWebhookUrl, phone: b.phoneMain }}>
+  (function () {
+    var f = document.getElementById('quoteForm'); if (!f) return;
+    var type = document.getElementById('qtype');
+    var sizeRow = document.getElementById('qsizeRow');
+    var msg = document.getElementById('qmsg');
+    type.addEventListener('change', function () {
+      sizeRow.hidden = !(type.value === 'Barndominium' || type.value === 'Slab Home');
+    });
+    f.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!f.reportValidity()) return;
+      var data = Object.fromEntries(new FormData(f).entries());
+      msg.hidden = false;
+      if (!webhook) {
+        msg.textContent = 'Thanks, ' + (data.name || '') + '! Online submissions aren’t connected yet — please call ' + phone + ' and we’ll get you a quote.';
+        msg.className = 'qmsg warn'; return;
+      }
+      msg.textContent = 'Sending…'; msg.className = 'qmsg';
+      try {
+        await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        f.reset(); sizeRow.hidden = true;
+        msg.textContent = 'Thanks! Your request is in — our team will reach out shortly.'; msg.className = 'qmsg ok';
+      } catch (err) {
+        msg.textContent = 'Something went wrong. Please call ' + phone + '.'; msg.className = 'qmsg warn';
+      }
+    });
+  })();
+</script>
+
+<style>
+  .quote-form{display:grid;gap:1rem;background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.6rem;box-shadow:var(--shadow)}
+  .qrow{display:grid;gap:1rem}
+  .qrow.two{grid-template-columns:1fr 1fr}
+  .quote-form label{display:grid;gap:.35rem;font-size:.82rem;font-weight:700;color:var(--charcoal-deep);letter-spacing:.01em}
+  .quote-form input,.quote-form select,.quote-form textarea{font:inherit;font-weight:400;padding:.68rem .72rem;border:1px solid var(--line);border-radius:8px;background:#fdfcfa;color:var(--ink)}
+  .quote-form textarea{resize:vertical}
+  .quote-form input:focus,.quote-form select:focus,.quote-form textarea:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
+  .quote-form .btn{width:100%;text-align:center;border:none;cursor:pointer;margin-top:.2rem}
+  .qfine{color:var(--muted);font-size:.82rem;margin:0}
+  .qmsg{margin:.1rem 0 0;font-weight:700;font-size:.95rem}
+  .qmsg.ok{color:#1f7a3d}
+  .qmsg.warn{color:var(--red-dark)}
+  @media(max-width:520px){.qrow.two{grid-template-columns:1fr}}
+</style>

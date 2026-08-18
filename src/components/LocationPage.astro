@@ -1,0 +1,73 @@
+---
+// Shared body for every location / service-area page. Fed a `loc` object
+// from src/data/site.ts so all city pages stay consistent while each keeps
+// its own localized copy (good for local SEO, easy to maintain).
+import { business, buildings } from '../data/site';
+import FeatureCards from './FeatureCards.astro';
+const { loc } = Astro.props;
+const b = business;
+---
+<section class="loc-hero">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#f0d6ab">Serving {loc.county}</span>
+    <h1>Pole Barn, Post-Frame &amp; Barndominium Builders in {loc.city}, {loc.state}</h1>
+    <p>{loc.intro}</p>
+    <div class="hero-cta">
+      <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+      <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call {b.phoneMain}</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What We Build</span>
+      <h2>Custom buildings for {loc.city} &amp; {loc.county}</h2>
+      <p>Every structure is custom-designed, delivered, and installed by our own crews — not subcontractors.</p>
+    </div>
+    <div class="cards">
+      {buildings.map((bld) => (
+        <article class="card">
+          <div class="ph"><img class="shot" src={bld.img} alt={bld.alt} loading="lazy" /></div>
+          <div class="card-body">
+            <h3>{bld.name}</h3>
+            <p>{bld.blurb}</p>
+            <a class="q" href={`${bld.slug}.html`}>Learn more →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Why Yutzy</span>
+      <h2>Why {loc.city} property owners choose Yutzy</h2>
+      <p>Builder-backed quality and Amish craftsmanship, delivered across {loc.state} and beyond.</p>
+    </div>
+    <FeatureCards items={[
+      { icon: 'craft', title: 'Amish Craftsmanship', text: 'A family-owned team that treats your build like their own.' },
+      { icon: 'award', title: '5-Year Warranty', text: 'Real peace of mind, in writing, on every building.' },
+      { icon: 'finance', title: 'Flexible Financing', text: 'Build now and pay over time through Rural 1st.' },
+      { icon: 'service', title: 'Start to Finish', text: 'One team from first consult through final installation.' },
+    ]} />
+  </div>
+</section>
+
+<section class="area">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#f0d6ab">Service Area</span>
+    <h2>Proudly building near {loc.city}</h2>
+    <p>Serving {loc.nearby.join(", ")}, and the surrounding {loc.county} area. Based in Garnett, KS, we deliver custom buildings across Kansas &amp; Missouri.</p>
+    <a class="btn btn-red" href="index.html#contact">Get a Free Quote in {loc.city}</a>
+  </div>
+</section>
+
+<style>
+  .loc-hero{background:radial-gradient(120% 120% at 80% 0,#3a3a3a 0,var(--charcoal-deep) 62%);color:#fff}
+  .loc-hero h1{color:#fff;font-size:clamp(1.9rem,4.2vw,3rem);margin:.6rem 0 1rem;max-width:22ch}
+  .loc-hero p{color:rgba(255,255,255,.86);max-width:62ch;font-size:1.12rem;margin:0 0 1.7rem}
+</style>

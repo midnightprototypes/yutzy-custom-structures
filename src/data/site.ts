@@ -20,6 +20,9 @@ export const business = {
   houzz: "https://www.houzz.com/pro/yutzycustomstructures/yutzy-custom-structures",
   // Paste the GoHighLevel form embed URL here when ready (see references/ghl-form.md).
   ghlFormEmbedUrl: "",
+  // GoHighLevel inbound-webhook URL for the custom quote form. When set, form
+  // submissions POST here and flow into the CRM. Leave "" until you have it.
+  quoteWebhookUrl: "",
 };
 
 export type Building = {
@@ -158,5 +161,39 @@ export const testimonials = [
     quote: "Just about finished with our home. I hired Yutzy to build our structure and they did an amazing job.",
     name: "Verified Houzz review",
     source: "Houzz review",
+  },
+];
+
+// Service-area / location pages for local SEO. Swap these cities for the real
+// target markets any time — each one generates its own page automatically.
+export type Location = {
+  slug: string; city: string; state: string; county: string;
+  intro: string; nearby: string[];
+};
+export const locations: Location[] = [
+  {
+    slug: "ottawa-ks", city: "Ottawa", state: "KS", county: "Franklin County",
+    intro: "Just up US-59 from our Garnett shop, Ottawa and the rest of Franklin County are right in our backyard. We build custom pole barns, post-frame garages, hobby shops, and barndominiums on acreages and farms across the area — delivered and installed by our own crews, not subcontractors.",
+    nearby: ["Wellsville", "Pomona", "Williamsburg", "Princeton"],
+  },
+  {
+    slug: "emporia-ks", city: "Emporia", state: "KS", county: "Lyon County",
+    intro: "From the Flint Hills around Emporia to the farms of Lyon County, we build post-frame buildings made for real Kansas weather. Whether it's a machine shed, a horse barn, or a full barndominium, our Amish craftsmanship and 5-year warranty travel well past the city limits.",
+    nearby: ["Americus", "Olpe", "Hartford", "Reading"],
+  },
+  {
+    slug: "overland-park-ks", city: "Overland Park", state: "KS", county: "Johnson County",
+    intro: "For homeowners on the edges of the Kansas City metro, we bring true post-frame construction to Overland Park and the surrounding Johnson County countryside — detached garages, workshops, and barndominiums built to suburban standards with rural durability.",
+    nearby: ["Olathe", "Gardner", "Spring Hill", "Stilwell"],
+  },
+  {
+    slug: "lawrence-ks", city: "Lawrence", state: "KS", county: "Douglas County",
+    intro: "Around Lawrence and Douglas County, we help landowners add the shop, barn, or barndominium their property has been missing. Every build is custom-sized and finished to fit the way you'll actually use it — backed by our workmanship warranty.",
+    nearby: ["Eudora", "Baldwin City", "Lecompton", "Overbrook"],
+  },
+  {
+    slug: "kansas-city-mo", city: "Kansas City", state: "MO", county: "Jackson County",
+    intro: "We proudly cross the state line to serve Kansas City and western Missouri. From post-frame garages and hobby shops to full barndominiums, our crews deliver the same builder-backed quality on the Missouri side that Yutzy is known for across Kansas.",
+    nearby: ["Lee's Summit", "Blue Springs", "Grandview", "Belton"],
   },
 ];

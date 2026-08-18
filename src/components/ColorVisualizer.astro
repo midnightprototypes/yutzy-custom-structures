@@ -1,0 +1,111 @@
+---
+// Photo-based color visualizer. Recolors a REAL building photo live in the
+// browser: each region's new color is blended over the photo's luminance
+// (overlay), so it keeps the panel lines, ribs, and shadows instead of
+// looking like a flat sticker. Photo + region mask are embedded as data URLs
+// (see src/data/visualizer.ts) so it works even in local file preview.
+import { metalColors } from '../data/site';
+import { baseSrc, maskSrc } from '../data/visualizer';
+const targets: [string, string][] = [
+  ['siding', 'Siding'],
+  ['roof', 'Roof'],
+];
+---
+<div class="cv">
+  <div class="cv-stage">
+    <canvas id="cvCanvas" role="img" aria-label="Building color preview"></canvas>
+    <p class="cv-loading" id="cvLoading">Loading…</p>
+  </div>
+
+  <div class="cv-controls">
+    {targets.map(([target, label]) => (
+      <div class="cv-group">
+        <div class="cv-grouphead">
+          <span class="cv-label">{label}</span>
+          <span class="cv-name" data-target={target}>Original</span>
+        </div>
+        <div class="cv-swatches">
+          {metalColors.map((c) => (
+            <button type="button" class="cv-swatch" data-target={target} data-hex={c.hex} data-name={c.name} title={c.name} aria-label={`${label}: ${c.name}`} style={`background:${c.hex}`}></button>
+          ))}
+        </div>
+      </div>
+    ))}
+    <button type="button" id="cvReset" class="cv-reset">Reset to original</button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ BASE: baseSrc, MASK: maskSrc }}>
+  (function () {
+    var cv = document.getElementById('cvCanvas'); if (!cv) return;
+    var ctx = cv.getContext('2d');
+    var base = new Image(), mask = new Image();
+    var W, H, baseData, maskData, lum;
+    var sel = { siding: null, roof: null };
+    function ov(L, c) { return L < 0.5 ? 2 * L * c : 1 - 2 * (1 - L) * (1 - c); }
+    function hx(h) { h = h.replace('#', ''); return [parseInt(h.slice(0, 2), 16) / 255, parseInt(h.slice(2, 4), 16) / 255, parseInt(h.slice(4, 6), 16) / 255]; }
+    function render() {
+      if (!baseData) return;
+      var out = new Uint8ClampedArray(baseData);
+      [['siding', 0], ['roof', 1]].forEach(function (rg) {
+        var col = sel[rg[0]]; if (!col) return; var c = hx(col); var ch = rg[1];
+        for (var i = 0, p = 0; i < W * H; i++, p += 4) {
+          var a = maskData[p + ch] / 255; if (a < 0.02) continue;
+          var L = lum[i];
+          out[p]     = baseData[p]     * (1 - a) + ov(L, c[0]) * 255 * a;
+          out[p + 1] = baseData[p + 1] * (1 - a) + ov(L, c[1]) * 255 * a;
+          out[p + 2] = baseData[p + 2] * (1 - a) + ov(L, c[2]) * 255 * a;
+        }
+      });
+      ctx.putImageData(new ImageData(out, W, H), 0, 0);
+    }
+    function ready() {
+      W = base.naturalWidth; H = base.naturalHeight;
+      cv.width = W; cv.height = H;
+      var oc = document.createElement('canvas'); oc.width = W; oc.height = H;
+      var octx = oc.getContext('2d');
+      octx.drawImage(base, 0, 0); baseData = octx.getImageData(0, 0, W, H).data;
+      octx.clearRect(0, 0, W, H); octx.drawImage(mask, 0, 0); maskData = octx.getImageData(0, 0, W, H).data;
+      lum = new Float32Array(W * H);
+      for (var i = 0, p = 0; i < W * H; i++, p += 4) { lum[i] = (0.299 * baseData[p] + 0.587 * baseData[p + 1] + 0.114 * baseData[p + 2]) / 255; }
+      var ld = document.getElementById('cvLoading'); if (ld) ld.style.display = 'none';
+      render();
+    }
+    var loaded = 0; function done() { if (++loaded === 2) ready(); }
+    base.onload = done; mask.onload = done; base.src = BASE; mask.src = MASK;
+
+    document.querySelectorAll('.cv-swatch').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var t = b.dataset.target; sel[t] = b.dataset.hex;
+        document.querySelectorAll('.cv-swatch[data-target="' + t + '"]').forEach(function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        var n = document.querySelector('.cv-name[data-target="' + t + '"]'); if (n) n.textContent = b.dataset.name;
+        render();
+      });
+    });
+    var reset = document.getElementById('cvReset');
+    if (reset) reset.addEventListener('click', function () {
+      sel = { siding: null, roof: null };
+      document.querySelectorAll('.cv-swatch').forEach(function (x) { x.classList.remove('on'); });
+      document.querySelectorAll('.cv-name').forEach(function (n) { n.textContent = 'Original'; });
+      render();
+    });
+  })();
+</script>
+
+<style>
+  .cv{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:start}
+  .cv-stage{position:relative;background:#e9eee9;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-height:180px}
+  .cv-stage canvas{width:100%;height:auto;display:block}
+  .cv-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);margin:0}
+  .cv-controls{display:grid;gap:1.3rem}
+  .cv-grouphead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;gap:1rem}
+  .cv-label{font-family:var(--font-head);font-weight:700;color:var(--charcoal-deep);font-size:1.05rem}
+  .cv-name{color:var(--muted);font-size:.85rem;font-weight:600;text-align:right}
+  .cv-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:7px}
+  .cv-swatch{aspect-ratio:1;border-radius:6px;border:1px solid #0000001f;cursor:pointer;padding:0;transition:transform .08s}
+  .cv-swatch:hover{transform:scale(1.08)}
+  .cv-swatch.on{outline:3px solid var(--red);outline-offset:1px;border-color:#fff}
+  .cv-reset{justify-self:start;background:none;border:none;color:var(--red-dark);font-weight:700;cursor:pointer;padding:.2rem 0;font-size:.9rem}
+  @media(max-width:820px){.cv{grid-template-columns:1fr}}
+</style>

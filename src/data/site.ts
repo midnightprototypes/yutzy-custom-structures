@@ -197,3 +197,29 @@ export const locations: Location[] = [
     nearby: ["Lee's Summit", "Blue Springs", "Grandview", "Belton"],
   },
 ];
+
+// Metal roof/siding colors (Sherwin-Williams coil coatings via United Steel
+// Supply) — the real chart Yutzy offers. Hex values are close matches; nudge
+// any of them to taste. Used by the color visualizer.
+export const metalColors = [
+  { name: "Brilliant White", hex: "#f7f7f3" },
+  { name: "Alamo White", hex: "#efeee4" },
+  { name: "Ivory", hex: "#e8e6ce" },
+  { name: "Light Stone", hex: "#d2d5bd" },
+  { name: "Tan", hex: "#b49b73" },
+  { name: "Taupe", hex: "#9a9a85" },
+  { name: "Ash Gray", hex: "#a6b0ab" },
+  { name: "Pewter Gray", hex: "#8a9092" },
+  { name: "Copper Metallic", hex: "#8a4a27" },
+  { name: "Brown", hex: "#3a2417" },
+  { name: "Burnished Slate", hex: "#3b3a25" },
+  { name: "Charcoal", hex: "#40463c" },
+  { name: "Rustic Red", hex: "#8b2a24" },
+  { name: "Brite Red", hex: "#b0202a" },
+  { name: "Burgundy", hex: "#3a1414" },
+  { name: "Hunter Green", hex: "#1e5d39" },
+  { name: "Dark Green", hex: "#1b4130" },
+  { name: "Ocean Blue", hex: "#1f5b72" },
+  { name: "Gallery Blue", hex: "#1f4a6b" },
+  { name: "Matte Black", hex: "#1a1a1a" },
+];

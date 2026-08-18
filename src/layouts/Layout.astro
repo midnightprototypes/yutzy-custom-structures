@@ -1,10 +1,9 @@
 ---
-import '@fontsource/archivo/600.css';
 import '@fontsource/archivo/700.css';
 import '@fontsource/archivo/800.css';
 import '@fontsource/barlow/400.css';
-import '@fontsource/barlow/500.css';
 import '@fontsource/barlow/600.css';
+import '@fontsource/barlow/700.css';
 import { business } from '../data/site';
 const b = business;
 interface Props { title: string; description: string; image?: string; }
@@ -126,9 +125,13 @@ const schema = {
     --gold:#c2924a; --sage:#a8b29a; --white:#fff;
     --maxw:1140px; --r:14px;
     --shadow:0 10px 30px rgba(26,26,26,.12);
-    --font-head:"Archivo", system-ui, sans-serif;
-    --font-body:"Barlow", system-ui, -apple-system, sans-serif;
+    --font-head:"Archivo","Archivo Fallback",system-ui,sans-serif;
+    --font-body:"Barlow","Barlow Fallback",system-ui,-apple-system,sans-serif;
   }
+  /* Metric-matched Arial fallbacks — the fallback occupies the same space as
+     the web font, so the swap on slow connections causes no layout shift (CLS). */
+  @font-face{font-family:"Archivo Fallback";src:local("Arial");size-adjust:122.79%;ascent-override:71.50%;descent-override:17.10%;line-gap-override:0%}
+  @font-face{font-family:"Barlow Fallback";src:local("Arial");size-adjust:116.22%;ascent-override:86.04%;descent-override:17.21%;line-gap-override:0%}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--cream);line-height:1.6}
@@ -137,12 +140,12 @@ const schema = {
   a{color:inherit}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
   .btn{display:inline-block;padding:.85rem 1.4rem;border-radius:10px;font-weight:700;text-decoration:none;cursor:pointer;border:2px solid transparent;transition:.15s;font-size:1rem}
-  .btn-red{background:var(--red);color:#fff}
-  .btn-red:hover{background:var(--red-dark)}
+  .btn-red{background:var(--red-dark);color:#fff}
+  .btn-red:hover{background:var(--red-deep)}
   .btn-ghost{border-color:rgba(255,255,255,.5);color:#fff}
   .btn-ghost:hover{background:rgba(255,255,255,.12)}
   .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:var(--gold)}
-  .sec-head .eyebrow,.contact .eyebrow{color:var(--red-dark)}
+  .sec-head .eyebrow,.contact .eyebrow{color:var(--red-deep)}
   section{padding:clamp(3rem,7vw,5.5rem) 0}
 
   .ph{position:relative;border-radius:var(--r);overflow:hidden;background:linear-gradient(135deg,#3a474c,#1e2321 72%);display:flex;align-items:flex-end;color:rgba(255,255,255,.92);min-height:220px}
@@ -201,7 +204,7 @@ const schema = {
   .prose{max-width:72ch;margin:0 auto}
   .prose h2{color:var(--charcoal-deep);font-size:1.5rem;margin:2.2rem 0 .6rem}
   .prose p{margin:0 0 1.05rem}
-  .prose a{color:var(--red-dark);font-weight:600}
+  .prose a{color:var(--red-deep);font-weight:600}
   .prose .lead-p{font-size:1.18rem;color:var(--ink)}
   .faq-wrap{max-width:820px;margin:0 auto}
   .faq-item{border-bottom:1px solid var(--line)}
@@ -221,14 +224,14 @@ const schema = {
   .card-body{padding:1.25rem 1.35rem 1.4rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
   .card-body h3{margin:0;font-size:1.25rem;color:var(--charcoal-deep)}
   .card-body p{margin:0;color:var(--muted);font-size:.95rem}
-  .card-body a.q{margin-top:.7rem;font-weight:700;color:var(--red);text-decoration:none;font-size:.95rem}
+  .card-body a.q{margin-top:.7rem;font-weight:700;color:var(--red-deep);text-decoration:none;font-size:.95rem}
   .card-body a.q:hover{color:var(--red-dark)}
 
   .why{background:var(--cream-2)}
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
   .checks svg{flex:none;margin-top:3px}
-  .checks b{color:var(--red)}
+  .checks b{color:var(--red-deep)}
   .checks-grid{grid-template-columns:1fr 1fr;gap:1.2rem 2.6rem;max-width:940px;margin:1.6rem auto 0}
   @media(max-width:760px){.checks-grid{grid-template-columns:1fr}}
 
@@ -268,7 +271,7 @@ const schema = {
   .contact .local{display:flex;gap:1.5rem;flex-wrap:wrap;margin:.4rem 0 .2rem}
   .contact .local div{font-size:.95rem}
   .contact .local b{color:var(--charcoal-deep)}
-  .contact .local a{color:var(--red-dark);font-weight:700;text-decoration:none}
+  .contact .local a{color:var(--red-deep);font-weight:700;text-decoration:none}
   .contact .fineprint{color:var(--muted);font-size:.9rem;margin-top:1rem}
   .form-slot{background:#fff;border:2px dashed var(--red);border-radius:var(--r);min-height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;color:var(--muted)}
   .form-slot svg{margin-bottom:.8rem}

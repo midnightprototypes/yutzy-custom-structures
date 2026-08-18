@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { business, buildings, testimonials } from '../data/site';
+import OverlayHero from '../components/OverlayHero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
 const b = business;
 const heroImg = "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/Blank-Brian-32-815x600.jpg";
 ---
@@ -8,27 +10,21 @@ const heroImg = "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/Bl
   title={`Post-Frame & Pole Barn Builders in Kansas & Missouri | ${b.name}`}
   description="Family-owned Amish craftsmanship since 2005. Custom pole barns, garages, hobby shops & barndominiums across Kansas & Missouri. Get a free quote today."
 >
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow">Yutzy Custom Structures · Kansas &amp; Missouri</span>
-        <h1>Post-Frame &amp; Pole Barn Builders Who Build It Right</h1>
-        <p class="lede">Custom pole barns, garages, hobby shops, and barndominiums — crafted by a family-owned Amish team and backed by a 5-year warranty.</p>
-        <div class="hero-cta">
-          <a class="btn btn-red" href="#contact">Get a Free Quote</a>
-          <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call {b.phoneMain}</a>
-        </div>
-      </div>
-      <div class="ph"><img class="shot" src={heroImg} alt="Custom barn-style post-frame building with two garage doors and a covered porch, built by Yutzy" /></div>
-    </div>
-    <div class="badges">
-      <div class="wrap">
-        <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Family-owned since 2005</div>
-        <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Authentic Amish craftsmanship</div>
-        <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 5-year warranty on every build</div>
-        <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Kansas &amp; Missouri</div>
-      </div>
+  <!-- HERO (full-bleed overlay) -->
+  <OverlayHero
+    eyebrow="Yutzy Custom Structures · Kansas & Missouri"
+    title="Post-Frame & Pole Barn Builders Who Build It Right"
+    subtitle="Custom pole barns, garages, hobby shops, and barndominiums — crafted by a family-owned Amish team and backed by a 5-year warranty."
+    image={heroImg}
+    alt="Custom barn-style post-frame building with two garage doors and a covered porch, built by Yutzy"
+    ctaHref="#contact"
+  />
+  <section class="trust-strip">
+    <div class="wrap badges-row">
+      <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Family-owned since 2005</div>
+      <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Authentic Amish craftsmanship</div>
+      <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 5-year warranty on every build</div>
+      <div class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Kansas &amp; Missouri</div>
     </div>
   </section>
 
@@ -63,13 +59,12 @@ const heroImg = "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/Bl
         <h2>Built sturdier, on purpose</h2>
         <p>More lumber and tighter post-and-truss spacing make a noticeably stronger building — crafted by a family-owned Amish team and backed by a 5-year warranty.</p>
       </div>
-      <ul class="checks checks-grid">
-        <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span><b>Amish craftsmanship.</b> A family-owned team that treats your build like their own.</span></li>
-        <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span><b>More lumber, tighter spacing.</b> Closer post and truss spacing for a noticeably stronger building.</span></li>
-        <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span><b>5-year warranty.</b> Real peace of mind, in writing, on every building.</span></li>
-        <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span><b>Start to finish.</b> One team from first consult through final installation.</span></li>
-        <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span><b>Financing available.</b> Build now and pay over time through Rural 1st, our preferred lending partner.</span></li>
-      </ul>
+      <FeatureCards items={[
+        { icon: 'craft', title: 'Amish Craftsmanship', text: 'A family-owned team that treats your build like their own.' },
+        { icon: 'award', title: '5-Year Warranty', text: 'Real peace of mind, in writing, on every building.' },
+        { icon: 'finance', title: 'Flexible Financing', text: 'Build now and pay over time through Rural 1st.' },
+        { icon: 'service', title: 'Start to Finish', text: 'One team from first consult through final installation.' },
+      ]} />
     </div>
   </section>
 

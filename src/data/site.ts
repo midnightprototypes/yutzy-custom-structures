@@ -41,7 +41,7 @@ export const buildings: Building[] = [
   {
     slug: "pole-barns",
     name: "Pole Barns",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2020/08/agricultural-post-frame-barn-builders-in-kansas-555x455.jpg",
+    img: "images/pole-barns.jpg",
     alt: "Agricultural post-frame pole barn built in Kansas",
     blurb: "Durable post-frame barns for storage, livestock, and equipment.",
     tagline: "Durable, versatile post-frame barns built to your needs.",
@@ -58,7 +58,7 @@ export const buildings: Building[] = [
   {
     slug: "post-frame-garages",
     name: "Post-Frame Garages",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2020/08/residential-pole-barn-garage-510x420.jpg",
+    img: "images/post-frame-garages.jpg",
     alt: "Residential post-frame garage with overhead doors",
     blurb: "Attached or standalone garages built to match your property.",
     tagline: "Room for vehicles, RVs, boats, and everything else.",
@@ -75,7 +75,7 @@ export const buildings: Building[] = [
   {
     slug: "hobby-shops",
     name: "Hobby Shops",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2022/07/big-hobby-shop-three-big-doors-e1758734961667-500x500.jpg",
+    img: "images/hobby-shops.jpg",
     alt: "Large hobby shop with three overhead garage doors",
     blurb: "Workshops and she-sheds sized for the way you actually work.",
     tagline: "The workshop, she-shed, or home-business space you've wanted.",
@@ -92,7 +92,7 @@ export const buildings: Building[] = [
   {
     slug: "equestrian-barns",
     name: "Equestrian Barns",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2022/08/Cakin-Jeff-777-510x420.jpg",
+    img: "images/equestrian-barns.jpg",
     alt: "Custom post-frame equestrian barn",
     blurb: "Horse barns with the stalls, airflow, and storage you need.",
     tagline: "Horse barns designed around your animals and your routine.",
@@ -109,7 +109,7 @@ export const buildings: Building[] = [
   {
     slug: "barndominiums",
     name: "Barndominiums",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2022/06/Waters-Billy-1-777-500x500.jpg",
+    img: "images/barndominiums.jpg",
     alt: "Modern barndominium with metal roof, stone accents, and attached garage",
     blurb: "Living space and shop under one sturdy, efficient roof.",
     tagline: "Home and shop under one sturdy, efficient roof.",
@@ -126,7 +126,7 @@ export const buildings: Building[] = [
   {
     slug: "slab-homes",
     name: "Slab Homes",
-    img: "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/IMG_0015ss-500x500.jpg",
+    img: "images/slab-homes.jpg",
     alt: "Gray slab-foundation home with metal roof and attached garage",
     blurb: "Stud-frame new-construction homes, with optional attached barns.",
     tagline: "Stud-frame new-construction homes with a unique building style.",

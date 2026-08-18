@@ -4,7 +4,7 @@ import { business, buildings, testimonials } from '../data/site';
 import OverlayHero from '../components/OverlayHero.astro';
 import FeatureCards from '../components/FeatureCards.astro';
 const b = business;
-const heroImg = "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/Blank-Brian-32-815x600.jpg";
+const heroImg = "images/hero.jpg";
 ---
 <Layout
   title={`Post-Frame & Pole Barn Builders in Kansas & Missouri | ${b.name}`}
@@ -65,6 +65,43 @@ const heroImg = "https://www.yutzyconstruction.com/wp-content/uploads/2024/07/Bl
         { icon: 'finance', title: 'Flexible Financing', text: 'Build now and pay over time through Rural 1st.' },
         { icon: 'service', title: 'Start to Finish', text: 'One team from first consult through final installation.' },
       ]} />
+    </div>
+  </section>
+
+  <!-- CUSTOMIZE YOUR LOOK -->
+  <section id="customize">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Make It Yours</span>
+        <h2>Customize your building's look</h2>
+        <p>Pick from a wide range of paint &amp; stain finishes, metal colors, and custom features so your building looks as good as it lasts.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/customize-paint.jpg" alt="Stained wood post-frame building" /></div>
+          <div class="card-body">
+            <h3>Paint &amp; Stain</h3>
+            <p>Premium paint and stain options for a fresh, lasting look with excellent weather resistance.</p>
+            <a class="q" href="docs/paint-and-stain-colors.pdf" target="_blank" rel="noopener">View Paint &amp; Stain Colors →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/customize-metal.jpg" alt="Metal-roof post-frame building" /></div>
+          <div class="card-body">
+            <h3>Metal Colors</h3>
+            <p>A wide range of durable, fade-resistant metal roof and siding colors to match your style.</p>
+            <a class="q" href="docs/metal-colors.pdf" target="_blank" rel="noopener">View Metal Colors →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/customize-options.jpg" alt="Custom-finished building with windows and trim" /></div>
+          <div class="card-body">
+            <h3>Customization Options</h3>
+            <p>Personalize windows, doors, trim, and layout so the building fits exactly what you need.</p>
+            <a class="q" href="docs/customization-options.pdf" target="_blank" rel="noopener">View Customization Options →</a>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 

@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LocationPage from '../components/LocationPage.astro';
+import { locations } from '../data/site';
+const loc = locations.find(l => l.slug === 'overland-park-ks')!;
+---
+<Layout
+  title={`Pole Barn & Post-Frame Builders in ${loc.city}, ${loc.state} | Yutzy Custom Structures`}
+  description={`Custom pole barns, post-frame garages & barndominiums in ${loc.city}, ${loc.state}. Family-owned Amish builders with a 5-year warranty. Get a free quote.`}
+>
+  <LocationPage loc={loc} />
+</Layout>

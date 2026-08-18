@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/site';
+const b = business;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: "Barndominium vs. Pole Barn Homes: Which Is Right for You?",
+  description: "A plain-English comparison of barndominiums and pole barn homes — cost, layout, finish, and how to choose — from a Kansas & Missouri post-frame builder.",
+  image: `${b.url}/images/barndominiums.jpg`,
+  author: { "@type": "Organization", name: b.name },
+  publisher: { "@type": "Organization", name: b.name, logo: { "@type": "ImageObject", url: b.logo } },
+  datePublished: "2026-08-17",
+  dateModified: "2026-08-17",
+};
+---
+<Layout
+  title="Barndominium vs. Pole Barn Homes: Which Is Right for You? | Yutzy Custom Structures"
+  description="Barndominium or pole barn home? Compare cost, layout, finish, and use to decide which post-frame home fits your land and budget in Kansas & Missouri."
+>
+  <section class="pagehead">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#f0d6ab">Guide</span>
+      <h1>Barndominium vs. Pole Barn Homes: Which Is Right for You?</h1>
+      <p>Both start with the same sturdy post-frame construction — the difference is how you finish and live in them. Here’s how to decide.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      <p class="lead-p">If you’re looking at building a home on acreage in Kansas or Missouri, you’ve probably run into two terms that sound similar: <strong>barndominium</strong> and <strong>pole barn home</strong>. They’re closely related — both are built with post-frame construction — but they’re used a little differently. Understanding the distinction helps you plan the right building for your land, your budget, and how you actually want to live.</p>
+
+      <h2>What is a pole barn home?</h2>
+      <p>A pole barn home is simply a <a href="pole-barns.html">post-frame building</a> that’s finished for living. Instead of a traditional foundation and stud walls, large laminated posts carry the structure, which creates wide-open interior spans and keeps costs down. Finish the inside — insulation, drywall, plumbing, HVAC — and you have a comfortable, efficient home with the durability of a barn.</p>
+
+      <h2>What is a barndominium?</h2>
+      <p>A <a href="barndominiums.html">barndominium</a> takes that same idea and usually combines <em>living space and a working shop or garage under one roof</em>. Think a finished home on one side and a heated shop, RV bay, or hobby space on the other. “Barndominium” has become the popular name for this blend of home and workspace, and it’s one of the fastest-growing ways people are building in the Midwest.</p>
+
+      <h2>The key differences</h2>
+      <p><strong>Purpose.</strong> A pole barn home is a house first. A barndominium is a house <em>plus</em> a shop or garage designed to work together from day one.</p>
+      <p><strong>Layout.</strong> Barndominiums often feature tall ceilings, large clear spans, and a shop area with oversized doors. Pole barn homes tend to read more like a conventional single-story home inside.</p>
+      <p><strong>Cost.</strong> Both are generally more economical than stick-built for the same square footage, because post-frame uses fewer, larger structural members. Your final cost comes down to size, height, insulation, and finish level far more than the label you put on it.</p>
+      <p><strong>Finish.</strong> Either can be finished simply or beautifully — stone accents, timber-frame porches, custom kitchens, the works. The construction method doesn’t limit the look.</p>
+
+      <h2>Which one is right for you?</h2>
+      <p>If your main goal is a home and you don’t need attached workspace, a pole barn home keeps things straightforward. If you want your shop, garage, or hobby space attached to your living area — sharing one efficient, well-insulated building — a barndominium is likely the better fit. Many of our customers land on a barndominium precisely because it lets them keep the tractor, the tools, and the family all under one roof.</p>
+
+      <h2>Built the same sturdy way</h2>
+      <p>Whichever direction you choose, we build it with the same approach: extra lumber, tighter post and truss spacing, Amish craftsmanship, and a 5-year workmanship warranty. We handle design, delivery, and installation with our own crews across Kansas and Missouri — and we’ll help you weigh the options before you commit.</p>
+
+      <p style="margin-top:2rem">
+        <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+        &nbsp;
+        <a class="btn btn-outline" href="faq.html">See our FAQ</a>
+      </p>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</Layout>

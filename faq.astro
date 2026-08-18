@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/site';
+const b = business;
+
+const faqs = [
+  { q: "What is post-frame construction?",
+    a: "Post-frame — often called “pole barn” — construction uses large laminated posts set on concrete footings to carry the building, instead of a continuous concrete foundation and closely spaced wall studs. It’s strong, faster to build, and more economical for large, open spaces, which is why it’s our specialty for barns, garages, shops, and barndominiums." },
+  { q: "How is post-frame different from stick-built construction?",
+    a: "Stick-built homes use a concrete foundation with 2x wall framing every 16 inches. Post-frame uses fewer, larger posts spaced farther apart, which opens up big clear spans and lowers cost. We use extra lumber and tighter post and truss spacing than many builders, so our post-frame buildings feel especially solid." },
+  { q: "What’s the difference between a barndominium and a pole barn home?",
+    a: "They overlap a lot. A “pole barn home” is simply a post-frame building finished for living. A “barndominium” usually pairs finished living space with a shop or garage under one roof. We build both — our Barndominium vs. Pole Barn Homes guide breaks down the differences in detail." },
+  { q: "How much does a pole barn cost?",
+    a: "It depends on size, height, doors, insulation, and finish level, so there’s no single price. The most accurate way to find out is a free quote — tell us what you’re picturing and we’ll give you a real figure for your project." },
+  { q: "How long does it take to build?",
+    a: "Timelines vary with size, weather, and finish level. Because we run a large team of our own crews, we can usually move quickly once your plans and permits are set, and we’ll give you a realistic schedule with your quote." },
+  { q: "Do you offer financing?",
+    a: "Yes. We partner with Rural 1st so you can build now and pay over time. Just ask about financing when you request your quote." },
+  { q: "Do I need a permit for a pole barn?",
+    a: "Permit requirements vary by county and by how the building will be used. We’re glad to point you in the right direction for your area — just ask when we talk through your project." },
+  { q: "Can I choose the size, colors, and options?",
+    a: "Absolutely. Every building is custom — sizes, door layouts, paint and stain, metal colors, windows, and trim. See the Customize Your Building’s Look section on our homepage for color and option catalogs." },
+  { q: "Do you deliver and install, or is it a kit?",
+    a: "We design, deliver, and install with our own crews from start to finish. You’re not buying a kit to assemble yourself." },
+  { q: "What areas do you serve, and is there a warranty?",
+    a: "We build across Kansas and Missouri from our shop in Garnett, KS, and every building comes with a 5-year workmanship warranty." },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+<Layout
+  title="Post-Frame & Pole Barn FAQ | Yutzy Custom Structures"
+  description="Answers to common questions about pole barns, post-frame construction, barndominiums, cost, financing, permits, and warranties in Kansas & Missouri."
+>
+  <section class="pagehead">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#f0d6ab">Answers</span>
+      <h1>Post-Frame &amp; Pole Barn FAQ</h1>
+      <p>Common questions about post-frame construction, barndominiums, cost, and what it’s like to build with Yutzy across Kansas &amp; Missouri.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap faq-wrap">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+      <p style="margin-top:2rem;text-align:center">
+        <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+        &nbsp;
+        <a class="btn btn-outline" href="barndominium-vs-pole-barn-homes.html">Read: Barndominium vs. Pole Barn Homes</a>
+      </p>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>

@@ -1,0 +1,26 @@
+---
+// Full-bleed hero: a photo that spans edge to edge with the headline sitting
+// ON the image. A gradient "scrim" (dark overlay) keeps the text readable.
+// Content sits lower-left — an editorial layout that reads more custom than
+// a dead-centered hero.
+import { business } from '../data/site';
+const b = business;
+interface Props {
+  eyebrow?: string; title: string; subtitle?: string;
+  image: string; alt: string; ctaHref?: string;
+}
+const { eyebrow, title, subtitle, image, alt, ctaHref = 'index.html#contact' } = Astro.props;
+---
+<section class="ohero">
+  <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
+  <div class="ohero-scrim"></div>
+  <div class="wrap ohero-inner">
+    {eyebrow && <span class="eyebrow ohero-eye">{eyebrow}</span>}
+    <h1 class="ohero-title">{title}</h1>
+    {subtitle && <p class="ohero-sub">{subtitle}</p>}
+    <div class="hero-cta">
+      <a class="btn btn-red" href={ctaHref}>Get a Free Quote</a>
+      <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call {b.phoneMain}</a>
+    </div>
+  </div>
+</section>

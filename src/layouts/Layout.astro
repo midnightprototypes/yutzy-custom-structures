@@ -32,7 +32,8 @@ const schema = {
   <link rel="icon" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" /></noscript>
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -243,6 +244,10 @@ const schema = {
   .area p{color:rgba(255,255,255,.9);max-width:560px;margin:0 auto 1.4rem}
   .area .btn-red{background:#fff;color:var(--red-dark)}
   .area .btn-red:hover{background:var(--cream)}
+  .area-band{position:relative;overflow:hidden}
+  .area-band::before{content:"";position:absolute;inset:0;background:url('images/where-we-build.webp') center/cover;z-index:0}
+  .area-band::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(95,26,22,.82),rgba(95,26,22,.88));z-index:1}
+  .area-band > .wrap{position:relative;z-index:2}
 
   .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
   .quote{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.6rem}

@@ -12,7 +12,7 @@ interface Props {
 const { eyebrow, title, subtitle, image, alt, ctaHref = 'index.html#contact' } = Astro.props;
 ---
 <section class="ohero">
-  <img class="ohero-bg" src={image} alt={alt} />
+  <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
   <div class="ohero-scrim"></div>
   <div class="wrap ohero-inner">
     {eyebrow && <span class="eyebrow ohero-eye">{eyebrow}</span>}

@@ -1,4 +1,10 @@
 ---
+import '@fontsource/archivo/600.css';
+import '@fontsource/archivo/700.css';
+import '@fontsource/archivo/800.css';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/600.css';
 import { business } from '../data/site';
 const b = business;
 interface Props { title: string; description: string; image?: string; }
@@ -30,10 +36,6 @@ const schema = {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" /></noscript>
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -138,6 +140,7 @@ const schema = {
   .btn-ghost{border-color:rgba(255,255,255,.5);color:#fff}
   .btn-ghost:hover{background:rgba(255,255,255,.12)}
   .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:var(--gold)}
+  .sec-head .eyebrow,.contact .eyebrow{color:var(--red-dark)}
   section{padding:clamp(3rem,7vw,5.5rem) 0}
 
   .ph{position:relative;border-radius:var(--r);overflow:hidden;background:linear-gradient(135deg,#8a3b32,#5f1a16 72%);display:flex;align-items:flex-end;color:rgba(255,255,255,.92);min-height:220px}
@@ -245,7 +248,7 @@ const schema = {
   .area .btn-red{background:#fff;color:var(--red-dark)}
   .area .btn-red:hover{background:var(--cream)}
   .area-band{position:relative;overflow:hidden}
-  .area-band::before{content:"";position:absolute;inset:0;background:url('images/where-we-build.webp') center/cover;z-index:0}
+  .area-band::before{content:"";position:absolute;inset:0;background:url('images/where-we-build.webp') center 64%/cover;z-index:0}
   .area-band::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(95,26,22,.82),rgba(95,26,22,.88));z-index:1}
   .area-band > .wrap{position:relative;z-index:2}
 

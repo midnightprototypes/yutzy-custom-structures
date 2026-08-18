@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business, buildings } from '../data/site';
+
+// One template -> six pages. getStaticPaths tells Astro to build a page for
+// each building in the data file. Add a building to site.ts and its page
+// appears automatically — no new file needed.
+export function getStaticPaths() {
+  return buildings.map((b) => ({ params: { slug: b.slug }, props: { b } }));
+}
+
+const { b } = Astro.props;
+const biz = business;
+---
+<Layout title={`${b.seoTitle} | ${biz.name}`} description={b.seoDesc}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Kansas &amp; Missouri</span>
+        <h1>{b.name}</h1>
+        <p class="lede">{b.tagline}</p>
+        <div class="hero-cta">
+          <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+          <a class="btn btn-ghost" href={`tel:${biz.phoneMainHref}`}>Call {biz.phoneMain}</a>
+        </div>
+      </div>
+      <div class="ph"><img class="shot" src={b.img} alt={b.alt} /></div>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section>
+    <div class="wrap detail">
+      <div class="detail-main">
+        <p class="lead-p">{b.intro}</p>
+        <ul class="checks">
+          {b.features.map((f) => (
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span>{f}</span></li>
+          ))}
+        </ul>
+        <div class="hero-cta">
+          <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+          <a class="btn btn-outline" href="index.html#buildings">See all buildings</a>
+        </div>
+      </div>
+      <aside class="detail-aside">
+        <div class="aside-card">
+          <p><b>Serving</b><br />Kansas &amp; Missouri</p>
+          <p><b>Warranty</b><br />5 years on every build</p>
+          <p><b>Financing</b><br />Available through Rural 1st</p>
+          <a class="btn btn-red" href={`tel:${biz.phoneMainHref}`} style="text-align:center">Call {biz.phoneMain}</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="area">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#f0d6ab">Free Quote</span>
+      <h2>Ready to build your {b.name.toLowerCase().replace(/s$/, '')}?</h2>
+      <p>Tell us about your project and our team will reach out with pricing and options.</p>
+      <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+    </div>
+  </section>
+</Layout>

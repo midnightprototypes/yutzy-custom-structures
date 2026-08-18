@@ -25,9 +25,15 @@ const biz = business;
           <a class="btn btn-ghost" href={`tel:${biz.phoneMainHref}`}>Call {biz.phoneMain}</a>
         </div>
       </div>
-      <div class="ph"><img class="shot" src={b.img} alt={b.alt} /></div>
+      <div class="ph bldg-shot"><img class="shot" src={b.img} alt={b.alt} width="900" height="600" /></div>
     </div>
   </section>
+
+  <style>
+    /* Building photo as a proper 3:2 landscape (overrides the near-square
+       default hero box). Higher specificity than the global .hero .ph. */
+    .hero .ph.bldg-shot{min-height:0;aspect-ratio:3/2}
+  </style>
 
   <!-- DETAIL -->
   <section>
@@ -36,7 +42,7 @@ const biz = business;
         <p class="lead-p">{b.intro}</p>
         <ul class="checks">
           {b.features.map((f) => (
-            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5322b" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span>{f}</span></li>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b26b2e" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span>{f}</span></li>
           ))}
         </ul>
         <div class="hero-cta">

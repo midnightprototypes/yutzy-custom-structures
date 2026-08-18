@@ -1,0 +1,16 @@
+{
+  "name": "yutzy-custom-structures",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^4.16.18",
+    "@fontsource/archivo": "^5.1.0",
+    "@fontsource/barlow": "^5.1.0"
+  }
+}

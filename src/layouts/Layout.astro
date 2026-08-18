@@ -1,9 +1,4 @@
 ---
-import '@fontsource/archivo/700.css';
-import '@fontsource/archivo/800.css';
-import '@fontsource/barlow/400.css';
-import '@fontsource/barlow/600.css';
-import '@fontsource/barlow/700.css';
 import { business } from '../data/site';
 const b = business;
 interface Props { title: string; description: string; image?: string; }
@@ -120,7 +115,7 @@ const schema = {
        compatibility; --red* now hold the cedar accent values. */
     --red:#b26b2e; --red-dark:#955a22; --red-deep:#7d4a1c;
     --charcoal:#2c383c; --charcoal-deep:#1e2321;
-    --ink:#242a27; --muted:#5c635e;
+    --ink:#242a27; --muted:#545a53;
     --cream:#ede7d7; --cream-2:#e3dbc6; --line:#dcd3bf;
     --gold:#c2924a; --sage:#a8b29a; --white:#fff;
     --maxw:1140px; --r:14px;
@@ -128,8 +123,15 @@ const schema = {
     --font-head:"Archivo","Archivo Fallback",system-ui,sans-serif;
     --font-body:"Barlow","Barlow Fallback",system-ui,-apple-system,sans-serif;
   }
-  /* Metric-matched Arial fallbacks — the fallback occupies the same space as
-     the web font, so the swap on slow connections causes no layout shift (CLS). */
+  /* Self-hosted fonts with font-display:optional. The text renders immediately in a
+     metric-matched fallback and only upgrades to the web font if it arrives within the
+     brief block period — so the page never reflows mid-load (no font-driven CLS). */
+  @font-face{font-family:"Archivo";font-style:normal;font-weight:700;font-display:optional;src:url("fonts/archivo-700.woff2") format("woff2")}
+  @font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-display:optional;src:url("fonts/archivo-800.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:400;font-display:optional;src:url("fonts/barlow-400.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:600;font-display:optional;src:url("fonts/barlow-600.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:700;font-display:optional;src:url("fonts/barlow-700.woff2") format("woff2")}
+  /* Metric-matched fallbacks so the pre-load text matches the web font's footprint. */
   @font-face{font-family:"Archivo Fallback";src:local("Arial");size-adjust:122.79%;ascent-override:71.50%;descent-override:17.10%;line-gap-override:0%}
   @font-face{font-family:"Barlow Fallback";src:local("Arial");size-adjust:116.22%;ascent-override:86.04%;descent-override:17.21%;line-gap-override:0%}
   *{box-sizing:border-box}
@@ -294,7 +296,7 @@ const schema = {
     .hero .ph{min-height:260px;order:-1}
     .cards,.quotes{grid-template-columns:1fr}
     .foot-grid{grid-template-columns:1fr}
-    .mobile-call{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--red);color:#fff;justify-content:center;gap:.5rem;padding:.9rem;font-weight:800;text-decoration:none;box-shadow:0 -4px 14px rgba(0,0,0,.15)}
+    .mobile-call{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--red-dark);color:#fff;justify-content:center;gap:.5rem;padding:.9rem;font-weight:800;text-decoration:none;box-shadow:0 -4px 14px rgba(0,0,0,.15)}
     body{padding-bottom:3.4rem}
   }
 </style>

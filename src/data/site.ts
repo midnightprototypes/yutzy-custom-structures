@@ -23,7 +23,7 @@ export const business = {
   google: {
     rating: "4.4",
     count: 88,
-    url: "https://www.google.com/maps/place/Yutzy+Custom+Structures/@38.2556811,-95.2518475,17z/data=!4m8!3m7!1s0x87b8bca6b3a95107:0xd89be3dc9da833d8!8m2!3d38.2556769!4d-95.2492672!9m1!1b1",
+    url: "https://www.google.com/maps?cid=15608319470259942360",
   },
   // Paste the GoHighLevel form embed URL here when ready (see references/ghl-form.md).
   ghlFormEmbedUrl: "",

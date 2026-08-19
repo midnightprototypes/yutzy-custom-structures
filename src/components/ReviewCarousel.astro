@@ -46,7 +46,8 @@ const { reviews } = Astro.props;
 
 <style>
   .revcar{position:relative}
-  .revcar-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:.4rem .2rem 1.2rem;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .revcar-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:.4rem .2rem 1rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+  .revcar-track::-webkit-scrollbar{display:none}
   .revcar-card{scroll-snap-align:start;flex:0 0 clamp(260px,80vw,360px);background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;margin:0;display:flex;flex-direction:column;gap:.7rem;box-shadow:0 1px 0 rgba(0,0,0,.02)}
   .revcar-stars{color:var(--gold);letter-spacing:.1em}
   .revcar-card blockquote{margin:0;font-size:1rem;line-height:1.55;color:var(--ink)}

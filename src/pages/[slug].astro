@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { business, buildings } from '../data/site';
+import { gallery } from '../data/gallery';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
 
 // One template -> six pages. getStaticPaths tells Astro to build a page for
 // each building in the data file. Add a building to site.ts and its page
@@ -11,6 +13,8 @@ export function getStaticPaths() {
 
 const { b } = Astro.props;
 const biz = business;
+// Photos tagged for this building type (see src/data/gallery.ts).
+const typePhotos = gallery.filter((g) => g.type === b.slug);
 ---
 <Layout title={`${b.seoTitle} | ${biz.name}`} description={b.seoDesc}>
   <!-- HERO -->
@@ -60,6 +64,20 @@ const biz = business;
       </aside>
     </div>
   </section>
+
+  {typePhotos.length > 0 && (
+    <!-- MORE PHOTOS OF THIS BUILDING TYPE -->
+    <section class="why">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">Our Work</span>
+          <h2>More {b.name} photos</h2>
+          <p>Real {b.name.toLowerCase()} we've built across Kansas &amp; Missouri. Tap any photo to browse.</p>
+        </div>
+        <PhotoLightbox images={typePhotos} />
+      </div>
+    </section>
+  )}
 
   <!-- CTA BAND -->
   <section class="area">

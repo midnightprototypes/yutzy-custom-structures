@@ -18,6 +18,13 @@ export const business = {
   url: "https://www.yutzyconstruction.com",
   facebook: "https://www.facebook.com/yutzyconstruction",
   houzz: "https://www.houzz.com/pro/yutzycustomstructures/yutzy-custom-structures",
+  // Google reviews summary shown as a live badge. Update rating/count as it
+  // grows; swap url for the exact Google reviews link when handy.
+  google: {
+    rating: "4.4",
+    count: 88,
+    url: "https://www.google.com/maps/search/?api=1&query=Yutzy+Custom+Structures+Garnett+KS",
+  },
   // Paste the GoHighLevel form embed URL here when ready (see references/ghl-form.md).
   ghlFormEmbedUrl: "",
   // GoHighLevel inbound-webhook URL for the custom quote form. When set, form

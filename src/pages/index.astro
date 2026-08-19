@@ -4,6 +4,7 @@ import { business, buildings, testimonials } from '../data/site';
 import OverlayHero from '../components/OverlayHero.astro';
 import FeatureCards from '../components/FeatureCards.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import DocPreview from '../components/DocPreview.astro';
 const b = business;
 const heroImg = "images/hero.webp";
 ---
@@ -83,7 +84,7 @@ const heroImg = "images/hero.webp";
           <div class="card-body">
             <h3>Paint &amp; Stain</h3>
             <p>Premium paint and stain options for a fresh, lasting look with excellent weather resistance.</p>
-            <a class="q" href="docs/paint-and-stain-colors.pdf" target="_blank" rel="noopener">View Paint &amp; Stain Colors →</a>
+            <a class="q doc-open" href="docs/paint-and-stain-colors.pdf" data-img="images/chart-paint.webp" data-pdf="docs/paint-and-stain-colors.pdf" data-title="Paint &amp; Stain Colors">View Paint &amp; Stain Colors →</a>
           </div>
         </article>
         <article class="card">
@@ -91,7 +92,7 @@ const heroImg = "images/hero.webp";
           <div class="card-body">
             <h3>Metal Colors</h3>
             <p>A wide range of durable, fade-resistant metal roof and siding colors to match your style.</p>
-            <a class="q" href="docs/metal-colors.pdf" target="_blank" rel="noopener">View Metal Colors →</a>
+            <a class="q doc-open" href="docs/metal-colors.pdf" data-img="images/chart-metal.webp" data-pdf="docs/metal-colors.pdf" data-title="Metal Colors">View Metal Colors →</a>
           </div>
         </article>
         <article class="card">
@@ -99,10 +100,11 @@ const heroImg = "images/hero.webp";
           <div class="card-body">
             <h3>Customization Options</h3>
             <p>Personalize windows, doors, trim, and layout so the building fits exactly what you need.</p>
-            <a class="q" href="docs/customization-options.pdf" target="_blank" rel="noopener">View Customization Options →</a>
+            <a class="q doc-open" href="docs/customization-options.pdf" data-img="images/chart-options.webp" data-pdf="docs/customization-options.pdf" data-title="Customization Options">View Customization Options →</a>
           </div>
         </article>
       </div>
+      <DocPreview />
     </div>
   </section>
 
@@ -122,7 +124,16 @@ const heroImg = "images/hero.webp";
       <div class="sec-head">
         <span class="eyebrow">Customer Stories</span>
         <h2>What our customers say</h2>
-        <p style="color:var(--muted);margin:0">Real reviews from our customers on Houzz. <a href={b.houzz} target="_blank" rel="noopener" style="color:var(--red-dark);font-weight:700">See all reviews →</a></p>
+        <p style="color:var(--muted);margin:0 0 1.1rem">Real reviews from customers across Kansas &amp; Missouri.</p>
+        <div class="rev-badges">
+          <a class="rev-badge" href={b.google.url} target="_blank" rel="noopener" aria-label={`${b.google.rating} out of 5 from ${b.google.count} Google reviews`}>
+            <svg class="rev-g" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 01-2.3 3.5v2.9h3.7C21.8 18.9 23 15.9 23 12.3z"/><path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3C3.7 21.4 7.5 24 12 24z"/><path fill="#FBBC05" d="M5.6 14.3a7.2 7.2 0 010-4.6v-3H1.8a12 12 0 000 10.6l3.8-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0 7.5 0 3.7 2.6 1.8 6.4l3.8 3C6.5 6.7 9 4.8 12 4.8z"/></svg>
+            <b class="rev-rating">{b.google.rating}</b>
+            <span class="rev-stars" style={`--pct:${(Number(b.google.rating) / 5 * 100).toFixed(0)}%`} aria-hidden="true"></span>
+            <span class="rev-count">{b.google.count} Google reviews →</span>
+          </a>
+          <a class="rev-badge alt" href={b.houzz} target="_blank" rel="noopener">Houzz reviews →</a>
+        </div>
       </div>
       <div class="quotes">
         {testimonials.map((r) => (
@@ -155,3 +166,15 @@ const heroImg = "images/hero.webp";
     </div>
   </section>
 </Layout>
+
+<style>
+  .rev-badges{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center}
+  .rev-badge{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem .95rem;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+  .rev-badge:hover{border-color:var(--red)}
+  .rev-badge.alt{color:var(--red-deep)}
+  .rev-rating{font-family:var(--font-head);font-size:1.05rem;color:var(--charcoal-deep)}
+  .rev-stars{position:relative;display:inline-block;font-size:1rem;line-height:1;letter-spacing:1px}
+  .rev-stars::before{content:"★★★★★";color:#d9d2c4}
+  .rev-stars::after{content:"★★★★★";color:var(--gold);position:absolute;left:0;top:0;width:var(--pct);overflow:hidden;white-space:nowrap}
+  .rev-count{color:var(--muted)}
+</style>

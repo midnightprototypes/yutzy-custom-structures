@@ -1,0 +1,47 @@
+---
+// Shared "document preview" modal. Any element with class `doc-open` and
+// data-img / data-pdf / data-title attributes opens this lightbox showing the
+// document rendered as an image (fast, mobile-friendly) with a Download button.
+// Render <DocPreview /> once per page; add as many .doc-open triggers as needed.
+---
+<div class="doc-lb" id="docLb" role="dialog" aria-modal="true" aria-label="Document preview">
+  <button class="doc-lb-close" id="docLbClose" type="button" aria-label="Close">&times;</button>
+  <div class="doc-lb-inner">
+    <img id="docLbImg" alt="" />
+    <a class="btn btn-red doc-lb-dl" id="docLbDl" href="#" target="_blank" rel="noopener">Download full PDF</a>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var lb = document.getElementById('docLb');
+    if (!lb) return;
+    var img = document.getElementById('docLbImg');
+    var dl = document.getElementById('docLbDl');
+    function open(src, pdf, title) {
+      img.src = src; img.alt = title || 'Document preview';
+      dl.href = pdf || '#';
+      lb.classList.add('on'); document.body.style.overflow = 'hidden';
+    }
+    function close() { lb.classList.remove('on'); document.body.style.overflow = ''; img.removeAttribute('src'); }
+    document.querySelectorAll('.doc-open').forEach(function (t) {
+      t.addEventListener('click', function (e) {
+        e.preventDefault();
+        open(t.getAttribute('data-img'), t.getAttribute('data-pdf'), t.getAttribute('data-title'));
+      });
+    });
+    document.getElementById('docLbClose').addEventListener('click', close);
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('on')) close(); });
+  })();
+</script>
+
+<style>
+  .doc-lb{position:fixed;inset:0;z-index:200;background:rgba(18,14,12,.92);display:none;align-items:center;justify-content:center;padding:1.5rem}
+  .doc-lb.on{display:flex}
+  .doc-lb-inner{display:flex;flex-direction:column;align-items:center;gap:1rem;max-height:92vh}
+  .doc-lb-inner img{max-width:92vw;max-height:78vh;border-radius:6px;box-shadow:0 12px 48px rgba(0,0,0,.55);background:#fff}
+  .doc-lb-close{position:absolute;top:.6rem;right:1rem;background:none;border:none;color:#fff;font-size:2.6rem;line-height:1;cursor:pointer;opacity:.9}
+  .doc-lb-close:hover{opacity:1}
+  .doc-lb-dl{text-decoration:none;flex:none}
+</style>

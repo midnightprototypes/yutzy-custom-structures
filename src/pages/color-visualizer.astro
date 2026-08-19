@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorVisualizer from '../components/ColorVisualizer.astro';
+---
+<Layout
+  title="Metal Building Color Visualizer | Yutzy Custom Structures"
+  description="Try Yutzy's real metal roof, siding, wainscot, and trim colors on a building. A free color visualizer for pole barns and post-frame buildings in Kansas & Missouri."
+>
+  <section class="pagehead">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#f0d6ab">Design Tool</span>
+      <h1>Metal Building Color Visualizer</h1>
+      <p>Mix and match your roof, walls, wainscot, and trim from our real metal color options. Found a combination you love? Send it our way for a free quote.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <ColorVisualizer />
+      <p style="text-align:center;margin-top:2.2rem">
+        <a class="btn btn-red" href="index.html#contact">Get a Free Quote</a>
+        &nbsp;
+        <a class="btn btn-outline" href="index.html#customize">See paint, stain &amp; option catalogs</a>
+      </p>
+      <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-top:.9rem">Colors shown are close on-screen matches and may vary slightly from the actual coated metal.</p>
+    </div>
+  </section>
+</Layout>

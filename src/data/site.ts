@@ -14,7 +14,7 @@ export const business = {
   hours: "Mon–Fri 8am–5pm",
   address: { street: "24917 N Hwy 169", city: "Garnett", region: "KS", zip: "66032", country: "US" },
   areaServed: ["Kansas", "Missouri"],
-  logo: "https://www.yutzyconstruction.com/wp-content/uploads/2020/09/yutzy-logo.png",
+  logo: "logo.png",
   url: "https://www.yutzyconstruction.com",
   facebook: "https://www.facebook.com/yutzyconstruction",
   houzz: "https://www.houzz.com/pro/yutzycustomstructures/yutzy-custom-structures",
@@ -23,7 +23,7 @@ export const business = {
   google: {
     rating: "4.4",
     count: 88,
-    url: "https://www.google.com/maps/search/?api=1&query=Yutzy+Custom+Structures+Garnett+KS",
+    url: "https://www.google.com/maps/place/Yutzy+Custom+Structures/@38.2556811,-95.2518475,17z/data=!4m8!3m7!1s0x87b8bca6b3a95107:0xd89be3dc9da833d8!8m2!3d38.2556769!4d-95.2492672!9m1!1b1",
   },
   // Paste the GoHighLevel form embed URL here when ready (see references/ghl-form.md).
   ghlFormEmbedUrl: "",
@@ -153,22 +153,25 @@ export const buildings: Building[] = [
 ];
 
 // Real 5-star reviews pulled from the company's Houzz profile.
+// Featured reviews shown in the scrolling carousel. Add/remove freely — set
+// `stars` (1–5) and `source` ("Google" / "Houzz"). Keep quotes accurate.
 export const testimonials = [
-  {
-    quote: "We worked with Yutzy to build our family home on 3 acres. They were very efficient, great at communicating, and did a fantastic job — a very nice, well-insulated home. Their pricing and unique style of building is why we chose them, and I'm very happy we did.",
-    name: "Michelle Honn",
-    source: "Houzz review",
-  },
-  {
-    quote: "Amazing — fast and in touch throughout the whole process. Vernon kept me updated the whole way, and I love my building.",
-    name: "Verified Houzz review",
-    source: "Houzz review",
-  },
-  {
-    quote: "Just about finished with our home. I hired Yutzy to build our structure and they did an amazing job.",
-    name: "Verified Houzz review",
-    source: "Houzz review",
-  },
+  { stars: 5, name: "Diane Hirt", source: "Google", quote: "Very pleased with the entire crew from project team to completion and all crews in between. Not only are they precise and quick, but the attention to detail is beyond compare. We recommend Yutzy to friends and family any chance we get." },
+  { stars: 5, name: "Aaron Woods", source: "Google", quote: "Highly recommend Yutzy Custom Structures! From start to finish, these guys were outstanding. The sales team was knowledgeable, patient, and never pushy — they listened to exactly what we wanted." },
+  { stars: 5, name: "Jacob McCoy", source: "Google", quote: "YCS was outstanding! In the often-intimidating world of barndominium builders, it's important to find a company you can trust. YCS proved to be extremely professional and transparent throughout our project." },
+  { stars: 5, name: "Mark Munoz", source: "Google", quote: "After researching different companies, I'm glad I did business with Yutzy. Just completed a 40x60x14 post frame — all employees were professional and completed each job in a timely manner." },
+  { stars: 5, name: "Brian Huff", source: "Google", quote: "Yutzy was a fantastic company to work with. I was very impressed with all of the crews. They listened to my input and the quality of their work was second to none. The building material was also first class." },
+  { stars: 5, name: "Katee Smith", source: "Google", quote: "YCS did an amazing job on my workshop (30x40x12)! I'd been waiting 10 years to have a shop, and they made it happen." },
+  { stars: 5, name: "Shaun Smith", source: "Google", quote: "I wanted to share our absolutely positive experience with the team at YCS. When we moved to the country, a workshop was always a dream of ours — and they made it a reality." },
+  { stars: 5, name: "Morgan Messer", source: "Google", quote: "I talked with Yutzy about my dream dog grooming and boarding facility and they were able to make it happen! I am beyond thankful for everyone who worked hard on this project for me." },
+  { stars: 5, name: "Rhonda Behm", source: "Google", quote: "We used Yutzy for our home/barn. They were on schedule, we had no delays, and the crew worked whether it was icy, snowy, or windy. They cut no corners." },
+  { stars: 4, name: "Nikki Ingram", source: "Google", quote: "We love our new building! The crew that installed it was top notch. The building went up quickly, the quality of work was great, and they cleaned up well." },
+  { stars: 5, name: "Dave", source: "Google", quote: "They were great to work with and did a great job. If you're interested in a new building, I would definitely recommend them." },
+  { stars: 5, name: "Michelle Hesselman", source: "Google", quote: "Yutzy did a great job erecting our building, with great customer service. Everyone from initial bids to finance, construction, and post-construction support was great to work with." },
+  { stars: 5, name: "Jarrett Ross", source: "Google", quote: "They did a very nice job on my shop." },
+  { stars: 5, name: "Michelle Honn", source: "Houzz", quote: "We worked with Yutzy to build our family home on 3 acres. They were very efficient, great at communicating, and did a fantastic job — a very nice, well-insulated home." },
+  { stars: 5, name: "Verified Houzz customer", source: "Houzz", quote: "Amazing — fast and in touch throughout the whole process. Vernon kept me updated the whole way, and I love my building." },
+  { stars: 5, name: "Verified Houzz customer", source: "Houzz", quote: "Just about finished with our home. I hired Yutzy to build our structure and they did an amazing job." },
 ];
 
 // Service-area / location pages for local SEO. Swap these cities for the real

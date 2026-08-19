@@ -1,5 +1,6 @@
 ---
 import { business } from '../data/site';
+import Logo from '../components/Logo.astro';
 const b = business;
 interface Props { title: string; description: string; image?: string; }
 const { title, description, image = b.logo } = Astro.props;
@@ -36,7 +37,7 @@ const schema = {
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={image} />
+  <meta property="og:image" content={new URL(image, Astro.site)} />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
@@ -45,7 +46,7 @@ const schema = {
 <header class="site">
   <div class="wrap navbar">
     <a class="brand" href="index.html" aria-label={b.name}>
-      <span class="mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 64 40" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M6 38V16L32 4l26 12v22"/><path d="M6 38h52"/><path d="M24 38V26h16v12"/></svg></span>
+      <span class="mark"><Logo /></span>
       <span class="brandtext"><b>Yutzy</b><small>Custom Structures</small></span>
     </a>
     <nav class="nav-links" id="site-nav">
@@ -75,7 +76,7 @@ const schema = {
   <div class="wrap foot-grid">
     <div>
       <a class="brand" href="index.html" style="margin-bottom:.8rem" aria-label={b.name}>
-        <span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 64 40" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M6 38V16L32 4l26 12v22"/><path d="M6 38h52"/><path d="M24 38V26h16v12"/></svg></span>
+        <span class="mark"><Logo /></span>
         <span class="brandtext"><b style="color:#fff">Yutzy</b><small style="color:#b3a99b">Custom Structures</small></span>
       </a>
       <p style="color:#c7bfb2;max-width:32ch">Family-owned Amish post-frame builders serving Kansas &amp; Missouri since 2005.</p>
@@ -175,12 +176,14 @@ const schema = {
   header.site{position:sticky;top:0;z-index:50;background:rgba(237,231,215,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .navbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
   .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
-  .brand .mark{width:40px;height:40px;border-radius:9px;background:var(--red);display:grid;place-items:center;flex:none}
+  .brand .mark{display:grid;place-items:center;flex:none;color:var(--charcoal-deep)}
+  .brand .mark svg{height:40px;width:auto;display:block}
+  footer.site .brand .mark{color:#fff}
   .brandtext b{display:block;font-family:var(--font-head);font-size:1.15rem;color:var(--charcoal-deep);line-height:1;letter-spacing:.01em}
   .brandtext small{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:3px}
   @media(max-width:440px){.brandtext small{display:none}.brandtext b{font-size:1.05rem}}
   .nav-links{display:flex;gap:1.6rem;font-weight:500;font-size:.95rem}
-  .nav-links a{text-decoration:none;color:var(--ink)}
+  .nav-links a:not(.btn){text-decoration:none;color:var(--ink)}
   .nav-links a:hover{color:var(--red-dark)}
   .nav-cta{display:flex;align-items:center;gap:1rem}
   .nav-phone{font-weight:700;text-decoration:none;color:var(--charcoal-deep);white-space:nowrap}
@@ -316,7 +319,7 @@ const schema = {
     .navbar{padding:.65rem 0;gap:.5rem}
     .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--cream);border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding:.3rem 0 .9rem;display:none}
     .nav-links.open{display:flex}
-    .nav-links a{padding:.9rem clamp(1.1rem,5vw,2rem);font-size:1.02rem;color:var(--ink)}
+    .nav-links a:not(.btn){padding:.9rem clamp(1.1rem,5vw,2rem);font-size:1.02rem;color:var(--ink)}
     .nav-links a:not(.btn){border-bottom:1px solid var(--line)}
     .nav-quote-m{display:block;margin:.75rem clamp(1.1rem,5vw,2rem) 0;text-align:center;padding:.9rem;font-size:1rem}
     .hero-grid,.contact-grid{grid-template-columns:1fr}

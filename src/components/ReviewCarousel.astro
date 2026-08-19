@@ -1,0 +1,60 @@
+---
+// Horizontal, swipeable review carousel with prev/next arrows and gentle
+// autoplay (pauses on hover/focus, respects prefers-reduced-motion).
+// ~1 KB inline JS, no library — keeps Lighthouse scores intact.
+interface Review { quote: string; name: string; source?: string; stars?: number }
+interface Props { reviews: Review[] }
+const { reviews } = Astro.props;
+---
+<div class="revcar">
+  <button class="revcar-nav revcar-prev" type="button" aria-label="Previous reviews">&#8249;</button>
+  <div class="revcar-track" role="list">
+    {reviews.map((r) => (
+      <figure class="revcar-card" role="listitem">
+        <div class="revcar-stars" aria-label={`${r.stars ?? 5} out of 5 stars`}>{"★".repeat(r.stars ?? 5)}</div>
+        <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
+        <figcaption><span class="revcar-name">{r.name}</span>{r.source && <span class="revcar-src"> · {r.source}</span>}</figcaption>
+      </figure>
+    ))}
+  </div>
+  <button class="revcar-nav revcar-next" type="button" aria-label="More reviews">&#8250;</button>
+</div>
+
+<script is:inline>
+  (function () {
+    var car = document.currentScript.previousElementSibling;
+    while (car && !car.classList.contains('revcar')) car = car.previousElementSibling;
+    if (!car) return;
+    var track = car.querySelector('.revcar-track');
+    function step() { var c = track.querySelector('.revcar-card'); return c ? c.getBoundingClientRect().width + 20 : 320; }
+    var paused = false, resume = null;
+    function nudge(dir) {
+      if (dir < 0 && track.scrollLeft < 4) track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+      else if (dir > 0 && track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    }
+    car.querySelector('.revcar-prev').addEventListener('click', function () { nudge(-1); hold(); });
+    car.querySelector('.revcar-next').addEventListener('click', function () { nudge(1); hold(); });
+    function hold() { paused = true; clearTimeout(resume); resume = setTimeout(function () { paused = false; }, 9000); }
+    car.addEventListener('mouseenter', function () { paused = true; });
+    car.addEventListener('mouseleave', function () { paused = false; });
+    car.addEventListener('focusin', function () { paused = true; });
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) setInterval(function () { if (!paused) nudge(1); }, 4500);
+  })();
+</script>
+
+<style>
+  .revcar{position:relative}
+  .revcar-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:.4rem .2rem 1.2rem;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .revcar-card{scroll-snap-align:start;flex:0 0 clamp(260px,80vw,360px);background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.6rem;margin:0;display:flex;flex-direction:column;gap:.7rem;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .revcar-stars{color:var(--gold);letter-spacing:.1em}
+  .revcar-card blockquote{margin:0;font-size:1rem;line-height:1.55;color:var(--ink)}
+  .revcar-card figcaption{margin-top:auto;font-size:.92rem}
+  .revcar-name{font-weight:700;color:var(--charcoal-deep)}
+  .revcar-src{color:var(--muted)}
+  .revcar-nav{position:absolute;top:42%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--charcoal-deep);font-size:1.6rem;line-height:1;cursor:pointer;box-shadow:var(--shadow);display:grid;place-items:center}
+  .revcar-nav:hover{border-color:var(--red)}
+  .revcar-prev{left:-10px}.revcar-next{right:-10px}
+  @media(max-width:640px){.revcar-nav{display:none}}
+</style>

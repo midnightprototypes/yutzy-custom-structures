@@ -37,19 +37,25 @@ const b = business;
     </label>
   </div>
   <div class="qrow">
-    <label>Approx. size (sq ft)<input name="sqft" type="text" inputmode="numeric" placeholder="e.g. 2,400" /></label>
+    <!-- required: every field GoHighLevel's External Tracking script has
+         reliably captured so far (name/phone/email/location/type) happens
+         to be `required`; sqft and message were the only optional ones and
+         the only two that never came through. Testing that pattern here —
+         asking for an approximate size is reasonable for a quote form
+         regardless. -->
+    <label>Approx. size (sq ft)<input name="sqft" type="text" inputmode="numeric" placeholder="e.g. 2,400" required /></label>
   </div>
   <div class="qrow">
     <label>Tell us about your project<textarea id="qmessageBox" rows="3" placeholder="Size, use, timeline, budget…"></textarea></label>
-    <!-- GoHighLevel's External Tracking script only picks up <input>/<select>
-         elements that are visible in the DOM — it doesn't read <textarea>
-         values (confirmed by testing) and skips fields hidden at page load
-         (which is why the old conditional sqft row above never came through
-         either). This mirror input stays in sync with the textarea above via
-         JS and carries the real "message" field name, so the value is both
-         nicely editable for visitors and reliably capturable by the tracking
-         script. Visually hidden via CSS (not `hidden`/display:none — that's
-         exactly what makes a field invisible to the tracker too). -->
+    <!-- GoHighLevel's External Tracking script doesn't read <textarea>
+         values directly (confirmed by testing), so this mirror input stays
+         in sync with the textarea above via JS and carries the real
+         "message" field name. Visually hidden via CSS (not `hidden`/
+         display:none — that's what makes a field invisible to the tracker
+         too). `required` is toggled on only once it actually has content,
+         so an empty optional message never blocks submission — same
+         required-field theory being tested on sqft above, without forcing
+         visitors to write something. -->
     <input type="text" name="message" id="qmessageMirror" class="visually-hidden" tabindex="-1" aria-hidden="true" />
   </div>
   <button class="btn btn-red" type="submit">Start My Project</button>
@@ -64,7 +70,10 @@ const b = business;
     var msg = document.getElementById('qmsg');
     var messageBox = document.getElementById('qmessageBox');
     var messageMirror = document.getElementById('qmessageMirror');
-    messageBox.addEventListener('input', function () { messageMirror.value = messageBox.value; });
+    messageBox.addEventListener('input', function () {
+      messageMirror.value = messageBox.value;
+      messageMirror.required = messageBox.value.trim().length > 0;
+    });
     // Preselect the project-type dropdown from a ?type= param, so a CTA like
     // "Talk Through My Project" (type=Not+sure+yet) or a building page's
     // "Start Your Barndominium" (type=Barndominium) lands with the right

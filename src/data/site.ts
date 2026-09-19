@@ -65,7 +65,7 @@ export const business = {
   ghlFormEmbedUrl: "",
   // GoHighLevel inbound-webhook URL for the custom quote form. When set, form
   // submissions POST here and flow into the CRM. Leave "" until you have it.
-  quoteWebhookUrl: "",
+  quoteWebhookUrl: "https://services.leadconnectorhq.com/hooks/rbnumIGxcuv03wewY2db/webhook-trigger/8cdb38ff-b824-44f7-82a1-7bcd1bb94ca2",
 };
 
 export type Building = {

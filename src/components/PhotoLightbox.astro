@@ -3,13 +3,13 @@
 // Clicking a photo opens it over a dimmed page with prev/next + keyboard nav,
 // so visitors browse without leaving the page. ~1 KB of inline JS.
 // Used on the main Gallery page and on each building detail page (filtered).
-interface Img { src: string; alt: string }
+interface Img { src: string; alt: string; type?: string }
 interface Props { images: Img[] }
 const { images } = Astro.props;
 ---
 <div class="gal-grid">
   {images.map((g) => (
-    <a class="gal-item" href={g.src}>
+    <a class="gal-item" href={g.src} data-type={g.type || ''}>
       <img src={g.src} alt={g.alt} loading="lazy" />
     </a>
   ))}
@@ -29,15 +29,26 @@ const { images } = Astro.props;
     while (root && !root.classList.contains('lightbox')) root = root.previousElementSibling;
     var grid = root && root.previousElementSibling;                // the .gal-grid
     if (!root || !grid) return;
-    var items = [].slice.call(grid.querySelectorAll('.gal-item'));
-    var srcs = items.map(function (a) { return a.getAttribute('href'); });
+    var allItems = [].slice.call(grid.querySelectorAll('.gal-item'));
     var img = root.querySelector('.lb-img');
     var count = root.querySelector('.lb-count');
+    var srcs = [];   // the currently-visible set, rebuilt each time the lightbox opens
     var cur = 0;
+    // offsetParent is null for display:none elements (and their descendants),
+    // so this always reflects whatever a filter bar has currently hidden —
+    // the lightbox never needs to know filtering exists.
+    function visibleItems() { return allItems.filter(function (a) { return a.offsetParent !== null; }); }
     function show(i) { cur = (i + srcs.length) % srcs.length; img.src = srcs[cur]; count.textContent = (cur + 1) + ' / ' + srcs.length; }
-    function open(i) { show(i); root.classList.add('on'); document.body.style.overflow = 'hidden'; }
+    function openAt(a) {
+      var vis = visibleItems();
+      srcs = vis.map(function (x) { return x.getAttribute('href'); });
+      var idx = vis.indexOf(a);
+      show(idx < 0 ? 0 : idx);
+      root.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
     function close() { root.classList.remove('on'); document.body.style.overflow = ''; img.removeAttribute('src'); }
-    items.forEach(function (a, i) { a.addEventListener('click', function (e) { e.preventDefault(); open(i); }); });
+    allItems.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); openAt(a); }); });
     root.querySelector('.lb-close').addEventListener('click', close);
     root.querySelector('.lb-prev').addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
     root.querySelector('.lb-next').addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });

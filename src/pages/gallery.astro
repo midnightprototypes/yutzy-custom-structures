@@ -1,7 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { gallery } from '../data/gallery';
+import { buildings } from '../data/site';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
+
+// Filter pills are built from whichever building types actually have photos
+// right now, in the same order as the buildings list — so adding more
+// photos (or a new category) tomorrow doesn't require touching this file.
+const typesWithPhotos = new Set(gallery.map((g) => g.type).filter(Boolean));
+const filters = buildings.filter((b) => typesWithPhotos.has(b.slug));
 ---
 <Layout
   title="Project Gallery | Yutzy Custom Structures"
@@ -17,10 +24,43 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 
   <section>
     <div class="wrap">
+      <div class="gal-filters" role="group" aria-label="Filter projects by building type">
+        <button class="gal-filter active" type="button" data-filter="all">All Projects</button>
+        {filters.map((f) => (
+          <button class="gal-filter" type="button" data-filter={f.slug}>{f.name}</button>
+        ))}
+      </div>
       <PhotoLightbox images={gallery} />
       <p style="text-align:center;margin-top:2.4rem">
         <a class="btn btn-red" href="index.html#contact">Start Your Project</a>
       </p>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      var bar = document.querySelector('.gal-filters');
+      if (!bar) return;
+      var buttons = [].slice.call(bar.querySelectorAll('.gal-filter'));
+      var items = [].slice.call(document.querySelectorAll('.gal-grid .gal-item'));
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          buttons.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var type = btn.getAttribute('data-filter');
+          items.forEach(function (a) {
+            var show = type === 'all' || a.getAttribute('data-type') === type;
+            a.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    .gal-filters{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:2rem}
+    .gal-filter{padding:.55rem 1.15rem;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:600;font-size:.92rem;cursor:pointer;transition:.15s;font-family:inherit}
+    .gal-filter:hover{border-color:var(--red)}
+    .gal-filter.active{background:var(--red-dark);border-color:var(--red-dark);color:#fff}
+  </style>
 </Layout>

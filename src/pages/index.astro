@@ -7,13 +7,12 @@ import QuoteForm from '../components/QuoteForm.astro';
 import DocPreview from '../components/DocPreview.astro';
 import ReviewCarousel from '../components/ReviewCarousel.astro';
 const b = business;
-const heroImg = "images/gallery/g01.webp";
+const heroImg = "images/hero.webp";
 
 const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const barndo = find('barndominiums');
 const slab = find('slab-homes');
 const poleBarn = find('pole-barns');
-const garage = find('post-frame-garages');
 const hobbyShop = find('hobby-shops');
 
 const faqHighlights = [
@@ -33,7 +32,7 @@ const faqHighlights = [
     title="Built Around How You Actually Live."
     subtitle="Custom homes, barndominiums, shops, barns, and commercial buildings built around your land, your plans, and what you need the building to do."
     image={heroImg}
-    alt="Custom barndominium with covered wraparound porch and stone accents, built by Yutzy Custom Structures"
+    alt="Post-frame building with exposed timber-frame gables, stone wainscoting and warm exterior lighting at dusk, built by Yutzy Custom Structures"
     ctaHref="#contact"
     ctaText="Start Your Project"
     ctaSecondaryText="Explore What We Build"
@@ -59,7 +58,7 @@ const faqHighlights = [
       </div>
       <div class="intent-grid">
         <article class="intent-card">
-          <div class="ph"><img class="shot" src="images/gallery/g04.webp" alt="Custom barndominium entry built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g44.webp" alt="Elegant post-frame home with a stone-columned covered porch and timber-frame entry" /></div>
           <div class="intent-body">
             <h3>A Home</h3>
             <p>Living spaces planned around daily life, from barndominiums to slab and post-frame layouts.</p>
@@ -67,7 +66,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="intent-card">
-          <div class="ph"><img class="shot" src={garage.img} alt={garage.alt} /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="Tan and brown two-car garage with a Yutzy nameplate on the peak" /></div>
           <div class="intent-body">
             <h3>A Shop or Garage</h3>
             <p>Dedicated space for vehicles, tools, equipment, or projects you've outgrown your current setup for.</p>
@@ -75,7 +74,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="intent-card">
-          <div class="ph"><img class="shot" src={poleBarn.img} alt={poleBarn.alt} /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g20.webp" alt="Gray equestrian barn with three horses sheltered under an open lean-to" /></div>
           <div class="intent-body">
             <h3>Something for the Farm</h3>
             <p>Practical buildings planned around your equipment, livestock, acreage, and daily chores.</p>
@@ -83,7 +82,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="intent-card">
-          <div class="ph"><img class="shot" src="images/gallery/g13.webp" alt="Custom post-frame building with sliding doors, built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g29.webp" alt="Gray three-bay garage with a covered entry and landscaped stone accents" /></div>
           <div class="intent-body">
             <h3>A Commercial Building</h3>
             <p>Custom post-frame buildings built around how your business operates: workspace, storage and shop space sized to fit.</p>
@@ -119,10 +118,10 @@ const faqHighlights = [
 
   <!-- CONSTRUCTION QUALITY -->
   <section class="ch-hero rotator" id="buildRotator">
-    <img class="ch-bg rot-img active" src="images/gallery/g21.webp" alt="Large post-frame building with sliding doors built by Yutzy Custom Structures" />
-    <img class="ch-bg rot-img" src="images/gallery/g13.webp" alt="Post-frame building sliding door detail built by Yutzy Custom Structures" />
-    <img class="ch-bg rot-img" src="images/gallery/g15.webp" alt="Long post-frame building with covered porch and overhead door built by Yutzy Custom Structures" />
-    <img class="ch-bg rot-img" src="images/gallery/g27.webp" alt="Custom pole barn built by Yutzy Custom Structures" />
+    <img class="ch-bg rot-img active" src="images/gallery/g17.webp" alt="Large open-bay pole barn under construction, showing the post-frame structure" />
+    <img class="ch-bg rot-img" src="images/gallery/g11.webp" alt="Open-sided pole barn with visible post and truss framing" />
+    <img class="ch-bg rot-img" src="images/gallery/g16.webp" alt="Finished red and white pole barn at dusk" />
+    <img class="ch-bg rot-img" src="images/gallery/g45.webp" alt="Finished white pole barn with red trim and an open drive-through bay" />
     <div class="ch-scrim"></div>
     <div class="wrap ch-inner">
       <span class="eyebrow ch-eye">How We Build</span>
@@ -147,7 +146,7 @@ const faqHighlights = [
       </div>
       <div class="cards proj-cards">
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g02.webp" alt="Custom barndominium built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g02.webp" alt="Bright red two-story barndominium with a stone-clad porch and a wood balcony off the upper level" /></div>
           <div class="card-body">
             <h3>Barndominium</h3>
             <p>{barndo.blurb}</p>
@@ -155,7 +154,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g13.webp" alt="Post-frame pole barn with custom sliding doors built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g16.webp" alt="Red and white pole barn with a split roofline at dusk" /></div>
           <div class="card-body">
             <h3>Pole Barn</h3>
             <p>{poleBarn.blurb}</p>
@@ -163,7 +162,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g08.webp" alt="Hobby shop built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g26.webp" alt="Navy and white pool house with a covered porch and hanging flower baskets beside an in-ground pool" /></div>
           <div class="card-body">
             <h3>Hobby Shop</h3>
             <p>{hobbyShop.blurb}</p>
@@ -171,7 +170,7 @@ const faqHighlights = [
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g03.webp" alt="Slab-foundation home with attached shop built by Yutzy Custom Structures" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g33.webp" alt="Gray slab home with a full-length covered porch and stone-clad columns" /></div>
           <div class="card-body">
             <h3>Slab Home</h3>
             <p>{slab.blurb}</p>

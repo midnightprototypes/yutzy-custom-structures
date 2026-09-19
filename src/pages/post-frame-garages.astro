@@ -8,7 +8,7 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 const b = business;
 const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('post-frame-garages');
-const projects = gallery.filter((g) => g.type === 'post-frame-garages');
+const projects = gallery.filter((g) => g.type === 'post-frame-garages').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Brian Huff')!;
 
 const faqs = [
@@ -35,8 +35,8 @@ const faqSchema = {
     eyebrow="Custom Post-Frame Garages | Kansas + Missouri"
     title="Room for Everything You Park or Store."
     subtitle="Attached or standalone post-frame garages sized and styled around your vehicles, your property and your home."
-    image="images/gallery/g05.webp"
-    alt="Long two-tone post-frame garage with a large overhead door and a row of windows"
+    image="images/gallery/g24.webp"
+    alt="Red two-car garage with green trim and a covered carport"
     ctaHref="index.html?type=Post-Frame+Garage#contact"
     ctaText="Start Your Garage"
     ctaSecondaryText="See Garage Projects"
@@ -54,21 +54,21 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g12.webp" alt="White post-frame garage with three overhead doors and a covered porch entry" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="Tan and brown two-car garage with a Yutzy nameplate on the peak" /></div>
           <div class="card-body">
             <h3>Vehicles</h3>
             <p>One to four-plus bays for daily drivers, trucks and family vehicles.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g20.webp" alt="Red and black two-tone garage with a wide overhead door and walk door" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g27.webp" alt="Tan and brown four-bay garage with a roof cupola" /></div>
           <div class="card-body">
             <h3>RVs + Boats</h3>
             <p>Taller doors and deeper bays sized around larger vehicles and equipment.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g09.webp" alt="Post-frame garage with wood-tone carriage-style overhead doors and a gravel driveway" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g10.webp" alt="Tan post-frame garage with a covered side porch and a single wood post" /></div>
           <div class="card-body">
             <h3>Garage + Workshop</h3>
             <p>Split the space between parking and a dedicated work or storage area.</p>
@@ -80,7 +80,7 @@ const faqSchema = {
 
   <!-- PLAN YOUR GARAGE -->
   <section class="photo-band">
-    <img class="photo-band-bg" src="images/gallery/g17.webp" alt="Two red post-frame buildings with overhead doors on a wooded property" />
+    <img class="photo-band-bg" src="images/gallery/g29.webp" alt="Gray three-bay garage with a covered entry and landscaped stone accents" />
     <div class="photo-band-scrim"></div>
     <div class="wrap photo-band-inner">
       <span class="eyebrow photo-band-eye">Plan Your Garage</span>
@@ -140,7 +140,7 @@ const faqSchema = {
   <!-- STYLED TO MATCH -->
   <section class="alt">
     <div class="wrap split-grid">
-      <div class="ph split-img"><img class="shot" src="images/gallery/g24.webp" alt="Tan two-car garage with a covered entry on a wooded hillside lot" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g21.webp" alt="Brown two-car garage with green trim and roof" /></div>
       <div>
         <span class="eyebrow">Styled to Match</span>
         <h2>It Doesn't Have to Look Like a Separate Building.</h2>
@@ -271,7 +271,7 @@ const faqSchema = {
 
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <img class="final-cta-bg" src="images/gallery/g05.webp" alt="" />
+    <img class="final-cta-bg" src="images/gallery/g30.webp" alt="" />
     <div class="final-cta-scrim"></div>
     <div class="wrap final-cta-inner">
       <h2>Tell Us What Needs to Fit Inside.</h2>

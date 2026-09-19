@@ -8,7 +8,7 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 const b = business;
 const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('pole-barns');
-const projects = gallery.filter((g) => g.type === 'pole-barns');
+const projects = gallery.filter((g) => g.type === 'pole-barns').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Mark Munoz')!;
 
 const faqs = [
@@ -36,7 +36,7 @@ const faqSchema = {
     title="Built for the Work You Need It to Do."
     subtitle="Custom pole barns designed around your property, equipment and everyday use — from storage and workshops to agricultural and livestock buildings."
     image="images/gallery/g18.webp"
-    alt="Red pole barn with three overhead doors, roof cupolas and an attached livestock lean-to"
+    alt="Large tan commercial pole barn with five matching overhead doors"
     ctaHref="index.html?type=Pole+Barn#contact"
     ctaText="Start Your Pole Barn"
     ctaSecondaryText="See Pole Barn Projects"
@@ -54,21 +54,21 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g05.webp" alt="Long two-tone post-frame garage with a large overhead door and a row of windows" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g11.webp" alt="Open-sided pole barn sheltering a tractor and farm equipment" /></div>
           <div class="card-body">
             <h3>Equipment Storage</h3>
             <p>Room for tractors, implements and trailers, with access planned around the way you use them.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g16.webp" alt="Close-up of a covered porch eave and gutter detail on a dark metal building with copper-toned trim" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g22.webp" alt="Simple red pole barn with a single overhead door in an open field" /></div>
           <div class="card-body">
             <h3>Workshop</h3>
             <p>Dedicated space for repairs, fabrication, woodworking or everyday projects.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g12.webp" alt="Red and white pole barn with cattle grazing in the pasture out front" /></div>
           <div class="card-body">
             <h3>Livestock + Agriculture</h3>
             <p>Buildings designed around animals, feed, storage and day-to-day farm operations.</p>
@@ -80,7 +80,7 @@ const faqSchema = {
 
   <!-- SIZE PLANNING -->
   <section class="photo-band">
-    <img class="photo-band-bg" src="images/gallery/g27.webp" alt="Wide view of a tan pole barn with a large overhead door" />
+    <img class="photo-band-bg" src="images/gallery/g15.webp" alt="Open-sided pole barn storing farm equipment" />
     <div class="photo-band-scrim"></div>
     <div class="wrap photo-band-inner">
       <span class="eyebrow photo-band-eye">Plan Your Building</span>
@@ -140,7 +140,7 @@ const faqSchema = {
   <!-- DOORS + ACCESS -->
   <section class="alt">
     <div class="wrap split-grid">
-      <div class="ph split-img"><img class="shot" src="images/gallery/g17.webp" alt="Two red post-frame buildings with overhead doors on a wooded property" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g45.webp" alt="White pole barn with red trim and an open drive-through bay for RV storage" /></div>
       <div>
         <span class="eyebrow">Doors + Access</span>
         <h2>Plan the Building Around How You'll Get In and Out.</h2>

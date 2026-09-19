@@ -15,7 +15,7 @@ export function getStaticPaths() {
 const { b } = Astro.props;
 const biz = business;
 // Photos tagged for this building type (see src/data/gallery.ts).
-const typePhotos = gallery.filter((g) => g.type === b.slug);
+const typePhotos = gallery.filter((g) => g.type === b.slug).slice(0, 6);
 ---
 <Layout title={`${b.seoTitle} | ${biz.name}`} description={b.seoDesc}>
   <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: b.name }]} />

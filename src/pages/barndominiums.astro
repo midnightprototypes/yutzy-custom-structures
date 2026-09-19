@@ -10,7 +10,7 @@ const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('barndominiums');
 const slab = find('slab-homes');
 const postFrame = find('post-frame-homes');
-const projects = gallery.filter((g) => g.type === 'barndominiums');
+const projects = gallery.filter((g) => g.type === 'barndominiums').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Jacob McCoy')!;
 
 const faqs = [
@@ -37,8 +37,8 @@ const faqSchema = {
     eyebrow="Custom Barndominiums | Kansas + Missouri"
     title="Build the Home. Keep the Space."
     subtitle="Custom barndominiums designed around how you want to live, work and use your property. From open living spaces to attached shops and garages, Yutzy helps bring the entire building together."
-    image="images/gallery/g30.webp"
-    alt="Two-story red barndominium with an upper balcony, wraparound porch and stone-clad columns"
+    image="images/gallery/g01.webp"
+    alt="Charcoal two-story barndominium with a covered wraparound porch, hanging flower baskets and a picnic table"
     ctaHref="index.html?type=Barndominium#contact"
     ctaText="Start Your Barndominium"
     ctaSecondaryText="See Barndominium Projects"
@@ -56,21 +56,21 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g02.webp" alt="Two-tone tan and brown barndominium with a covered patio and outdoor seating area" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g04.webp" alt="White two-story barndominium with twin roof cupolas and an attached carport" /></div>
           <div class="card-body">
             <h3>Home + Garage</h3>
             <p>Comfortable living space with room for vehicles and storage, all under one roof.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g10.webp" alt="Barndominium with an attached shop wing, two overhead doors and stone wainscoting" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g06.webp" alt="Charcoal barndominium with stone wainscoting, a timber-frame entry and an attached three-bay shop" /></div>
           <div class="card-body">
             <h3>Home + Shop</h3>
             <p>Keep work and hobbies close without giving up comfortable, finished living space.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g11.webp" alt="Red barndominium under construction with an exposed timber-frame gable entry" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g23.webp" alt="Tan barndominium with a stone-clad timber-frame entry and an attached shop" /></div>
           <div class="card-body">
             <h3>Home + Land</h3>
             <p>A home built to make sense for acreage and rural property, planned for how you'll use it for years to come.</p>
@@ -82,7 +82,7 @@ const faqSchema = {
 
   <!-- DESIGNED AROUND YOU -->
   <section class="photo-band">
-    <img class="photo-band-bg" src="images/gallery/g04.webp" alt="Covered entry with exposed timber-frame trusses, stone wainscoting and glass double doors on a Yutzy barndominium" />
+    <img class="photo-band-bg" src="images/gallery/g02.webp" alt="Bright red two-story barndominium with a stone-clad porch and a wood balcony off the upper level" />
     <div class="photo-band-scrim"></div>
     <div class="wrap photo-band-inner">
       <span class="eyebrow photo-band-eye">Your Home, Your Layout</span>
@@ -108,7 +108,7 @@ const faqSchema = {
   <!-- EXTERIOR -->
   <section>
     <div class="wrap split-grid">
-      <div class="ph split-img"><img class="shot" src="images/gallery/g06.webp" alt="White barndominium with a covered front porch, wood posts and rocking chairs" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g36.webp" alt="White barndominium with a covered porch and an attached two-bay shop" /></div>
       <div>
         <span class="eyebrow">From the Road</span>
         <h2>It Doesn't Have to Look Like a Barn.</h2>

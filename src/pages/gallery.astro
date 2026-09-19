@@ -6,10 +6,13 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 // Filter pills are built from whichever building types actually have photos
-// right now, in the same order as the buildings list — so adding more
-// photos (or a new category) tomorrow doesn't require touching this file.
+// right now, sorted alphabetically by name — so adding more photos (or a
+// new category) tomorrow doesn't require touching this file. "All Projects"
+// (added separately below) always stays first.
 const typesWithPhotos = new Set(gallery.map((g) => g.type).filter(Boolean));
-const filters = buildings.filter((b) => typesWithPhotos.has(b.slug));
+const filters = buildings
+  .filter((b) => typesWithPhotos.has(b.slug))
+  .sort((a, b) => a.name.localeCompare(b.name));
 ---
 <Layout
   title="Project Gallery | Yutzy Custom Structures"
@@ -61,9 +64,12 @@ const filters = buildings.filter((b) => typesWithPhotos.has(b.slug));
   </script>
 
   <style>
-    .gal-filters{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:2rem}
-    .gal-filter{padding:.55rem 1.15rem;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:600;font-size:.92rem;cursor:pointer;transition:.15s;font-family:inherit}
+    /* Fixed column count (rather than flex-wrap) so 8 pills always form two
+       full rows instead of one pill wrapping alone onto its own row. */
+    .gal-filters{display:grid;grid-template-columns:repeat(4, max-content);gap:.6rem .8rem;justify-content:center;margin-bottom:2rem}
+    .gal-filter{padding:.55rem 1.15rem;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:600;font-size:.92rem;cursor:pointer;transition:.15s;font-family:inherit;white-space:nowrap}
     .gal-filter:hover{border-color:var(--red)}
     .gal-filter.active{background:var(--red-dark);border-color:var(--red-dark);color:#fff}
+    @media(max-width:700px){.gal-filters{grid-template-columns:repeat(2, max-content)}}
   </style>
 </Layout>

@@ -10,7 +10,7 @@ const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('slab-homes');
 const barndo = find('barndominiums');
 const postFrame = find('post-frame-homes');
-const projects = gallery.filter((g) => g.type === 'slab-homes');
+const projects = gallery.filter((g) => g.type === 'slab-homes').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Michelle Honn')!;
 
 const faqs = [
@@ -37,8 +37,8 @@ const faqSchema = {
     eyebrow="Custom Slab Homes | Kansas + Missouri"
     title="Single-Level Living. Built Around You."
     subtitle="Custom slab homes designed around how you want to live, with flexible floor plans, comfortable everyday spaces and no wasted square footage."
-    image="images/gallery/g03.webp"
-    alt="Aerial view of a slab home with an attached shop, covered porch and stone accents"
+    image="images/gallery/g33.webp"
+    alt="Gray slab home with a full-length covered porch and stone-clad columns"
     ctaHref="index.html?type=Slab+Home#contact"
     ctaText="Start Your Home"
     ctaSecondaryText="See Home Projects"
@@ -56,18 +56,21 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g41.webp" alt="White slab home with a covered back porch overlooking a pond" /></div>
           <div class="card-body">
             <h3>Easy Everyday Living</h3>
             <p>Keep the spaces you use most on one level with an easy flow from room to room.</p>
           </div>
         </article>
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g43.webp" alt="Tan slab home, rear elevation with matching windows" /></div>
           <div class="card-body">
             <h3>Use Every Square Foot</h3>
             <p>Design the home around the rooms and storage you actually need instead of paying for space you won't use.</p>
           </div>
         </article>
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g42.webp" alt="Brown ranch-style home with a full-length wraparound covered porch" /></div>
           <div class="card-body">
             <h3>Built for the Long Term</h3>
             <p>Single-level living can make the home easier to enjoy through every stage of life.</p>
@@ -129,7 +132,7 @@ const faqSchema = {
         <h2>Make It Feel Like Home Before You Ever Walk Inside.</h2>
         <p class="lead-p">Rooflines, siding, metal accents, stone, windows, porches and color choices can completely change the character of your home.</p>
       </div>
-      <div class="ph split-img"><img class="shot" src="images/gallery/g24.webp" alt="Tan two-car garage with a covered entry on a wooded hillside lot" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g34.webp" alt="Close-up of an arched wood front door with sidelights on a slab home" /></div>
     </div>
   </section>
 

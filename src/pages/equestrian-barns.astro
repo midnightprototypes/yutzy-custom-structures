@@ -8,7 +8,7 @@ import PhotoLightbox from '../components/PhotoLightbox.astro';
 const b = business;
 const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('equestrian-barns');
-const projects = gallery.filter((g) => g.type === 'equestrian-barns');
+const projects = gallery.filter((g) => g.type === 'equestrian-barns').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Diane Hirt')!;
 
 const faqs = [
@@ -35,8 +35,8 @@ const faqSchema = {
     eyebrow="Custom Equestrian Barns | Kansas + Missouri"
     title="Built Around Your Animals and Your Routine."
     subtitle="Custom equestrian barns with the stalls, airflow and storage that keep horses healthy and daily chores simple."
-    image="images/gallery/g28.webp"
-    alt="White equestrian building with an open lean-to bay and metal livestock panels"
+    image="images/gallery/g20.webp"
+    alt="Gray equestrian barn with three horses sheltered under an open lean-to"
     ctaHref="index.html?type=Equestrian+Barn#contact"
     ctaText="Start Your Barn"
     ctaSecondaryText="See Equestrian Projects"
@@ -54,14 +54,14 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g09.webp" alt="Row of horse stalls with black metal fronts inside a post-frame equestrian barn" /></div>
           <div class="card-body">
             <h3>Stalls + Housing</h3>
             <p>Layouts sized to your herd, with room to add stalls down the road.</p>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><img class="shot" src="images/gallery/g29.webp" alt="White equestrian building with an open lean-to, wood posts and livestock panels" /></div>
+          <div class="ph"><img class="shot" src="images/gallery/g13.webp" alt="Tan equestrian barn with a covered porch and a horse near the round pen" /></div>
           <div class="card-body">
             <h3>Turnout + Chores</h3>
             <p>Lean-tos and open-sided access planned around your daily routine.</p>
@@ -80,7 +80,7 @@ const faqSchema = {
 
   <!-- PLAN YOUR BARN -->
   <section class="photo-band">
-    <img class="photo-band-bg" src="images/gallery/g29.webp" alt="White equestrian building with an open lean-to, wood posts and livestock panels" />
+    <img class="photo-band-bg" src="images/gallery/g19.webp" alt="White equestrian barn with a row of evenly spaced stall windows" />
     <div class="photo-band-scrim"></div>
     <div class="wrap photo-band-inner">
       <span class="eyebrow photo-band-eye">Plan Your Barn</span>
@@ -140,7 +140,7 @@ const faqSchema = {
   <!-- VENTILATION + LAYOUT -->
   <section class="alt">
     <div class="wrap split-grid">
-      <div class="ph split-img"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g09.webp" alt="Row of horse stalls with black metal fronts inside a post-frame equestrian barn" /></div>
       <div>
         <span class="eyebrow">Airflow + Layout</span>
         <h2>Planned Around Your Animals, Not Just the Building.</h2>
@@ -271,7 +271,7 @@ const faqSchema = {
 
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <img class="final-cta-bg" src="images/gallery/g28.webp" alt="" />
+    <img class="final-cta-bg" src="images/gallery/g20.webp" alt="" />
     <div class="final-cta-scrim"></div>
     <div class="wrap final-cta-inner">
       <h2>Tell Us About Your Animals.</h2>

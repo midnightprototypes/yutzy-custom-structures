@@ -1,13 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { business, buildings, testimonials } from '../data/site';
+import { gallery } from '../data/gallery';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import OverlayHero from '../components/OverlayHero.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
 const b = business;
 const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
 const self = find('post-frame-homes');
 const barndo = find('barndominiums');
 const slab = find('slab-homes');
+const projects = gallery.filter((g) => g.type === 'post-frame-homes').slice(0, 6);
 const review = testimonials.find((t) => t.name === 'Rhonda Behm')!;
 
 const faqs = [
@@ -33,10 +36,10 @@ const faqSchema = {
 
   <OverlayHero
     eyebrow="Custom Post-Frame Homes | Kansas + Missouri"
-    title="A Custom Home With More Flexibility Built In."
+    title="A Custom Home With More Flexibility."
     subtitle="Post-frame construction gives you the freedom to create open layouts, flexible spaces and a home designed around the way you actually want to live."
-    image="images/gallery/g22.webp"
-    alt="Post-frame home with a gambrel roofline and covered porch, built by Yutzy Custom Structures"
+    image="images/gallery/g44.webp"
+    alt="Elegant post-frame home with a stone-columned covered porch and timber-frame entry"
     ctaHref="index.html?type=Post-Frame+Home#contact"
     ctaText="Start Your Home"
     ctaSecondaryText="Talk Through Your Home"
@@ -54,18 +57,21 @@ const faqSchema = {
       </div>
       <div class="cards">
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g37.webp" alt="White post-frame home with a timber-frame covered patio and ceiling fan" /></div>
           <div class="card-body">
             <h3>Open Living</h3>
             <p>Create large kitchens, living rooms and gathering spaces without forcing the home into a traditional layout.</p>
           </div>
         </article>
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g35.webp" alt="Tan post-frame home with stone wainscoting and a covered gable entry" /></div>
           <div class="card-body">
             <h3>Flexible Design</h3>
             <p>Plan the home around your family, property and priorities instead of starting with a one-size-fits-all floor plan.</p>
           </div>
         </article>
         <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g40.webp" alt="Gray post-frame home with stone wainscoting and an attached two-car garage" /></div>
           <div class="card-body">
             <h3>Room to Grow</h3>
             <p>Design for the way you live now while thinking ahead to storage, garages, hobbies and future needs.</p>
@@ -75,9 +81,22 @@ const faqSchema = {
     </div>
   </section>
 
+  <!-- REAL PROJECTS -->
+  <section id="projects" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Post-Frame Homes By Yutzy</span>
+        <h2>See What We've Built.</h2>
+        <p>Explore real Yutzy post-frame homes across Kansas and Missouri.</p>
+      </div>
+      <PhotoLightbox images={projects} />
+      <p style="text-align:center;margin-top:1.8rem"><a class="btn btn-outline" href="gallery.html">View All Yutzy Projects</a></p>
+    </div>
+  </section>
+
   <!-- START WITH YOUR LIFE -->
   <section class="photo-band">
-    <img class="photo-band-bg" src="images/gallery/g08.webp" alt="Two-story white hobby shop with a covered patio and pergola" />
+    <img class="photo-band-bg" src="images/gallery/g32.webp" alt="Modern white post-frame home with black-framed windows and a two-story gable" />
     <div class="photo-band-scrim"></div>
     <div class="wrap photo-band-inner">
       <span class="eyebrow photo-band-eye">Start With Your Life, Not a Floor Plan</span>
@@ -88,9 +107,9 @@ const faqSchema = {
   </section>
 
   <!-- POST-FRAME DOESN'T MEAN BARN -->
-  <section class="alt">
+  <section>
     <div class="wrap split-grid">
-      <div class="ph split-img"><img class="shot" src="images/gallery/g24.webp" alt="Tan two-car garage with a covered entry on a wooded hillside lot" /></div>
+      <div class="ph split-img"><img class="shot" src="images/gallery/g05.webp" alt="Close-up of an exposed timber-frame gable entry with black steel connectors on a post-frame home" /></div>
       <div>
         <span class="eyebrow">A Quick Note on the Name</span>
         <h2>Post-Frame Doesn't Mean "Barn."</h2>
@@ -100,7 +119,7 @@ const faqSchema = {
   </section>
 
   <!-- FLOOR PLAN FLEXIBILITY -->
-  <section>
+  <section class="alt">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Floor Plan Flexibility</span>
@@ -119,7 +138,7 @@ const faqSchema = {
   </section>
 
   <!-- HOW YUTZY BUILDS -->
-  <section class="alt">
+  <section>
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Behind the Finishes</span>
@@ -136,7 +155,7 @@ const faqSchema = {
   </section>
 
   <!-- COMPARE HOME TYPES -->
-  <section>
+  <section class="alt">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Still Deciding</span>
@@ -171,7 +190,7 @@ const faqSchema = {
   </section>
 
   <!-- PROCESS -->
-  <section class="alt">
+  <section>
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Building Your Home</span>
@@ -189,7 +208,7 @@ const faqSchema = {
   </section>
 
   <!-- TESTIMONIAL -->
-  <section>
+  <section class="alt">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Built for Real Families</span>
@@ -206,7 +225,7 @@ const faqSchema = {
   </section>
 
   <!-- FINANCING -->
-  <section class="alt">
+  <section>
     <div class="wrap" style="text-align:center">
       <span class="eyebrow">Financing</span>
       <h2>Planning the Home? Plan the Investment Too.</h2>
@@ -216,7 +235,7 @@ const faqSchema = {
   </section>
 
   <!-- ALREADY HAVE LAND -->
-  <section>
+  <section class="alt">
     <div class="wrap" style="text-align:center">
       <span class="eyebrow">Ready to Get More Specific?</span>
       <h2>Already Have Your Property?</h2>
@@ -227,7 +246,7 @@ const faqSchema = {
   </section>
 
   <!-- FAQ -->
-  <section class="alt">
+  <section>
     <div class="wrap faq-wrap">
       <div class="sec-head">
         <span class="eyebrow">Questions</span>
@@ -243,7 +262,7 @@ const faqSchema = {
   </section>
 
   <!-- RELATED -->
-  <section>
+  <section class="alt">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Keep Planning Your Project</span>
@@ -276,7 +295,7 @@ const faqSchema = {
 
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <img class="final-cta-bg" src="images/gallery/g22.webp" alt="" />
+    <img class="final-cta-bg" src="images/gallery/g44.webp" alt="" />
     <div class="final-cta-scrim"></div>
     <div class="wrap final-cta-inner">
       <h2>You Don't Need Every Detail Figured Out Yet.</h2>

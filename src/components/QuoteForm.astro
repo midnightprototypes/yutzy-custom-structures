@@ -41,8 +41,8 @@ const b = business;
   <div class="qrow">
     <label>Tell us about your project<textarea name="message" rows="3" placeholder="Size, use, timeline, budget…"></textarea></label>
   </div>
-  <button class="btn btn-red" type="submit">Get My Free Quote</button>
-  <p class="qfine">We'll only use your info to contact you about your quote.</p>
+  <button class="btn btn-red" type="submit">Start My Project</button>
+  <p class="qfine">A Yutzy team member will follow up to talk through your project. We'll only use your info to get in touch.</p>
   <p class="qmsg" id="qmsg" hidden></p>
 </form>
 
@@ -55,6 +55,17 @@ const b = business;
     type.addEventListener('change', function () {
       sizeRow.hidden = !(type.value === 'Barndominium' || type.value === 'Slab Home');
     });
+    // Preselect the project-type dropdown from a ?type= param, so a CTA like
+    // "Talk Through My Project" (type=Not+sure+yet) or a building page's
+    // "Start Your Barndominium" (type=Barndominium) lands with the right
+    // option already chosen instead of making the visitor pick again.
+    var wanted = new URLSearchParams(location.search).get('type');
+    if (wanted) {
+      var match = Array.from(type.options).find(function (o) {
+        return o.value.toLowerCase() === wanted.toLowerCase();
+      });
+      if (match) { type.value = match.value; type.dispatchEvent(new Event('change')); }
+    }
     f.addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!f.reportValidity()) return;

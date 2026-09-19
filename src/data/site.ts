@@ -12,18 +12,54 @@ export const business = {
   phoneMOHref: "+14173292340",
   hoursShort: "Mon–Fri 8–5",
   hours: "Mon–Fri 8am–5pm",
-  address: { street: "24917 N Hwy 169", city: "Garnett", region: "KS", zip: "66032", country: "US" },
+  address: { street: "24917 US-169", city: "Garnett", region: "KS", zip: "66032", country: "US" },
   areaServed: ["Kansas", "Missouri"],
   logo: "logo.png",
   url: "https://www.yutzyconstruction.com",
   facebook: "https://www.facebook.com/yutzyconstruction",
   houzz: "https://www.houzz.com/pro/yutzycustomstructures/yutzy-custom-structures",
-  // Google reviews summary shown as a live badge. Update rating/count as it
-  // grows; swap url for the exact Google reviews link when handy.
+  // Google reviews summary shown as a live badge, plus the verified Google
+  // Business Profile links for the Garnett HQ (Place ID:
+  // ChIJB1Gps6a8uIcR2DOondzjm9g). Update rating/count as it grows.
   google: {
     rating: "4.4",
     count: 88,
-    url: "https://www.google.com/search?q=Yutzy+Custom+Structures+reviews",
+    placeId: "ChIJB1Gps6a8uIcR2DOondzjm9g",
+    url: "https://search.google.com/local/reviews?placeid=ChIJB1Gps6a8uIcR2DOondzjm9g",
+    writeReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJB1Gps6a8uIcR2DOondzjm9g",
+    mapEmbedUrl: "https://maps.google.com/maps?q=24917+US-169+Garnett+KS+66032&output=embed",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=place_id:ChIJB1Gps6a8uIcR2DOondzjm9g",
+  },
+  // Fordland, MO shop location. NOTE: the only address we have for this
+  // location is Google's listing for "D&M Mini Barns" (see dmMiniBarns
+  // below) — confirm with Ryan whether this is actually Yutzy's own
+  // Fordland presence or strictly the D&M sister-company lot before
+  // treating this as Yutzy's verified Fordland address.
+  fordland: {
+    street: "853 S Iron Mountain Rd", city: "Fordland", region: "MO", zip: "65652", country: "US",
+    placeId: "ChIJjzOacfqFz4cRVzMMwfnBkKU",
+    mapEmbedUrl: "https://maps.google.com/maps?q=853+S+Iron+Mountain+Rd+Fordland+MO+65652&output=embed",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=place_id:ChIJjzOacfqFz4cRVzMMwfnBkKU",
+  },
+  // D&M Mini Barns — sister company, shed/portable-building focused (vs.
+  // Yutzy's higher-end custom structures). Cross-promoted, not the same
+  // brand. No website on file yet, so these link to their Google listings.
+  dmMiniBarns: {
+    name: "D&M Mini Barns",
+    locations: [
+      {
+        city: "Garnett", region: "KS",
+        street: "24751 US-169", zip: "66032",
+        placeId: "ChIJJ1E98Qr21IQRQY96NXu2bpk",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=place_id:ChIJJ1E98Qr21IQRQY96NXu2bpk",
+      },
+      {
+        city: "Fordland", region: "MO",
+        street: "853 S Iron Mountain Rd", zip: "65652",
+        placeId: "ChIJjzOacfqFz4cRVzMMwfnBkKU",
+        directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=place_id:ChIJjzOacfqFz4cRVzMMwfnBkKU",
+      },
+    ],
   },
   // Paste the GoHighLevel form embed URL here when ready (see references/ghl-form.md).
   ghlFormEmbedUrl: "",

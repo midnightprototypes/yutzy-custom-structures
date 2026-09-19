@@ -8,8 +8,15 @@ const b = business;
 interface Props {
   eyebrow?: string; title: string; subtitle?: string;
   image: string; alt: string; ctaHref?: string;
+  ctaText?: string; ctaSecondaryText?: string; ctaSecondaryHref?: string;
+  areaNote?: string; areaNoteHref?: string;
 }
-const { eyebrow, title, subtitle, image, alt, ctaHref = 'index.html#contact' } = Astro.props;
+const {
+  eyebrow, title, subtitle, image, alt,
+  ctaHref = 'index.html#contact', ctaText = 'Start Your Project',
+  ctaSecondaryText, ctaSecondaryHref,
+  areaNote, areaNoteHref,
+} = Astro.props;
 ---
 <section class="ohero">
   <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
@@ -19,8 +26,10 @@ const { eyebrow, title, subtitle, image, alt, ctaHref = 'index.html#contact' } =
     <h1 class="ohero-title">{title}</h1>
     {subtitle && <p class="ohero-sub">{subtitle}</p>}
     <div class="hero-cta">
-      <a class="btn btn-red" href={ctaHref}>Get a Free Quote</a>
-      <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call {b.phoneMain}</a>
+      <a class="btn btn-red" href={ctaHref}>{ctaText}</a>
+      {ctaSecondaryText && <a class="btn btn-ghost" href={ctaSecondaryHref}>{ctaSecondaryText}</a>}
     </div>
+    <p class="ohero-phone">Prefer to talk? <a href={`tel:${b.phoneMainHref}`}>Call {b.phoneMain}</a></p>
+    {areaNote && <p class="ohero-area">{areaNote} {areaNoteHref && <a href={areaNoteHref}>Check your area →</a>}</p>}
   </div>
 </section>

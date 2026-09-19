@@ -36,27 +36,11 @@ const b = business;
       </select>
     </label>
   </div>
-  <div class="qrow">
-    <!-- required: every field GoHighLevel's External Tracking script has
-         reliably captured so far (name/phone/email/location/type) happens
-         to be `required`; sqft and message were the only optional ones and
-         the only two that never came through. Testing that pattern here —
-         asking for an approximate size is reasonable for a quote form
-         regardless. -->
-    <label>Approx. size (sq ft)<input name="sqft" type="text" inputmode="numeric" placeholder="e.g. 2,400" required /></label>
+  <div class="qrow" id="qsizeRow" hidden>
+    <label>Approx. finished size (sq ft)<input name="sqft" type="text" inputmode="numeric" placeholder="e.g. 2,400" /></label>
   </div>
   <div class="qrow">
-    <label>Tell us about your project<textarea id="qmessageBox" rows="3" placeholder="Size, use, timeline, budget…"></textarea></label>
-    <!-- GoHighLevel's External Tracking script doesn't read <textarea>
-         values directly (confirmed by testing), so this mirror input stays
-         in sync with the textarea above via JS and carries the real
-         "message" field name. Visually hidden via CSS (not `hidden`/
-         display:none — that's what makes a field invisible to the tracker
-         too). `required` is toggled on only once it actually has content,
-         so an empty optional message never blocks submission — same
-         required-field theory being tested on sqft above, without forcing
-         visitors to write something. -->
-    <input type="text" name="message" id="qmessageMirror" class="visually-hidden" tabindex="-1" aria-hidden="true" />
+    <label>Tell us about your project<textarea name="message" rows="3" placeholder="Size, use, timeline, budget…"></textarea></label>
   </div>
   <button class="btn btn-red" type="submit">Start My Project</button>
   <p class="qfine">A Yutzy team member will follow up to talk through your project. We'll only use your info to get in touch.</p>
@@ -67,12 +51,10 @@ const b = business;
   (function () {
     var f = document.getElementById('quoteForm'); if (!f) return;
     var type = document.getElementById('qtype');
+    var sizeRow = document.getElementById('qsizeRow');
     var msg = document.getElementById('qmsg');
-    var messageBox = document.getElementById('qmessageBox');
-    var messageMirror = document.getElementById('qmessageMirror');
-    messageBox.addEventListener('input', function () {
-      messageMirror.value = messageBox.value;
-      messageMirror.required = messageBox.value.trim().length > 0;
+    type.addEventListener('change', function () {
+      sizeRow.hidden = !(type.value === 'Barndominium' || type.value === 'Slab Home' || type.value === 'Post-Frame Home');
     });
     // Preselect the project-type dropdown from a ?type= param, so a CTA like
     // "Talk Through My Project" (type=Not+sure+yet) or a building page's
@@ -83,7 +65,7 @@ const b = business;
       var match = Array.from(type.options).find(function (o) {
         return o.value.toLowerCase() === wanted.toLowerCase();
       });
-      if (match) { type.value = match.value; }
+      if (match) { type.value = match.value; type.dispatchEvent(new Event('change')); }
     }
     f.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -97,7 +79,7 @@ const b = business;
       msg.textContent = 'Sending…'; msg.className = 'qmsg';
       try {
         await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-        f.reset();
+        f.reset(); sizeRow.hidden = true;
         msg.textContent = 'Thanks! Your request is in — our team will reach out shortly.'; msg.className = 'qmsg ok';
       } catch (err) {
         msg.textContent = 'Something went wrong. Please call ' + phone + '.'; msg.className = 'qmsg warn';
@@ -114,9 +96,6 @@ const b = business;
   .quote-form input,.quote-form select,.quote-form textarea{font:inherit;font-weight:400;padding:.68rem .72rem;border:1px solid var(--line);border-radius:8px;background:#fdfcfa;color:var(--ink)}
   .quote-form textarea{resize:vertical}
   .quote-form input:focus,.quote-form select:focus,.quote-form textarea:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
-  /* Present in the DOM (not display:none) so GoHighLevel's tracking script
-     can still read it, but invisible and unreachable to real visitors. */
-  .quote-form .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   .quote-form .btn{width:100%;text-align:center;border:none;cursor:pointer;margin-top:.2rem}
   .qfine{color:var(--muted);font-size:.82rem;margin:0}
   .qmsg{margin:.1rem 0 0;font-weight:700;font-size:.95rem}

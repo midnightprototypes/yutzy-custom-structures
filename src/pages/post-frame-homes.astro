@@ -1,0 +1,302 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business, buildings, testimonials } from '../data/site';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import OverlayHero from '../components/OverlayHero.astro';
+const b = business;
+const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
+const self = find('post-frame-homes');
+const barndo = find('barndominiums');
+const slab = find('slab-homes');
+const review = testimonials.find((t) => t.name === 'Rhonda Behm')!;
+
+const faqs = [
+  { q: "Do I need a floor plan before contacting Yutzy?", a: "No. Start with the property, the spaces you need, and what you want the home to feel like — we'll help you work through the rest." },
+  { q: "Can I customize a post-frame home?", a: "Yes. The exterior design, interior finishes, room layout and residential features are all part of a custom build." },
+  { q: "Can I include an attached garage or shop?", a: "Yes. Attached garages and shops are a common part of these builds." },
+  { q: "Will a post-frame home look like a barn?", a: "No. Post-frame describes the structural system, not the finished look. Rooflines, porches, siding, windows and trim shape how the home actually reads." },
+  { q: "Where does Yutzy build homes?", a: "We serve customers across Kansas and Missouri from our Garnett, Kansas and Fordland, Missouri locations." },
+  { q: "Do you offer financing?", a: "Financing options may be available for qualifying projects through Rural 1st." },
+  { q: "How much does a post-frame home cost?", a: "Every home is different. Size, layout, finishes, site conditions, garage space and other selections all affect the final project cost. Start by telling us what you're considering and we'll help you understand the next steps." },
+];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+<Layout
+  title={`${self.seoTitle} | ${b.name}`}
+  description="Post-frame construction gives you the freedom to create open, flexible layouts for a true custom home. Built by Yutzy Custom Structures across Kansas & Missouri."
+>
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Post-Frame Homes' }]} />
+
+  <OverlayHero
+    eyebrow="Custom Post-Frame Homes | Kansas + Missouri"
+    title="A Custom Home With More Flexibility Built In."
+    subtitle="Post-frame construction gives you the freedom to create open layouts, flexible spaces and a home designed around the way you actually want to live."
+    image="images/gallery/g22.webp"
+    alt="Post-frame home with a gambrel roofline and covered porch, built by Yutzy Custom Structures"
+    ctaHref="index.html?type=Post-Frame+Home#contact"
+    ctaText="Start Your Home"
+    ctaSecondaryText="Talk Through Your Home"
+    ctaSecondaryHref="index.html?type=Post-Frame+Home#contact"
+    areaNote="Building Since 2005 · Kansas + Missouri · Custom Floor Plans"
+  />
+
+  <!-- WHY POST-FRAME -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Why Post-Frame?</span>
+        <h2>More Freedom in the Floor Plan.</h2>
+        <p>Post-frame construction can create large, open interior spaces with fewer structural interruptions, giving you more flexibility when planning the rooms, gathering spaces and features that matter most.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Open Living</h3>
+            <p>Create large kitchens, living rooms and gathering spaces without forcing the home into a traditional layout.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Flexible Design</h3>
+            <p>Plan the home around your family, property and priorities instead of starting with a one-size-fits-all floor plan.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Room to Grow</h3>
+            <p>Design for the way you live now while thinking ahead to storage, garages, hobbies and future needs.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- START WITH YOUR LIFE -->
+  <section class="photo-band">
+    <img class="photo-band-bg" src="images/gallery/g08.webp" alt="Two-story white hobby shop with a covered patio and pergola" />
+    <div class="photo-band-scrim"></div>
+    <div class="wrap photo-band-inner">
+      <span class="eyebrow photo-band-eye">Start With Your Life, Not a Floor Plan</span>
+      <h2>What Does Your Home Need to Do for You?</h2>
+      <p class="photo-band-lead">You don't need a finished plan before talking with Yutzy. How many bedrooms, an open kitchen and living space, an attached garage, a home office, a large pantry, a mudroom, a covered porch, room for hobbies or equipment — start with the way you want to live and we'll help work through the building around it.</p>
+      <a class="btn btn-red" href="index.html?type=Post-Frame+Home#contact">Talk Through Your Home</a>
+    </div>
+  </section>
+
+  <!-- POST-FRAME DOESN'T MEAN BARN -->
+  <section class="alt">
+    <div class="wrap split-grid">
+      <div class="ph split-img"><img class="shot" src="images/gallery/g24.webp" alt="Tan two-car garage with a covered entry on a wooded hillside lot" /></div>
+      <div>
+        <span class="eyebrow">A Quick Note on the Name</span>
+        <h2>Post-Frame Doesn't Mean "Barn."</h2>
+        <p class="lead-p">Post-frame describes the structural system behind the building. The finished home can still have the exterior design, interior finishes, room layout and residential features you'd expect from a custom home — rooflines, porches, siding, windows and trim all shape how it actually reads.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOOR PLAN FLEXIBILITY -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Floor Plan Flexibility</span>
+        <h2>More Freedom to Plan the Space Around You.</h2>
+        <p>One of the biggest advantages of post-frame construction is the flexibility it can give you when planning large open spaces, room placement, garages and the overall flow of the home.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Open kitchen + living</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Primary suites</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Garages + storage</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Home offices</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Mudrooms + pantries</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Porches + flex rooms</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW YUTZY BUILDS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Behind the Finishes</span>
+        <h2>Built as a Home From the Start.</h2>
+        <p>A residential post-frame project needs to be planned for more than appearance. Structure, foundation, insulation, roofing and the building envelope all affect how the finished home performs over time.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Structure:</b> posts and framing sized to the home's design.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Foundation:</b> a foundation system suited to your site and plan.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Insulation:</b> options designed around finished residential living.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Roof + exterior:</b> durable materials with customizable finishes.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- COMPARE HOME TYPES -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Still Deciding</span>
+        <h2>Not Sure Which Home Type Fits You Best?</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Post-Frame Home</h3>
+            <p>A strong fit for customers who want flexible layouts, open interior space and a custom residential design using post-frame construction.</p>
+            <span class="q">You're Here</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src={barndo.img} alt={barndo.alt} /></div>
+          <div class="card-body">
+            <h3>{barndo.name}</h3>
+            <p>A strong option when you want living space combined with a larger attached shop, garage or flexible-use area.</p>
+            <a class="q" href="barndominiums.html">Explore Barndominiums →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src={slab.img} alt={slab.alt} /></div>
+          <div class="card-body">
+            <h3>{slab.name}</h3>
+            <p>A strong option for customers who want a more traditional single-level custom-home layout.</p>
+            <a class="q" href="slab-homes.html">Explore Slab Homes →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Building Your Home</span>
+        <h2>Start With the Idea. We'll Help With the Rest.</h2>
+        <p>You don't need finalized plans before talking with Yutzy. Start with the property, the spaces you need, and what you want the home to feel like.</p>
+      </div>
+      <ol class="process">
+        <li><span class="pnum">01</span><h3>Tell Us About Your Property</h3><p>Where you're building and what you're considering.</p></li>
+        <li><span class="pnum">02</span><h3>Talk Through the Home</h3><p>Bedrooms, living spaces, garage, storage and priorities.</p></li>
+        <li><span class="pnum">03</span><h3>Design + Planning</h3><p>Work through layout, size, options and overall scope.</p></li>
+        <li><span class="pnum">04</span><h3>Finalize the Details</h3><p>Confirm plans, materials and project decisions.</p></li>
+        <li><span class="pnum">05</span><h3>Build Your Home</h3><p>The Yutzy team takes the project into construction.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built for Real Families</span>
+        <h2>Hear From a Yutzy Homeowner.</h2>
+      </div>
+      <div class="quotes" style="grid-template-columns:1fr;max-width:680px;margin:0 auto">
+        <article class="quote">
+          <div class="stars">{"★".repeat(review.stars)}</div>
+          <p>&ldquo;{review.quote}&rdquo;</p>
+          <p class="who">{review.name} · {review.source}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section class="alt">
+    <div class="wrap" style="text-align:center">
+      <span class="eyebrow">Financing</span>
+      <h2>Planning the Home? Plan the Investment Too.</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Financing options may be available for qualifying projects through Rural 1st.</p>
+      <a class="btn btn-outline" href="index.html#contact">Explore Financing</a>
+    </div>
+  </section>
+
+  <!-- ALREADY HAVE LAND -->
+  <section>
+    <div class="wrap" style="text-align:center">
+      <span class="eyebrow">Ready to Get More Specific?</span>
+      <h2>Already Have Your Property?</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Tell us where you're planning to build and what you're thinking about for the home. We'll help you work through the next steps from there.</p>
+      <a class="btn btn-red" href="index.html?type=Post-Frame+Home#contact">Tell Us About Your Property</a>
+      <p style="color:var(--muted);margin-top:1rem">Serving customers across Kansas and Missouri from Garnett, KS and Fordland, MO. <a href="index.html#area" style="color:var(--red-deep);font-weight:600">See where we build →</a></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt">
+    <div class="wrap faq-wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Questions</span>
+        <h2>Post-Frame Home Questions</h2>
+      </div>
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Keep Planning Your Project</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Barndominiums</h3>
+            <p>Want more dedicated shop or garage space attached to the home?</p>
+            <a class="q" href="barndominiums.html">Explore Barndominiums →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Shops + Garages</h3>
+            <p>Need a separate building for vehicles, equipment or hobbies?</p>
+            <a class="q" href="hobby-shops.html">Explore Shops + Garages →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Financing</h3>
+            <p>Explore financing options that may be available for qualifying projects.</p>
+            <a class="q" href="index.html#contact">Explore Financing →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <img class="final-cta-bg" src="images/gallery/g22.webp" alt="" />
+    <div class="final-cta-scrim"></div>
+    <div class="wrap final-cta-inner">
+      <h2>You Don't Need Every Detail Figured Out Yet.</h2>
+      <p>Tell us where you're building, what spaces you need and what you're imagining for the home. We'll help you work through the next steps.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="index.html?type=Post-Frame+Home#contact">Start My Home</a>
+        <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call Yutzy</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+  .final-cta{position:relative;overflow:hidden;text-align:center;padding:clamp(4rem,10vw,6rem) 0}
+  .final-cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .final-cta-scrim{position:absolute;inset:0;background:linear-gradient(rgba(30,35,33,.86),rgba(30,35,33,.9));z-index:1}
+  .final-cta-inner{position:relative;z-index:2;color:#fff}
+  .final-cta h2{font-size:clamp(1.9rem,4.5vw,2.7rem);margin:0 0 .8rem;max-width:20ch;margin-left:auto;margin-right:auto;color:#fff}
+  .final-cta p{color:rgba(255,255,255,.86);max-width:56ch;margin:0 auto 1.8rem}
+  .final-cta .hero-cta{justify-content:center}
+</style>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { business } from '../data/site';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 const b = business;
 
 const faqs = [
@@ -37,9 +38,11 @@ const faqSchema = {
 };
 ---
 <Layout
-  title="Post-Frame & Pole Barn FAQ | Yutzy Custom Structures"
-  description="Answers to common questions about pole barns, post-frame construction, barndominiums, cost, financing, permits, and warranties in Kansas & Missouri."
+  title="Frequently Asked Questions | Yutzy Custom Structures"
+  description="Answers to common questions about custom homes, barndominiums, shops, barns and commercial buildings — cost, financing, permits, and warranties in Kansas & Missouri."
 >
+  <Breadcrumbs items={[{ label: 'FAQ' }]} />
+
   <section class="pagehead">
     <div class="wrap">
       <span class="eyebrow" style="color:#f0d6ab">Answers</span>

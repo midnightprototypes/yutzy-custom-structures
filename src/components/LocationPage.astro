@@ -4,9 +4,12 @@
 // its own localized copy (good for local SEO, easy to maintain).
 import { business, buildings } from '../data/site';
 import FeatureCards from './FeatureCards.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
 const { loc } = Astro.props;
 const b = business;
 ---
+<Breadcrumbs items={[{ label: 'Locations', href: 'index.html#area' }, { label: `${loc.city}, ${loc.state}` }]} />
+
 <section class="loc-hero">
   <div class="wrap">
     <span class="eyebrow" style="color:#f0d6ab">Serving {loc.county}</span>

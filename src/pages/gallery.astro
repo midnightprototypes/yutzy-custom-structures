@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { gallery } from '../data/gallery';
 import { buildings } from '../data/site';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 // Filter pills are built from whichever building types actually have photos
 // right now, in the same order as the buildings list — so adding more
@@ -14,6 +15,8 @@ const filters = buildings.filter((b) => typesWithPhotos.has(b.slug));
   title="Project Gallery | Yutzy Custom Structures"
   description="Browse finished pole barns, post-frame garages, hobby shops, and barndominiums built by Yutzy Custom Structures across Kansas & Missouri."
 >
+  <Breadcrumbs items={[{ label: 'Project Gallery' }]} />
+
   <section class="pagehead">
     <div class="wrap">
       <span class="eyebrow" style="color:#f0d6ab">Our Work</span>

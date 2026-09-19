@@ -1,0 +1,297 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business, buildings, testimonials } from '../data/site';
+import { gallery } from '../data/gallery';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import OverlayHero from '../components/OverlayHero.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
+const b = business;
+const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
+const self = find('hobby-shops');
+const projects = gallery.filter((g) => g.type === 'hobby-shops');
+const review = testimonials.find((t) => t.name === 'Katee Smith')!;
+
+const faqs = [
+  { q: "Can a hobby shop be insulated and finished inside?", a: "Yes. Hobby shops can be left as a basic shell or fully insulated and finished, depending on how you plan to use the space." },
+  { q: "Can I run a small business out of it?", a: "Yes. We build hobby shops wired-ready for a home business, studio or workshop setup." },
+  { q: "What sizes are available?", a: "Fully custom — from a small dedicated workshop to a larger multi-purpose space." },
+  { q: "Can it include a covered porch or sitting area?", a: "Yes. A lot of customers add a covered porch for a she-shed, retreat or everyday sitting space." },
+  { q: "Where does Yutzy build hobby shops?", a: "We serve customers across Kansas and Missouri from our Garnett, KS and Fordland, MO locations." },
+  { q: "How much does a hobby shop cost?", a: "Pricing depends on size, insulation, finish level, doors and windows. Tell us what you need and we'll help you work through the options and pricing." },
+];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+<Layout
+  title={`${self.seoTitle} | ${b.name}`}
+  description="Custom hobby shops, workshops and she-sheds — insulated and finish-ready, sized around how you actually work. Built by Yutzy Custom Structures across Kansas & Missouri."
+>
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Hobby Shops' }]} />
+
+  <OverlayHero
+    eyebrow="Custom Hobby Shops | Kansas + Missouri"
+    title="The Space You've Been Waiting For."
+    subtitle="Insulated, finish-ready hobby shops sized and laid out around how you actually work — woodworking, a home business, or just a space that's yours."
+    image="images/gallery/g08.webp"
+    alt="Two-story white hobby shop with a covered patio and pergola"
+    ctaHref="index.html?type=Hobby+Shop#contact"
+    ctaText="Start Your Hobby Shop"
+    ctaSecondaryText="See Hobby Shop Projects"
+    ctaSecondaryHref="#projects"
+    areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+  />
+
+  <!-- WHAT'S THE SPACE FOR -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built Around How You Work</span>
+        <h2>What's the Space For?</h2>
+        <p>A hobby shop earns its keep by fitting how you actually use it. Tell us what you're building, running or getting away to, and we'll help you plan the layout around it.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g16.webp" alt="Close-up of a covered porch eave and gutter detail on a dark metal building with copper-toned trim" /></div>
+          <div class="card-body">
+            <h3>Workshop</h3>
+            <p>Woodworking, fabrication, repairs or everyday projects — laid out around your tools.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g26.webp" alt="White hobby shop with a dark overhead door and a row of windows" /></div>
+          <div class="card-body">
+            <h3>Home Business</h3>
+            <p>Wired-ready space for a studio, storage or a small business run from home.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g14.webp" alt="Covered porch on a two-tone hobby shop with wooden rocking chairs and string lights" /></div>
+          <div class="card-body">
+            <h3>She-Shed + Retreat</h3>
+            <p>A finished, comfortable space that's just yours — porch, lighting and all.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN YOUR SHOP -->
+  <section class="photo-band">
+    <img class="photo-band-bg" src="images/gallery/g08.webp" alt="Two-story white hobby shop with a covered patio and pergola" />
+    <div class="photo-band-scrim"></div>
+    <div class="wrap photo-band-inner">
+      <span class="eyebrow photo-band-eye">Plan Your Space</span>
+      <h2>Start With What You'll Do In It.</h2>
+      <p class="photo-band-lead">You don't need a finished plan before contacting us. What are you working on, do you need power and lighting for tools, do you want a covered porch, should it stand alone or attach to another building — we'll help you work backward from there to the right size.</p>
+      <a class="btn btn-red" href="index.html?type=Hobby+Shop#contact">Talk Through My Space</a>
+    </div>
+  </section>
+
+  <!-- CONFIGURATIONS -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built Around the Way You Use It</span>
+        <h2>One Building Type. A Lot of Possibilities.</h2>
+        <p>These are starting points for inspiration, not fixed packages — every hobby shop is configured around how you'll actually spend time in it.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Insulated + finish-ready:</b> comfortable year-round, not just a shell.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Overhead + walk-in doors:</b> sized for equipment or everyday access.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Wired-ready:</b> power and lighting planned around your setup.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Fully custom sizing:</b> from a small dedicated workshop to a larger space.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REAL PROJECTS -->
+  <section id="projects" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Hobby Shops By Yutzy</span>
+        <h2>See What We've Built.</h2>
+        <p>Explore real Yutzy hobby shops built for woodworking, home businesses, she-sheds and everyday projects across Kansas and Missouri.</p>
+      </div>
+      <PhotoLightbox images={projects} />
+      <p style="text-align:center;margin-top:1.8rem"><a class="btn btn-outline" href="gallery.html">View All Yutzy Projects</a></p>
+    </div>
+  </section>
+
+  <!-- CONSTRUCTION QUALITY -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">How We Build</span>
+        <h2>Built to Actually Work In, Not Just Look Good.</h2>
+        <p>A hobby shop gets used constantly — tools, projects, weather and everyday wear. The structure behind the finish matters just as much as the layout.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Posts + trusses:</b> tighter spacing than a typical post-frame build.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Roofing + siding:</b> durable metal systems with customizable colors.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Foundation:</b> built to your site and how the space will be used.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Backed in writing:</b> a 5-year workmanship warranty on every build.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- INSULATION + FINISH -->
+  <section class="alt">
+    <div class="wrap split-grid">
+      <div class="ph split-img"><img class="shot" src="images/gallery/g26.webp" alt="White hobby shop with a dark overhead door and a row of windows" /></div>
+      <div>
+        <span class="eyebrow">Comfortable Year-Round</span>
+        <h2>A Shell Is Optional, Not the Default.</h2>
+        <p class="lead-p">Insulation, drywall, flooring and climate control can turn a basic post-frame shell into a space you actually want to spend time in — whether that's an afternoon of woodworking in January or a full day running a home business.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZATION -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Make It Yours</span>
+        <h2>Customize It to Fit How You'll Use It.</h2>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Siding + roof colors</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Covered porches + sitting areas</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Windows + natural light</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Insulation + interior finish</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Wired for power + lighting</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Storage or loft space</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">From Idea to Building</span>
+        <h2>You Don't Need Every Detail Figured Out Yet.</h2>
+        <p>Start with what you'll do in the space and how much room it needs. We'll help work through the rest.</p>
+      </div>
+      <ol class="process">
+        <li><span class="pnum">01</span><h3>Tell Us What You Need</h3><p>Workshop, home business, she-shed or a combination.</p></li>
+        <li><span class="pnum">02</span><h3>Talk Through the Site</h3><p>Location, access and how it fits your property.</p></li>
+        <li><span class="pnum">03</span><h3>Size + Configuration</h3><p>Work through dimensions, doors, windows and finish level.</p></li>
+        <li><span class="pnum">04</span><h3>Finalize the Build</h3><p>Confirm scope, materials, colors and project details.</p></li>
+        <li><span class="pnum">05</span><h3>We Build It</h3><p>The Yutzy team takes the project into construction.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Hear From Someone Who Built With Yutzy</span>
+      </div>
+      <div class="quotes" style="grid-template-columns:1fr;max-width:680px;margin:0 auto">
+        <article class="quote">
+          <div class="stars">{"★".repeat(review.stars)}</div>
+          <p>&ldquo;{review.quote}&rdquo;</p>
+          <p class="who">{review.name} · {review.source}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="alt" style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Where We Build</span>
+      <h2>Hobby Shops Across Kansas + Missouri.</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Yutzy serves customers from locations in Garnett, Kansas and Fordland, Missouri, with projects across the surrounding region.</p>
+      <a class="btn btn-outline" href="index.html#area">See Where We Build</a>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Financing</span>
+      <h2>Planning a Bigger Space?</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Financing options may be available for qualifying projects through Rural 1st.</p>
+      <a class="btn btn-outline" href="index.html#contact">Explore Financing</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt">
+    <div class="wrap faq-wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Questions</span>
+        <h2>Hobby Shop Questions</h2>
+      </div>
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Related</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Post-Frame Garages</h3>
+            <p>Need vehicle parking more than workshop space?</p>
+            <a class="q" href="post-frame-garages.html">Explore Garages →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Pole Barns</h3>
+            <p>Looking for larger equipment or ag storage instead?</p>
+            <a class="q" href="pole-barns.html">Explore Pole Barns →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Financing</h3>
+            <p>Explore financing options that may be available for qualifying projects.</p>
+            <a class="q" href="index.html#contact">Explore Financing →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <img class="final-cta-bg" src="images/gallery/g08.webp" alt="" />
+    <div class="final-cta-scrim"></div>
+    <div class="wrap final-cta-inner">
+      <h2>Tell Us What You'll Do In the Space.</h2>
+      <p>Share what you're building, running or getting away to, and where the space will go. We'll help you work through size, layout and next steps.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="index.html?type=Hobby+Shop#contact">Start My Hobby Shop</a>
+        <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call Yutzy</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+  .final-cta{position:relative;overflow:hidden;text-align:center;padding:clamp(4rem,10vw,6rem) 0}
+  .final-cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .final-cta-scrim{position:absolute;inset:0;background:linear-gradient(rgba(30,35,33,.86),rgba(30,35,33,.9));z-index:1}
+  .final-cta-inner{position:relative;z-index:2;color:#fff}
+  .final-cta h2{font-size:clamp(1.9rem,4.5vw,2.7rem);margin:0 0 .8rem;max-width:20ch;margin-left:auto;margin-right:auto;color:#fff}
+  .final-cta p{color:rgba(255,255,255,.86);max-width:56ch;margin:0 auto 1.8rem}
+  .final-cta .hero-cta{justify-content:center}
+</style>

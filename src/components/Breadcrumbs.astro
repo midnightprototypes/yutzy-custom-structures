@@ -1,0 +1,35 @@
+---
+// Breadcrumb trail for deeper pages (never the homepage). Renders the
+// visible nav AND the matching BreadcrumbList schema from one list, so
+// they can't drift out of sync.
+// Usage: <Breadcrumbs items={[{ label: "What We Build", href: "index.html#buildings" }, { label: "Barndominiums" }]} />
+// (Home is added automatically as the first crumb — don't include it.)
+import { business } from '../data/site';
+
+interface Crumb { label: string; href?: string }
+interface Props { items: Crumb[] }
+const { items } = Astro.props;
+
+const trail: Crumb[] = [{ label: 'Home', href: 'index.html' }, ...items];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: trail.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: new URL(c.href, business.url).toString() } : {}),
+  })),
+};
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <div class="wrap">
+    <ol>
+      {trail.map((c) => (
+        <li>{c.href ? <a href={c.href}>{c.label}</a> : c.label}</li>
+      ))}
+    </ol>
+  </div>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

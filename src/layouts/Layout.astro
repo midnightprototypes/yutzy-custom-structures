@@ -94,6 +94,7 @@ const schema = {
       <p><a href="post-frame-garages.html">Garages</a></p>
       <p><a href="hobby-shops.html">Hobby Shops</a></p>
       <p><a href="barndominiums.html">Barndominiums</a></p>
+      <p><a href="post-frame-homes.html">Post-Frame Homes</a></p>
       <p><a href="slab-homes.html">Slab Homes</a></p>
     </div>
     <div>
@@ -261,12 +262,53 @@ const schema = {
   .card-body a.q:hover{color:var(--red-dark)}
 
   .why{background:var(--cream-2)}
+  .alt{background:var(--cream-2)}
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
   .checks svg{flex:none;margin-top:3px}
   .checks b{color:var(--red-deep)}
   .checks-grid{grid-template-columns:1fr 1fr;gap:1.2rem 2.6rem;max-width:940px;margin:1.6rem auto 0}
   @media(max-width:760px){.checks-grid{grid-template-columns:1fr}}
+
+  /* breadcrumbs — deeper pages only, never the homepage */
+  .breadcrumbs{padding:.9rem 0}
+  .breadcrumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem;font-size:.85rem;color:var(--muted)}
+  .breadcrumbs li{display:flex;align-items:center;gap:.4rem}
+  .breadcrumbs li:not(:last-child)::after{content:'/';color:var(--line);margin-left:.4rem}
+  .breadcrumbs a{color:var(--muted);text-decoration:none}
+  .breadcrumbs a:hover{color:var(--red-dark);text-decoration:underline}
+  .breadcrumbs li:last-child{color:var(--ink);font-weight:600}
+
+  /* reusable timeline (How It Works / building-page process sections) */
+  .process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem}
+  .process li{border-top:3px solid var(--red);padding-top:1rem}
+  .pnum{display:block;font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--red-deep);margin-bottom:.4rem}
+  .process h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--charcoal-deep)}
+  .process p{margin:0;color:var(--muted);font-size:.92rem}
+  @media(max-width:900px){.process{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.process{grid-template-columns:1fr}}
+
+  /* reusable split (image one side, copy the other) content block */
+  .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3rem);align-items:center}
+  .split-reverse{direction:rtl}
+  .split-reverse > *{direction:ltr}
+  .split-img{min-height:360px;border-radius:var(--r);overflow:hidden}
+  @media(max-width:860px){.split-grid{grid-template-columns:1fr}.split-reverse{direction:ltr}.split-img{order:-1;min-height:260px}}
+
+  /* reusable full-bleed photo band with content overlaid — same family as
+     the hero, for a single strong section mid-page (construction quality,
+     "designed around you," etc.) without a squeezed side-by-side column */
+  .photo-band{position:relative;min-height:clamp(440px,58vh,580px);display:flex;align-items:center;overflow:hidden;padding:0}
+  .photo-band-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .photo-band-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(30,35,33,.92),rgba(30,35,33,.68) 50%,rgba(30,35,33,.32))}
+  .photo-band-inner{position:relative;z-index:2;max-width:680px;padding-top:3rem;padding-bottom:3rem}
+  .photo-band-eye{color:#f0d6ab}
+  .photo-band h2{color:#fff;font-size:clamp(1.9rem,4vw,2.6rem);margin:.5rem 0 .9rem}
+  .photo-band-lead{color:rgba(255,255,255,.86);font-size:1.12rem;margin:0 0 1.7rem;max-width:52ch}
+  .checks-light li{color:rgba(255,255,255,.92)}
+  .checks-light b{color:#f0d6ab}
+  .checks-light li span{flex:1;min-width:0}
+  @media(max-width:640px){.photo-band{min-height:auto;padding:3rem 0}.photo-band-inner{max-width:100%}}
 
   /* building detail pages */
   .detail{display:grid;grid-template-columns:1.5fr .9fr;gap:2.5rem;align-items:start}

@@ -30,6 +30,7 @@ const b = business;
         <option>Hobby Shop</option>
         <option>Equestrian Barn</option>
         <option>Barndominium</option>
+        <option>Post-Frame Home</option>
         <option>Slab Home</option>
         <option>Not sure yet</option>
       </select>
@@ -53,7 +54,7 @@ const b = business;
     var sizeRow = document.getElementById('qsizeRow');
     var msg = document.getElementById('qmsg');
     type.addEventListener('change', function () {
-      sizeRow.hidden = !(type.value === 'Barndominium' || type.value === 'Slab Home');
+      sizeRow.hidden = !(type.value === 'Barndominium' || type.value === 'Slab Home' || type.value === 'Post-Frame Home');
     });
     // Preselect the project-type dropdown from a ?type= param, so a CTA like
     // "Talk Through My Project" (type=Not+sure+yet) or a building page's

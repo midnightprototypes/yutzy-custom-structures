@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { business, buildings } from '../data/site';
 import { gallery } from '../data/gallery';
 import PhotoLightbox from '../components/PhotoLightbox.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 // One template -> six pages. getStaticPaths tells Astro to build a page for
 // each building in the data file. Add a building to site.ts and its page
@@ -17,6 +18,8 @@ const biz = business;
 const typePhotos = gallery.filter((g) => g.type === b.slug);
 ---
 <Layout title={`${b.seoTitle} | ${biz.name}`} description={b.seoDesc}>
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: b.name }]} />
+
   <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-grid">

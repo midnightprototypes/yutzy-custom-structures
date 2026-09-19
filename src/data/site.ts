@@ -170,6 +170,23 @@ export const buildings: Building[] = [
     seoDesc: "Custom barndominiums that combine living space and a shop under one efficient roof. Family-owned Amish craftsmanship across Kansas & Missouri.",
   },
   {
+    slug: "post-frame-homes",
+    name: "Post-Frame Homes",
+    img: "images/gallery/g22.webp",
+    alt: "Post-frame home with a gambrel roofline and covered porch, built by Yutzy Custom Structures",
+    blurb: "A custom home with the open layouts post-frame construction makes possible.",
+    tagline: "A custom home with more flexibility built in.",
+    intro: "Post-frame construction gives you large, open interior spaces with fewer structural interruptions — more freedom to plan the rooms and layout around how you actually want to live. We design the exterior, finishes, and floor plan so the finished home reads as a custom home, not a barn.",
+    features: [
+      "Open floor plans with fewer load-bearing walls",
+      "Fully custom exterior and interior finishes",
+      "Attached garage or shop options",
+      "Backed by our 5-year warranty",
+    ],
+    seoTitle: "Post-Frame Home Builders in Kansas & Missouri",
+    seoDesc: "Custom post-frame homes with open, flexible layouts — designed and built by Yutzy Custom Structures across Kansas & Missouri.",
+  },
+  {
     slug: "slab-homes",
     name: "Slab Homes",
     img: "images/slab-homes.webp",

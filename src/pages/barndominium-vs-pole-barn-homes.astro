@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { business } from '../data/site';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 const b = business;
 const schema = {
   "@context": "https://schema.org",
@@ -18,6 +19,8 @@ const schema = {
   title="Barndominium vs. Pole Barn Homes: Which Is Right for You? | Yutzy Custom Structures"
   description="Barndominium or pole barn home? Compare cost, layout, finish, and use to decide which post-frame home fits your land and budget in Kansas & Missouri."
 >
+  <Breadcrumbs items={[{ label: 'Resources', href: 'faq.html' }, { label: 'Barndominium vs. Pole Barn Homes' }]} />
+
   <section class="pagehead">
     <div class="wrap">
       <span class="eyebrow" style="color:#f0d6ab">Guide</span>

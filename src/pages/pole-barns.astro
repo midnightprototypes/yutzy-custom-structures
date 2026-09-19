@@ -1,0 +1,297 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business, buildings, testimonials } from '../data/site';
+import { gallery } from '../data/gallery';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import OverlayHero from '../components/OverlayHero.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
+const b = business;
+const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
+const self = find('pole-barns');
+const projects = gallery.filter((g) => g.type === 'pole-barns');
+const review = testimonials.find((t) => t.name === 'Mark Munoz')!;
+
+const faqs = [
+  { q: "Do I need to know the exact size before contacting Yutzy?", a: "No. Start with what you need the building to hold and how you plan to use it. We can help work through size and configuration from there." },
+  { q: "Can I combine a shop and storage area?", a: "Yes. Pole barns can be configured around multiple uses, including enclosed shop space, equipment storage and open-sided areas." },
+  { q: "Can I customize the doors and openings?", a: "Yes. Door size, placement and access can be planned around the vehicles, equipment and use of the building." },
+  { q: "Where does Yutzy build pole barns?", a: "We serve customers across Kansas and Missouri from our Garnett, KS and Fordland, MO locations." },
+  { q: "Do you offer financing?", a: "Financing options may be available for qualifying projects through Rural 1st." },
+  { q: "How much does a pole barn cost?", a: "Pricing depends on the building size, configuration, doors, materials, site conditions and other project details. Tell us what you need the building to do and we'll help you work through the options and pricing." },
+];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+<Layout
+  title={`${self.seoTitle} | ${b.name}`}
+  description="Custom pole barns for storage, workshops, agriculture and equipment — sized and configured around how you use them. Built by Yutzy Custom Structures across Kansas & Missouri."
+>
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Pole Barns' }]} />
+
+  <OverlayHero
+    eyebrow="Custom Pole Barns | Kansas + Missouri"
+    title="Built for the Work You Need It to Do."
+    subtitle="Custom pole barns designed around your property, equipment and everyday use — from storage and workshops to agricultural and livestock buildings."
+    image="images/gallery/g18.webp"
+    alt="Red pole barn with three overhead doors, roof cupolas and an attached livestock lean-to"
+    ctaHref="index.html?type=Pole+Barn#contact"
+    ctaText="Start Your Pole Barn"
+    ctaSecondaryText="See Pole Barn Projects"
+    ctaSecondaryHref="#projects"
+    areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+  />
+
+  <!-- WHAT WILL YOU USE IT FOR -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built Around the Use</span>
+        <h2>What Do You Need the Building to Do?</h2>
+        <p>The right pole barn starts with what needs to happen inside it. Tell us what you're storing, working on or protecting and we'll help you think through the building around it.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g05.webp" alt="Long two-tone post-frame garage with a large overhead door and a row of windows" /></div>
+          <div class="card-body">
+            <h3>Equipment Storage</h3>
+            <p>Room for tractors, implements and trailers, with access planned around the way you use them.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g16.webp" alt="Close-up of a covered porch eave and gutter detail on a dark metal building with copper-toned trim" /></div>
+          <div class="card-body">
+            <h3>Workshop</h3>
+            <p>Dedicated space for repairs, fabrication, woodworking or everyday projects.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+          <div class="card-body">
+            <h3>Livestock + Agriculture</h3>
+            <p>Buildings designed around animals, feed, storage and day-to-day farm operations.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZE PLANNING -->
+  <section class="photo-band">
+    <img class="photo-band-bg" src="images/gallery/g27.webp" alt="Wide view of a tan pole barn with a large overhead door" />
+    <div class="photo-band-scrim"></div>
+    <div class="wrap photo-band-inner">
+      <span class="eyebrow photo-band-eye">Plan Your Building</span>
+      <h2>Start With What Has to Fit Inside.</h2>
+      <p class="photo-band-lead">You don't have to know the exact building dimensions before contacting us. How many vehicles or pieces of equipment, what's the tallest item going in, do you need drive-through access, will part of the building be a workshop — we'll help you work backward from the use to the building size.</p>
+      <a class="btn btn-red" href="index.html?type=Pole+Barn#contact">Talk Through My Building</a>
+    </div>
+  </section>
+
+  <!-- CONFIGURATIONS -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Build It Around the Job</span>
+        <h2>One Building Type. A Lot of Possibilities.</h2>
+        <p>These are starting points for inspiration, not fixed packages — every building is configured around your actual use.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Fully enclosed:</b> secure equipment, vehicles, workshops and storage.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Open-sided:</b> equipment access, hay storage or agricultural use.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Combination building:</b> enclosed shop or storage with attached open-sided coverage.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Shop + storage:</b> separate work space from general equipment or vehicle storage.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REAL PROJECTS -->
+  <section id="projects" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Pole Barns By Yutzy</span>
+        <h2>See What We've Built.</h2>
+        <p>Explore real Yutzy pole barns built for equipment, storage, workshops, agriculture and everyday use across Kansas and Missouri.</p>
+      </div>
+      <PhotoLightbox images={projects} />
+      <p style="text-align:center;margin-top:1.8rem"><a class="btn btn-outline" href="gallery.html">View All Yutzy Projects</a></p>
+    </div>
+  </section>
+
+  <!-- CONSTRUCTION QUALITY -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">How We Build</span>
+        <h2>Built for More Than Just the First Few Years.</h2>
+        <p>A pole barn has to handle weather, daily use and the demands of what happens inside it. The structure behind the finished building matters just as much as the exterior.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Posts + trusses:</b> tighter spacing than a typical post-frame build.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Roofing + siding:</b> durable metal systems with customizable colors.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Foundation:</b> built to your site and the building's use.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Backed in writing:</b> a 5-year workmanship warranty on every build.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DOORS + ACCESS -->
+  <section class="alt">
+    <div class="wrap split-grid">
+      <div class="ph split-img"><img class="shot" src="images/gallery/g17.webp" alt="Two red post-frame buildings with overhead doors on a wooded property" /></div>
+      <div>
+        <span class="eyebrow">Doors + Access</span>
+        <h2>Plan the Building Around How You'll Get In and Out.</h2>
+        <p class="lead-p">Door size and placement can make or break how useful the building is. Plan access around the vehicles, equipment and work that will actually happen inside — overhead doors, sliding doors, walk doors, drive-through access and multiple equipment entrances.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZATION -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Make It Work for Your Property</span>
+        <h2>Customize It to Fit Your Use and Your Style.</h2>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Siding + roof colors</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Wainscoting</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Windows + doors</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Lean-tos + open-sided sections</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Interior partitions</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Dedicated shop areas</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">From Idea to Building</span>
+        <h2>You Don't Need the Exact Size Figured Out Yet.</h2>
+        <p>Start with what the building needs to hold, where it will sit and how you plan to use it. We'll help work through the rest.</p>
+      </div>
+      <ol class="process">
+        <li><span class="pnum">01</span><h3>Tell Us What You Need</h3><p>Equipment, storage, workshop, livestock, business use or a combination.</p></li>
+        <li><span class="pnum">02</span><h3>Talk Through the Site</h3><p>Location, access, property layout and how the building will be used.</p></li>
+        <li><span class="pnum">03</span><h3>Size + Configuration</h3><p>Work through dimensions, doors, openings, enclosed areas and other options.</p></li>
+        <li><span class="pnum">04</span><h3>Finalize the Build</h3><p>Confirm scope, materials, colors and project details.</p></li>
+        <li><span class="pnum">05</span><h3>We Build It</h3><p>The Yutzy team takes the project into construction.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Hear From Someone Who Built With Yutzy</span>
+      </div>
+      <div class="quotes" style="grid-template-columns:1fr;max-width:680px;margin:0 auto">
+        <article class="quote">
+          <div class="stars">{"★".repeat(review.stars)}</div>
+          <p>&ldquo;{review.quote}&rdquo;</p>
+          <p class="who">{review.name} · {review.source}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="alt" style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Where We Build</span>
+      <h2>Pole Barns Across Kansas + Missouri.</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Yutzy serves customers from locations in Garnett, Kansas and Fordland, Missouri, with projects across the surrounding region.</p>
+      <a class="btn btn-outline" href="index.html#area">See Where We Build</a>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Financing</span>
+      <h2>Planning a Bigger Building?</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Financing options may be available for qualifying projects through Rural 1st.</p>
+      <a class="btn btn-outline" href="index.html#contact">Explore Financing</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt">
+    <div class="wrap faq-wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Questions</span>
+        <h2>Pole Barn Questions</h2>
+      </div>
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Related</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Equestrian Barns</h3>
+            <p>Building around livestock, stalls and daily chores?</p>
+            <a class="q" href="equestrian-barns.html">Explore Equestrian Barns →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Hobby Shops</h3>
+            <p>Need a dedicated workshop or business space instead?</p>
+            <a class="q" href="hobby-shops.html">Explore Hobby Shops →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Financing</h3>
+            <p>Explore financing options that may be available for qualifying projects.</p>
+            <a class="q" href="index.html#contact">Explore Financing →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <img class="final-cta-bg" src="images/gallery/g18.webp" alt="" />
+    <div class="final-cta-scrim"></div>
+    <div class="wrap final-cta-inner">
+      <h2>Tell Us What Needs to Fit Inside.</h2>
+      <p>Share what you're storing, working on or protecting and where the building will be located. We'll help you work through the size, layout and next steps.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="index.html?type=Pole+Barn#contact">Start My Pole Barn</a>
+        <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call Yutzy</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+  .final-cta{position:relative;overflow:hidden;text-align:center;padding:clamp(4rem,10vw,6rem) 0}
+  .final-cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .final-cta-scrim{position:absolute;inset:0;background:linear-gradient(rgba(30,35,33,.86),rgba(30,35,33,.9));z-index:1}
+  .final-cta-inner{position:relative;z-index:2;color:#fff}
+  .final-cta h2{font-size:clamp(1.9rem,4.5vw,2.7rem);margin:0 0 .8rem;max-width:20ch;margin-left:auto;margin-right:auto;color:#fff}
+  .final-cta p{color:rgba(255,255,255,.86);max-width:56ch;margin:0 auto 1.8rem}
+  .final-cta .hero-cta{justify-content:center}
+</style>

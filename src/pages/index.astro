@@ -63,7 +63,7 @@ const faqHighlights = [
           <div class="intent-body">
             <h3>A Home</h3>
             <p>Living spaces planned around daily life, from barndominiums to slab and post-frame layouts.</p>
-            <p class="intent-links"><a href="barndominiums.html">Barndominiums</a> · <a href="slab-homes.html">Slab Homes →</a></p>
+            <p class="intent-links"><a href="barndominiums.html">Barndominiums</a> · <a href="post-frame-homes.html">Post-Frame Homes</a> · <a href="slab-homes.html">Slab Homes →</a></p>
           </div>
         </article>
         <article class="intent-card">
@@ -198,8 +198,8 @@ const faqHighlights = [
           <span class="rev-stars" style={`--pct:${(Number(b.google.rating) / 5 * 100).toFixed(0)}%`} aria-hidden="true"></span>
           <span class="rev-count">Read our Google reviews →</span>
         </a>
-        <a class="rev-badge alt" href={b.houzz} target="_blank" rel="noopener">Houzz reviews →</a>
-        <a class="rev-badge alt" href={b.google.writeReviewUrl} target="_blank" rel="noopener">Leave us a review →</a>
+        <a class="rev-badge rev-badge-outline" href={b.houzz} target="_blank" rel="noopener">Houzz reviews →</a>
+        <a class="rev-badge rev-badge-outline" href={b.google.writeReviewUrl} target="_blank" rel="noopener">Leave us a review →</a>
       </div>
       <ReviewCarousel reviews={testimonials} />
     </div>
@@ -388,13 +388,12 @@ const faqHighlights = [
 </Layout>
 
 <style>
-  .alt{background:var(--cream-2)}
   .rev-inline{margin:.6rem 0 0}
   .rev-inline a{color:var(--red-deep);font-weight:700;text-decoration:none}
   .rev-badges{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-bottom:2.2rem}
   .rev-badge{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem .95rem;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;box-shadow:0 1px 0 rgba(0,0,0,.03)}
   .rev-badge:hover{border-color:var(--red)}
-  .rev-badge.alt{color:var(--red-deep)}
+  .rev-badge-outline{color:var(--red-deep)}
   .rev-rating{font-family:var(--font-head);font-size:1.05rem;color:var(--charcoal-deep)}
   .rev-stars{position:relative;display:inline-block;font-size:1rem;line-height:1;letter-spacing:1px}
   .rev-stars::before{content:"★★★★★";color:#d9d2c4}

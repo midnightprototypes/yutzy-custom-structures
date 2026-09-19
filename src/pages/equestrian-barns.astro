@@ -1,0 +1,297 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business, buildings, testimonials } from '../data/site';
+import { gallery } from '../data/gallery';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import OverlayHero from '../components/OverlayHero.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
+const b = business;
+const find = (slug: string) => buildings.find((x) => x.slug === slug)!;
+const self = find('equestrian-barns');
+const projects = gallery.filter((g) => g.type === 'equestrian-barns');
+const review = testimonials.find((t) => t.name === 'Diane Hirt')!;
+
+const faqs = [
+  { q: "How many stalls can I include?", a: "Stall count and layout are custom to your herd size and how you manage them — we'll help you plan the space around your animals." },
+  { q: "Do you plan for ventilation and lighting?", a: "Yes. Airflow and lighting are planned into the layout, not added as an afterthought." },
+  { q: "Can I add tack and hay storage?", a: "Yes. Tack rooms, feed and hay storage can be built into the layout alongside stalls and turnout access." },
+  { q: "Can the barn include an attached lean-to or covered area?", a: "Yes. Open-sided lean-tos and covered areas can be attached for turnout, equipment or extra coverage." },
+  { q: "Where does Yutzy build equestrian barns?", a: "We serve customers across Kansas and Missouri from our Garnett, KS and Fordland, MO locations." },
+  { q: "How much does an equestrian barn cost?", a: "Pricing depends on size, stall count, ventilation, storage and finish level. Tell us about your animals and routine and we'll help you work through the options and pricing." },
+];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+<Layout
+  title={`${self.seoTitle} | ${b.name}`}
+  description="Custom equestrian barns with the stalls, ventilation and storage designed around your horses and your daily routine. Built by Yutzy Custom Structures across Kansas & Missouri."
+>
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Equestrian Barns' }]} />
+
+  <OverlayHero
+    eyebrow="Custom Equestrian Barns | Kansas + Missouri"
+    title="Built Around Your Animals and Your Routine."
+    subtitle="Custom equestrian barns with the stalls, airflow and storage that keep horses healthy and daily chores simple."
+    image="images/gallery/g28.webp"
+    alt="White equestrian building with an open lean-to bay and metal livestock panels"
+    ctaHref="index.html?type=Equestrian+Barn#contact"
+    ctaText="Start Your Barn"
+    ctaSecondaryText="See Equestrian Projects"
+    ctaSecondaryHref="#projects"
+    areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+  />
+
+  <!-- WHAT DOES THE BARN NEED TO DO -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built Around the Animals</span>
+        <h2>What Does the Barn Need to Handle?</h2>
+        <p>The right equestrian barn starts with your animals and your routine. Tell us how many horses, how you manage feed and chores, and we'll help you plan the layout around it.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+          <div class="card-body">
+            <h3>Stalls + Housing</h3>
+            <p>Layouts sized to your herd, with room to add stalls down the road.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src="images/gallery/g29.webp" alt="White equestrian building with an open lean-to, wood posts and livestock panels" /></div>
+          <div class="card-body">
+            <h3>Turnout + Chores</h3>
+            <p>Lean-tos and open-sided access planned around your daily routine.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><img class="shot" src={self.img} alt={self.alt} /></div>
+          <div class="card-body">
+            <h3>Tack + Feed Storage</h3>
+            <p>Dedicated space for tack, feed and hay, kept close to where you need it.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN YOUR BARN -->
+  <section class="photo-band">
+    <img class="photo-band-bg" src="images/gallery/g29.webp" alt="White equestrian building with an open lean-to, wood posts and livestock panels" />
+    <div class="photo-band-scrim"></div>
+    <div class="wrap photo-band-inner">
+      <span class="eyebrow photo-band-eye">Plan Your Barn</span>
+      <h2>Start With How You Manage Your Animals.</h2>
+      <p class="photo-band-lead">You don't need exact dimensions before contacting us. How many horses, do you need individual stalls or open housing, how much hay and feed storage, do chores happen mostly indoors or out — we'll help you work backward from there to the right size.</p>
+      <a class="btn btn-red" href="index.html?type=Equestrian+Barn#contact">Talk Through My Barn</a>
+    </div>
+  </section>
+
+  <!-- CONFIGURATIONS -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Built Around the Way You Work</span>
+        <h2>One Building Type. A Lot of Possibilities.</h2>
+        <p>These are starting points for inspiration, not fixed packages — every equestrian barn is configured around your herd and your daily routine.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Enclosed stalls:</b> individual housing sized to your herd.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Open lean-tos:</b> covered turnout and shelter along one or more sides.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Tack + feed rooms:</b> dedicated, secure storage built into the layout.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Combination barn:</b> stalls, storage and turnout under one roof.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REAL PROJECTS -->
+  <section id="projects" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Equestrian Barns By Yutzy</span>
+        <h2>See What We've Built.</h2>
+        <p>Explore real Yutzy equestrian barns built for stalls, turnout and daily care across Kansas and Missouri.</p>
+      </div>
+      <PhotoLightbox images={projects} />
+      <p style="text-align:center;margin-top:1.8rem"><a class="btn btn-outline" href="gallery.html">View All Yutzy Projects</a></p>
+    </div>
+  </section>
+
+  <!-- CONSTRUCTION QUALITY -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">How We Build</span>
+        <h2>Built for Daily Use, in Every Season.</h2>
+        <p>An equestrian barn has to hold up to daily traffic, weather and the demands of caring for animals. The structure behind the finished barn matters just as much as the stalls.</p>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Posts + trusses:</b> tighter spacing than a typical post-frame build.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Roofing + siding:</b> durable metal systems with customizable colors.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Foundation:</b> built to your site and how the barn will be used.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> <span><b>Backed in writing:</b> a 5-year workmanship warranty on every build.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- VENTILATION + LAYOUT -->
+  <section class="alt">
+    <div class="wrap split-grid">
+      <div class="ph split-img"><img class="shot" src="images/gallery/g28.webp" alt="White equestrian building with an open lean-to bay and metal livestock panels" /></div>
+      <div>
+        <span class="eyebrow">Airflow + Layout</span>
+        <h2>Planned Around Your Animals, Not Just the Building.</h2>
+        <p class="lead-p">Ventilation, lighting and stall placement affect your animals' health and how easy the barn is to work in every day. We plan airflow and layout together from the start, rather than treating them as separate decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZATION -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Make It Work for Your Herd</span>
+        <h2>Customize It to Fit Your Animals and Your Routine.</h2>
+      </div>
+      <ul class="checks checks-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Siding + roof colors</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Stall count + placement</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Lean-tos + turnout access</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Tack + feed rooms</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Ventilation + lighting</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#955a22" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Wash + grooming area</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">From Idea to Building</span>
+        <h2>You Don't Need the Exact Layout Figured Out Yet.</h2>
+        <p>Start with how many animals and how you manage them day to day. We'll help work through the rest.</p>
+      </div>
+      <ol class="process">
+        <li><span class="pnum">01</span><h3>Tell Us About Your Herd</h3><p>Number of animals, stall needs, storage and daily routine.</p></li>
+        <li><span class="pnum">02</span><h3>Talk Through the Site</h3><p>Location, access, turnout and how the property is used.</p></li>
+        <li><span class="pnum">03</span><h3>Layout + Configuration</h3><p>Work through stalls, storage, lean-tos and ventilation.</p></li>
+        <li><span class="pnum">04</span><h3>Finalize the Build</h3><p>Confirm scope, materials, colors and project details.</p></li>
+        <li><span class="pnum">05</span><h3>We Build It</h3><p>The Yutzy team takes the project into construction.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Hear From Someone Who Built With Yutzy</span>
+      </div>
+      <div class="quotes" style="grid-template-columns:1fr;max-width:680px;margin:0 auto">
+        <article class="quote">
+          <div class="stars">{"★".repeat(review.stars)}</div>
+          <p>&ldquo;{review.quote}&rdquo;</p>
+          <p class="who">{review.name} · {review.source}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="alt" style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Where We Build</span>
+      <h2>Equestrian Barns Across Kansas + Missouri.</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Yutzy serves customers from locations in Garnett, Kansas and Fordland, Missouri, with projects across the surrounding region.</p>
+      <a class="btn btn-outline" href="index.html#area">See Where We Build</a>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section style="text-align:center">
+    <div class="wrap">
+      <span class="eyebrow">Financing</span>
+      <h2>Planning a Larger Facility?</h2>
+      <p style="color:var(--muted);max-width:560px;margin:0 auto 1.4rem">Financing options may be available for qualifying projects through Rural 1st.</p>
+      <a class="btn btn-outline" href="index.html#contact">Explore Financing</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt">
+    <div class="wrap faq-wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Questions</span>
+        <h2>Equestrian Barn Questions</h2>
+      </div>
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p class="faq-a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Related</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <h3>Pole Barns</h3>
+            <p>Need equipment or ag storage alongside the barn?</p>
+            <a class="q" href="pole-barns.html">Explore Pole Barns →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Hobby Shops</h3>
+            <p>Looking for dedicated workshop space instead?</p>
+            <a class="q" href="hobby-shops.html">Explore Hobby Shops →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Financing</h3>
+            <p>Explore financing options that may be available for qualifying projects.</p>
+            <a class="q" href="index.html#contact">Explore Financing →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <img class="final-cta-bg" src="images/gallery/g28.webp" alt="" />
+    <div class="final-cta-scrim"></div>
+    <div class="wrap final-cta-inner">
+      <h2>Tell Us About Your Animals.</h2>
+      <p>Share how many horses, how you manage feed and chores, and where the barn will be located. We'll help you work through the layout, size and next steps.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="index.html?type=Equestrian+Barn#contact">Start My Barn</a>
+        <a class="btn btn-ghost" href={`tel:${b.phoneMainHref}`}>Call Yutzy</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+  .final-cta{position:relative;overflow:hidden;text-align:center;padding:clamp(4rem,10vw,6rem) 0}
+  .final-cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .final-cta-scrim{position:absolute;inset:0;background:linear-gradient(rgba(30,35,33,.86),rgba(30,35,33,.9));z-index:1}
+  .final-cta-inner{position:relative;z-index:2;color:#fff}
+  .final-cta h2{font-size:clamp(1.9rem,4.5vw,2.7rem);margin:0 0 .8rem;max-width:20ch;margin-left:auto;margin-right:auto;color:#fff}
+  .final-cta p{color:rgba(255,255,255,.86);max-width:56ch;margin:0 auto 1.8rem}
+  .final-cta .hero-cta{justify-content:center}
+</style>

@@ -409,10 +409,13 @@ const faqHighlights = [
   .intent-body{padding:1.3rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
   .intent-body h3{margin:0;font-size:1.25rem;color:var(--charcoal-deep)}
   .intent-body p{margin:0;color:var(--muted);font-size:.95rem}
-  .intent-body .intent-links{font-size:.92rem;margin-top:auto;padding-top:.3rem}
+  /* min-height reserves room for 2 lines so a link row that only needs one
+     line (e.g. "Garages · Hobby Shops →") still starts at the same top
+     position as a row that wraps to two — not just the same bottom. */
+  .intent-body .intent-links{font-size:.92rem;margin-top:auto;padding-top:.3rem;min-height:3.3rem}
   .intent-links a{color:var(--red-deep);font-weight:700;text-decoration:none}
   .intent-links a:hover{color:var(--red-dark)}
-  .intent-body a.q{margin-top:auto;padding-top:.3rem;font-weight:700;color:var(--red-deep);text-decoration:none;font-size:.92rem}
+  .intent-body a.q{margin-top:auto;padding-top:.3rem;font-weight:700;color:var(--red-deep);text-decoration:none;font-size:.92rem;min-height:3.3rem}
   .not-sure{max-width:640px;margin:2.4rem auto 0;text-align:center;color:var(--muted)}
   .not-sure b{display:block;color:var(--charcoal-deep);font-family:var(--font-head);font-size:1.1rem;margin-bottom:.3rem}
   .not-sure a.q{display:inline-block;margin-top:.6rem;font-weight:700;color:var(--red-deep);text-decoration:none}

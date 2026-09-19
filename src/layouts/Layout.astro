@@ -30,6 +30,9 @@ const schema = {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="/favicon.png" />
+  <link rel="preload" href="/fonts/archivo-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/archivo-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -146,14 +149,17 @@ const schema = {
     --font-head:"Archivo","Archivo Fallback",system-ui,sans-serif;
     --font-body:"Barlow","Barlow Fallback",system-ui,-apple-system,sans-serif;
   }
-  /* Self-hosted fonts with font-display:optional. The text renders immediately in a
-     metric-matched fallback and only upgrades to the web font if it arrives within the
-     brief block period — so the page never reflows mid-load (no font-driven CLS). */
-  @font-face{font-family:"Archivo";font-style:normal;font-weight:700;font-display:optional;src:url("fonts/archivo-700.woff2") format("woff2")}
-  @font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-display:optional;src:url("fonts/archivo-800.woff2") format("woff2")}
-  @font-face{font-family:"Barlow";font-style:normal;font-weight:400;font-display:optional;src:url("fonts/barlow-400.woff2") format("woff2")}
-  @font-face{font-family:"Barlow";font-style:normal;font-weight:600;font-display:optional;src:url("fonts/barlow-600.woff2") format("woff2")}
-  @font-face{font-family:"Barlow";font-style:normal;font-weight:700;font-display:optional;src:url("fonts/barlow-700.woff2") format("woff2")}
+  /* Self-hosted fonts with font-display:swap. The text renders immediately in a
+     metric-matched fallback and always upgrades to the web font once it finishes
+     loading — the fallback's overridden metrics keep that swap from shifting layout.
+     (font-display:optional was tried first, but on real network latency the fonts
+     often missed its short block window and stayed on the fallback for the whole
+     page view — invisible in local dev, where fonts load instantly from disk.) */
+  @font-face{font-family:"Archivo";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/archivo-700.woff2") format("woff2")}
+  @font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-display:swap;src:url("fonts/archivo-800.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/barlow-400.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/barlow-600.woff2") format("woff2")}
+  @font-face{font-family:"Barlow";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/barlow-700.woff2") format("woff2")}
   /* Metric-matched fallbacks so the pre-load text matches the web font's footprint. */
   @font-face{font-family:"Archivo Fallback";src:local("Arial");size-adjust:122.79%;ascent-override:71.50%;descent-override:17.10%;line-gap-override:0%}
   @font-face{font-family:"Barlow Fallback";src:local("Arial");size-adjust:116.22%;ascent-override:86.04%;descent-override:17.21%;line-gap-override:0%}

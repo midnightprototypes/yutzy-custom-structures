@@ -49,7 +49,6 @@ const schema = {
   <div class="wrap navbar">
     <a class="brand" href="index.html" aria-label={b.name}>
       <span class="mark"><img src="images/yutzy-mark.webp" alt="" width="871" height="463" /></span>
-      <span class="brandtext"><b>Yutzy</b><small>Custom Structures</small></span>
     </a>
     <nav class="nav-links" id="site-nav">
       <a href="index.html#buildings">What We Build</a>
@@ -184,13 +183,9 @@ const schema = {
 
   header.site{position:sticky;top:0;z-index:50;background:rgba(237,231,215,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .navbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
-  .brand{display:flex;align-items:flex-end;gap:.55rem;text-decoration:none}
-  .brandtext{line-height:1;transform:translateY(2px)}
+  .brand{display:flex;align-items:center;text-decoration:none}
   .brand .mark{display:grid;place-items:center;flex:none}
-  .brand .mark img{height:42px;width:auto;display:block}
-  .brandtext b{display:block;font-family:var(--font-head);font-size:1.15rem;color:var(--charcoal-deep);line-height:1;letter-spacing:.01em}
-  .brandtext small{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px;line-height:1}
-  @media(max-width:440px){.brandtext small{display:none}.brandtext b{font-size:1.05rem}}
+  .brand .mark img{height:52px;width:auto;display:block}
   .nav-links{display:flex;gap:1.6rem;font-weight:500;font-size:.95rem}
   .nav-links a:not(.btn){text-decoration:none;color:var(--ink)}
   .nav-links a:hover{color:var(--red-dark)}

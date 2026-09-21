@@ -273,14 +273,11 @@ const schema = {
   .ocard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
   .ocard .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;transition:transform .5s ease}
   .ocard:hover .shot{transform:scale(1.06)}
-  /* Scrim: concentrated in the bottom band where the copy sits, then clearing
-     completely by ~80% so the top of the photo reads at full brightness. It
-     has to stay dense low down — white text over a sunlit sky needs real
-     coverage — but above the text it gets out of the way. */
-  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(18,16,15,.92) 0%,rgba(18,16,15,.85) 35%,rgba(18,16,15,.60) 55%,rgba(18,16,15,.18) 70%,rgba(18,16,15,0) 82%)}
-  /* Photoless variant — the "you're here" card in a cross-link row. Same shape
-     and text treatment as its neighbours, minus a scrim it has no photo for. */
-  .ocard-flat::after{display:none}
+  /* No scrim — the photo shows at full brightness. Legibility comes from a
+     tight dark halo on the glyphs instead, which hugs the text rather than
+     veiling the image. These photos need it: several have bright sky or white
+     siding right behind the copy, where plain white text measures ~1:1. */
+  .ocard-body{text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 6px rgba(0,0,0,.85),0 2px 14px rgba(0,0,0,.6)}
   .ocard-body{position:relative;z-index:2;width:100%;padding:1.3rem 1.35rem 1.35rem;display:flex;flex-direction:column;gap:.4rem}
   .ocard-body h3{margin:0;font-size:1.3rem;line-height:1.15;color:#fff}
   .ocard-body p{margin:0;color:rgba(255,255,255,.88);font-size:.92rem;line-height:1.45}

@@ -264,6 +264,32 @@ const schema = {
   .card-body .q{margin-top:auto;padding-top:.7rem;font-weight:700;color:var(--red-deep);text-decoration:none;font-size:.95rem}
   .card-body a.q:hover{color:var(--red-dark)}
 
+  /* Overlay cards: the photo IS the card, with copy sitting on a scrim over it.
+     Global because every photo card grid on the homepage and the building pages
+     uses it. Grid stretch keeps a row's cards equal height, and bottom-anchored
+     content lines the CTAs up without the min-height reservations the old
+     photo-above/text-below cards needed. */
+  .ocard{position:relative;display:flex;align-items:flex-end;min-height:360px;border-radius:var(--r);overflow:hidden;background:var(--charcoal-deep);transition:transform .15s,box-shadow .15s}
+  .ocard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .ocard .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;transition:transform .5s ease}
+  .ocard:hover .shot{transform:scale(1.06)}
+  /* Scrim: needs ~.74 alpha behind the small copy for white to clear AA even
+     over a bright sky, so it stays heavy through the text zone (bottom ~60%)
+     and only then falls away, keeping the top of the photo clean. */
+  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(18,16,15,.93) 0%,rgba(18,16,15,.86) 40%,rgba(18,16,15,.68) 62%,rgba(18,16,15,.3) 82%,rgba(18,16,15,0) 100%)}
+  /* Photoless variant — the "you're here" card in a cross-link row. Same shape
+     and text treatment as its neighbours, minus a scrim it has no photo for. */
+  .ocard-flat::after{display:none}
+  .ocard-body{position:relative;z-index:2;width:100%;padding:1.3rem 1.35rem 1.35rem;display:flex;flex-direction:column;gap:.4rem}
+  .ocard-body h3{margin:0;font-size:1.3rem;line-height:1.15;color:#fff}
+  .ocard-body p{margin:0;color:rgba(255,255,255,.88);font-size:.92rem;line-height:1.45}
+  .ocard-body .q{margin-top:.3rem;font-weight:700;color:#fff;text-decoration:none;font-size:.92rem}
+  .ocard-body a.q:hover{text-decoration:underline}
+  .ocard-links{font-size:.92rem;margin-top:.3rem}
+  .ocard-links a{color:#fff;font-weight:700;text-decoration:none}
+  .ocard-links a:hover{text-decoration:underline}
+  .ocard a:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:3px}
+
   .why{background:var(--cream-2)}
   .alt{background:var(--cream-2)}
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}

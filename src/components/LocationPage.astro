@@ -31,9 +31,9 @@ const b = business;
     </div>
     <div class="cards">
       {buildings.map((bld) => (
-        <article class="card">
-          <div class="ph"><img class="shot" src={bld.img} alt={bld.alt} loading="lazy" /></div>
-          <div class="card-body">
+        <article class="ocard">
+          <img class="shot" src={bld.img} alt={bld.alt} loading="lazy" />
+          <div class="ocard-body">
             <h3>{bld.name}</h3>
             <p>{bld.blurb}</p>
             <a class="q" href={`${bld.slug}.html`}>Learn more →</a>

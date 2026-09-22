@@ -175,6 +175,17 @@ const schema = {
     apply();
   })();
 
+  // Carry the closing CTA's photo into the footer so the image isn't sliced
+  // off at the seam. Read from the page's own CTA, so each page continues its
+  // own image; pages without one keep a plain solid footer.
+  (function () {
+    var img = document.querySelector('.final-cta-bg');
+    var foot = document.querySelector('footer.site');
+    if (!img || !foot) return;
+    var src = img.currentSrc || img.getAttribute('src');
+    if (src) foot.style.setProperty('--foot-photo', 'url("' + src + '")');
+  })();
+
   // Reveal on scroll. Tagged here rather than in markup so every page picks it
   // up without touching 24 templates. Hero content is deliberately skipped —
   // it's visible at load, so revealing it would just flash.
@@ -331,7 +342,7 @@ const schema = {
   .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   /* The page's one ambient loop: a slow push on the hero. `alternate` means it
      eases back out rather than snapping to the start of the next cycle. */
-  .ohero-full .ohero-bg{transform-origin:52% 58%;animation:hero-push 26s ease-in-out infinite alternate}
+  .ohero-full .ohero-bg{transform-origin:52% 58%;animation:hero-push 16s ease-in-out infinite alternate}
   @keyframes hero-push{from{transform:scale(1)}to{transform:scale(1.08)}}
   .ohero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,14,13,.85),rgba(15,14,13,.5) 45%,rgba(15,14,13,.1)),linear-gradient(0deg,rgba(15,14,13,.65),transparent 55%)}
   .ohero-inner{position:relative;color:#fff;padding-top:clamp(3rem,10vh,5.5rem);padding-bottom:clamp(2.5rem,7vh,4rem)}
@@ -488,6 +499,10 @@ const schema = {
     /* land on the finished state: rules drawn, numbers in place */
     html.js .process li.reveal::before,html.js .process li.reveal.in::before{transform:scaleX(1);transition:none}
     html.js .process li.reveal .pnum{opacity:1;transform:none;transition:none}
+    /* stage walk off — every step lands on its resting state, not mid-cycle */
+    html.js .process li.in .pnum,html.js .process li.in::before{animation:none}
+    html.js .process li.in::before{background:var(--red);opacity:1}
+    html.js .process li.in .pnum{color:var(--red-deep);text-shadow:none}
   }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
@@ -516,6 +531,32 @@ const schema = {
   .pnum{display:block;font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--red-deep);margin-bottom:.4rem}
   html.js .process li.reveal .pnum{opacity:0;transform:translateY(6px);transition:opacity .45s ease .25s,transform .45s cubic-bezier(.2,.7,.2,1) .25s}
   html.js .process li.reveal.in .pnum{opacity:1;transform:none}
+
+  /* A highlight that walks the five stages once the row has revealed. Every
+     step shares one 15s timeline with its window baked into the percentages —
+     using animation-delay instead would stagger the *reset* too, so the row
+     would un-highlight raggedly at the end of each cycle. Colour and glow
+     only: transform stays free for the reveal transition above. */
+  html.js .process li.in .pnum{animation:stage-num 15s linear infinite}
+  html.js .process li.in::before{animation:stage-rule 15s linear infinite}
+  html.js .process li.in:nth-child(2) .pnum{animation-name:stage-num-2}
+  html.js .process li.in:nth-child(2)::before{animation-name:stage-rule-2}
+  html.js .process li.in:nth-child(3) .pnum{animation-name:stage-num-3}
+  html.js .process li.in:nth-child(3)::before{animation-name:stage-rule-3}
+  html.js .process li.in:nth-child(4) .pnum{animation-name:stage-num-4}
+  html.js .process li.in:nth-child(4)::before{animation-name:stage-rule-4}
+  html.js .process li.in:nth-child(5) .pnum{animation-name:stage-num-5}
+  html.js .process li.in:nth-child(5)::before{animation-name:stage-rule-5}
+  @keyframes stage-num{0%,2%{color:var(--red-deep);text-shadow:none}6%,14%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}18%,100%{color:var(--red-deep);text-shadow:none}}
+  @keyframes stage-num-2{0%,22%{color:var(--red-deep);text-shadow:none}26%,34%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}38%,100%{color:var(--red-deep);text-shadow:none}}
+  @keyframes stage-num-3{0%,42%{color:var(--red-deep);text-shadow:none}46%,54%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}58%,100%{color:var(--red-deep);text-shadow:none}}
+  @keyframes stage-num-4{0%,62%{color:var(--red-deep);text-shadow:none}66%,74%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}78%,100%{color:var(--red-deep);text-shadow:none}}
+  @keyframes stage-num-5{0%,82%{color:var(--red-deep);text-shadow:none}86%,94%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}98%,100%{color:var(--red-deep);text-shadow:none}}
+  @keyframes stage-rule{0%,2%{background:var(--red);opacity:.55}6%,14%{background:var(--gold);opacity:1}18%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-2{0%,22%{background:var(--red);opacity:.55}26%,34%{background:var(--gold);opacity:1}38%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-3{0%,42%{background:var(--red);opacity:.55}46%,54%{background:var(--gold);opacity:1}58%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-4{0%,62%{background:var(--red);opacity:.55}66%,74%{background:var(--gold);opacity:1}78%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-5{0%,82%{background:var(--red);opacity:.55}86%,94%{background:var(--gold);opacity:1}98%,100%{background:var(--red);opacity:.55}}
   .process h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--charcoal-deep)}
   .process p{margin:0;color:var(--muted);font-size:.92rem}
   @media(max-width:900px){.process{grid-template-columns:1fr 1fr}}
@@ -586,7 +627,19 @@ const schema = {
   .form-slot b{color:var(--charcoal-deep);font-size:1.05rem}
   .form-wrap{max-width:560px;width:100%}
 
-  footer.site{background:var(--charcoal-deep);color:#ddd6cc;padding:3rem 0 1.6rem}
+  footer.site{background:var(--charcoal-deep);color:#ddd6cc;padding:3rem 0 1.6rem;position:relative;overflow:hidden}
+  /* The closing CTA's photo continues into the footer instead of being sliced
+     off at the seam, then fades to solid before the legal line. Both surfaces
+     are near-black already, so the photo reads as texture and doesn't need to
+     line up pixel-for-pixel to feel continuous. --foot-photo is set per page
+     from that page's own CTA image; with no CTA it stays unset and the footer
+     is simply solid. */
+  footer.site::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:var(--foot-photo,none);background-size:cover;background-position:center 18%;
+    opacity:.22;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
+            mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%)}
+  footer.site > .wrap,footer.site .foot-legal{position:relative;z-index:1}
   .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.1fr;gap:1.6rem}
   footer.site a{color:#fff;text-decoration:none}
   footer.site a:hover{text-decoration:underline}

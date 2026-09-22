@@ -119,10 +119,14 @@ const schema = {
 </footer>
 
 <div class="mobile-bar">
-  <a class="mobile-call" href={`tel:${b.phoneMainHref}`} aria-label="Call Yutzy">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
+  <a class="mobile-call" href={`tel:${b.phoneMainHref}`}>
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
+    Call
   </a>
-  <a class="mobile-start" href="index.html#contact">Start Project</a>
+  <a class="mobile-start" href="index.html#contact">
+    Start Project
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
 </div>
 
 <script is:inline>
@@ -330,12 +334,17 @@ const schema = {
   .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   /* The page's one ambient loop: a slow push on the hero. `alternate` means it
      eases back out rather than snapping to the start of the next cycle. */
-  .ohero-full .ohero-bg{transform-origin:52% 58%;animation:hero-push 16s ease-in-out infinite alternate}
-  @keyframes hero-push{from{transform:scale(1)}to{transform:scale(1.08)}}
+  /* Anchored low, near the garage-door/gravel line, and starting zoomed in —
+     so the first thing on screen is a tighter crop with the roof peak pushed
+     out of frame, easing out to the full framing (peak included, a little
+     more of the gravel apron visible) rather than zooming in and cropping
+     the peak further as it plays. */
+  .ohero-full .ohero-bg{transform-origin:50% 74%;animation:hero-push 16s ease-in-out infinite alternate}
+  @keyframes hero-push{from{transform:scale(1.12)}to{transform:scale(1)}}
   .ohero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,14,13,.85),rgba(15,14,13,.5) 45%,rgba(15,14,13,.1)),linear-gradient(0deg,rgba(15,14,13,.65),transparent 55%)}
   .ohero-inner{position:relative;color:#fff;padding-top:clamp(3rem,10vh,5.5rem);padding-bottom:clamp(2.5rem,7vh,4rem)}
   .ohero-eye{color:#f0d6ab}
-  .ohero-title{color:#fff;font-size:clamp(2.3rem,5.4vw,4rem);margin:.6rem 0 1rem;max-width:17ch;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+  .ohero-title{color:#fff;font-size:clamp(2.6rem,6.8vw,5.5rem);line-height:.98;letter-spacing:-.02em;margin:.6rem 0 1rem;max-width:19ch;text-shadow:0 2px 24px rgba(0,0,0,.35)}
   .ohero-sub{font-size:1.2rem;color:rgba(255,255,255,.9);max-width:46ch;margin:0 0 1.8rem}
   .ohero-phone{margin:1.1rem 0 0;font-size:.92rem;color:rgba(255,255,255,.72)}
   .ohero-phone a{color:#fff;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
@@ -374,6 +383,19 @@ const schema = {
   .feat-card:hover .feat-bar{transform:scaleY(1.6)}
   .feat-icon{transition:background .3s,color .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
   .feat-card:hover .feat-icon{background:var(--red);color:#fff;transform:translateY(-2px)}
+  /* Same idea as the How It Works stage-walk: one shared 10s timeline, each
+     card's 25% turn baked into its own keyframe percentages rather than an
+     animation-delay (which would stagger the *reset* too and the row would
+     un-highlight raggedly). Reuses the hover look — filled cedar, white icon,
+     soft glow — so the auto-cycle and the hover state read as the same idea. */
+  .feat-grid .feat-card.in:nth-child(1) .feat-icon{animation:feat-glow-1 10s linear infinite}
+  .feat-grid .feat-card.in:nth-child(2) .feat-icon{animation:feat-glow-2 10s linear infinite}
+  .feat-grid .feat-card.in:nth-child(3) .feat-icon{animation:feat-glow-3 10s linear infinite}
+  .feat-grid .feat-card.in:nth-child(4) .feat-icon{animation:feat-glow-4 10s linear infinite}
+  @keyframes feat-glow-1{0%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}2%,17%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}25%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes feat-glow-2{0%,25%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}27%,42%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}50%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes feat-glow-3{0%,50%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}52%,67%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}75%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes feat-glow-4{0%,75%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}77%,92%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
   @media(max-width:900px){.feat-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
 
@@ -420,8 +442,9 @@ const schema = {
   .ocard:hover .shot{transform:scale(1.06)}
   /* Footer fade, not a full-card veil: it only covers the band the copy sits
      in and is fully clear by ~64%, so the building itself stays untouched.
-     A light shadow rides along to protect the heading, which sits highest. */
-  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(30,40,44,.90) 0%,rgba(30,40,44,.84) 26%,rgba(32,43,47,.66) 42%,rgba(34,46,50,.24) 54%,rgba(34,46,50,0) 64%)}
+     Lighter than the first pass — that one was darkening the photos more
+     than intended. A light shadow rides along to protect the heading. */
+  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(30,40,44,.82) 0%,rgba(30,40,44,.76) 26%,rgba(32,43,47,.60) 42%,rgba(34,46,50,.20) 54%,rgba(34,46,50,0) 64%)}
   .ocard-body{text-shadow:0 1px 3px rgba(0,0,0,.5)}
   .ocard-body{position:relative;z-index:2;width:100%;padding:1.3rem 1.35rem 1.35rem;display:flex;flex-direction:column;gap:.4rem}
   .ocard-body h3{margin:0;font-size:1.3rem;line-height:1.15;color:#fff}
@@ -511,6 +534,7 @@ const schema = {
     html.js .process li.in .pnum,html.js .process li.in::before{animation:none}
     html.js .process li.in::before{background:var(--red);opacity:1}
     html.js .process li.in .pnum{background:transparent;color:var(--red-deep);box-shadow:none}
+    .feat-grid .feat-card.in .feat-icon{animation:none;background:rgba(178,107,46,.10);color:var(--red);box-shadow:none}
   }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
@@ -672,18 +696,20 @@ const schema = {
     /* Two columns rather than one long stack — the building/service-area
        lists are what made this run to a full extra screen on a phone. */
     .foot-grid{grid-template-columns:1fr 1fr;gap:1.8rem 1.2rem}
-    /* Floating pills, not a bar. Call is a circular icon button, Start
-       Project a pill beside it — both lift off the page with their own
-       shadow, with a gap between and margin off both edges, instead of one
-       slab where Start Project ate the width and Call got a sliver. */
-    .mobile-bar{display:flex;position:fixed;left:1rem;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom));z-index:60;gap:.7rem}
-    .mobile-call{flex:none;width:3.1rem;height:3.1rem;display:flex;align-items:center;justify-content:center;
-      background:var(--charcoal-deep);color:#fff;border-radius:50%;text-decoration:none;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}
-    .mobile-call svg{width:18px;height:18px}
-    .mobile-start{flex:1;display:flex;align-items:center;justify-content:center;
-      background:var(--red-dark);color:#fff;border-radius:999px;padding:.85rem 1rem;font-weight:800;
-      text-decoration:none;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}
-    body{padding-bottom:calc(4.9rem + env(safe-area-inset-bottom))}
+    /* Two independent floating pills, not a bar. Both sized to their own
+       content (not one flex:1 stretching to fill the row) and pinned to
+       opposite edges via space-between, so there's real separation between
+       them instead of Start Project eating ~75% of the row and Call
+       shrinking to a sliver beside it. Each carries its own icon and label
+       now that neither has to squeeze against the other. */
+    .mobile-bar{display:flex;justify-content:space-between;align-items:center;
+      position:fixed;left:1rem;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom));z-index:60}
+    .mobile-call,.mobile-start{flex:none;display:flex;align-items:center;gap:.45rem;
+      border-radius:999px;padding:.8rem 1.15rem;font-weight:800;font-size:.95rem;
+      text-decoration:none;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}
+    .mobile-call{background:var(--charcoal-deep)}
+    .mobile-start{background:var(--red-dark)}
+    body{padding-bottom:calc(4.6rem + env(safe-area-inset-bottom))}
   }
 </style>
 

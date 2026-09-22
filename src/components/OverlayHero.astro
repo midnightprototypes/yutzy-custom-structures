@@ -9,16 +9,16 @@ interface Props {
   eyebrow?: string; title: string; subtitle?: string;
   image: string; alt: string; ctaHref?: string;
   ctaText?: string; ctaSecondaryText?: string; ctaSecondaryHref?: string;
-  areaNote?: string; areaNoteHref?: string;
+  areaNote?: string; areaNoteHref?: string; full?: boolean;
 }
 const {
   eyebrow, title, subtitle, image, alt,
   ctaHref = 'index.html#contact', ctaText = 'Start Your Project',
   ctaSecondaryText, ctaSecondaryHref,
-  areaNote, areaNoteHref,
+  areaNote, areaNoteHref, full = false,
 } = Astro.props;
 ---
-<section class="ohero">
+<section class={`ohero${full ? ' ohero-full' : ''}`}>
   <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
   <div class="ohero-scrim"></div>
   <div class="wrap ohero-inner">

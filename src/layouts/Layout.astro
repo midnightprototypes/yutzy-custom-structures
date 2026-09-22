@@ -1,8 +1,10 @@
 ---
 import { business } from '../data/site';
 const b = business;
-interface Props { title: string; description: string; image?: string; }
-const { title, description, image = b.logo } = Astro.props;
+interface Props { title: string; description: string; image?: string; heroOverlay?: boolean; }
+// heroOverlay: the page opens with a full-bleed hero, so the header lifts out
+// of the flow and sits on the photo until you scroll past it.
+const { title, description, image = b.logo, heroOverlay = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const schema = {
   "@context": "https://schema.org",
@@ -42,13 +44,18 @@ const schema = {
   <meta property="og:image" content={new URL(image, Astro.site)} />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <!-- Set before paint so reveal-on-scroll never flashes its visible state. -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<header class="site">
+<header class={`site${heroOverlay ? ' over-hero' : ''}`}>
   <div class="wrap navbar">
     <a class="brand" href="index.html" aria-label={b.name}>
-      <span class="mark"><img src="images/yutzy-mark.webp" alt="" width="871" height="463" /></span>
+      <span class="mark">
+        <img class="mark-dark" src="images/yutzy-mark.webp" alt="" width="871" height="463" />
+        {heroOverlay && <img class="mark-light" src="images/yutzy-mark-white.webp" alt="" width="871" height="463" />}
+      </span>
     </a>
     <nav class="nav-links" id="site-nav">
       <a href="index.html#buildings">What We Build</a>
@@ -132,6 +139,78 @@ const schema = {
       if (e.target.closest('a')) { n.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
     });
   })();
+
+  // Overlay header: solid cream bar once the hero has scrolled past, and
+  // whenever the mobile menu opens (the panel needs an opaque backdrop).
+  // Driven by a sentinel at the foot of the hero rather than scroll maths, so
+  // it doesn't care how tall the hero ends up or how the header is positioned.
+  (function () {
+    var h = document.querySelector('header.site.over-hero');
+    if (!h) return;
+    var hero = document.querySelector('.ohero');
+    var nav = document.getElementById('site-nav');
+    var pastHero = false;
+
+    function apply() {
+      h.classList.toggle('is-solid', pastHero || (nav && nav.classList.contains('open')));
+    }
+
+    if (hero && 'IntersectionObserver' in window) {
+      var mark = document.createElement('div');
+      mark.setAttribute('aria-hidden', 'true');
+      mark.style.cssText = 'position:absolute;bottom:0;left:0;width:1px;height:1px;pointer-events:none';
+      hero.appendChild(mark);
+      new IntersectionObserver(function (entries) {
+        pastHero = !entries[0].isIntersecting;
+        apply();
+      }, { rootMargin: '-' + (h.offsetHeight + 8) + 'px 0px 0px 0px' }).observe(mark);
+    } else {
+      window.addEventListener('scroll', function () {
+        pastHero = window.scrollY > (hero ? hero.offsetHeight - h.offsetHeight - 8 : 40);
+        apply();
+      }, { passive: true });
+    }
+
+    if (nav) new MutationObserver(apply).observe(nav, { attributes: true, attributeFilter: ['class'] });
+    apply();
+  })();
+
+  // Reveal on scroll. Tagged here rather than in markup so every page picks it
+  // up without touching 24 templates. Hero content is deliberately skipped —
+  // it's visible at load, so revealing it would just flash.
+  (function () {
+    var groups = ['.sec-head', '.ocard', '.card', '.process > *', '.quote-wrap', '.faq-item', '.loc-card'];
+    var targets = [];
+    document.querySelectorAll('main section').forEach(function (sec) {
+      if (sec.classList.contains('ohero') || sec.querySelector('.ohero')) return;
+      groups.forEach(function (sel) {
+        var found = sec.querySelectorAll(sel);
+        found.forEach(function (el, i) {
+          if (el.closest('.ohero') || el.classList.contains('reveal')) return;
+          // Only tag what starts below the fold. Anything already on screen is
+          // left alone, so a misbehaving observer can never strand visible
+          // content at opacity 0.
+          if (el.getBoundingClientRect().top < window.innerHeight * 0.95) return;
+          el.classList.add('reveal');
+          if (i % 4 === 1) el.classList.add('d1');
+          else if (i % 4 === 2) el.classList.add('d2');
+          else if (i % 4 === 3) el.classList.add('d3');
+          targets.push(el);
+        });
+      });
+    });
+    if (!targets.length) return;
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    targets.forEach(function (el) { io.observe(el); });
+  })();
 </script>
 
 <style is:global>
@@ -181,7 +260,29 @@ const schema = {
   .ph{position:relative;border-radius:var(--r);overflow:hidden;background:linear-gradient(135deg,#3a474c,#1e2321 72%);display:flex;align-items:flex-end;color:rgba(255,255,255,.92);min-height:220px}
   .ph .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;display:block}
 
-  header.site{position:sticky;top:0;z-index:50;background:rgba(237,231,215,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  header.site{position:sticky;top:0;z-index:50;background:rgba(237,231,215,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:background .3s ease,border-color .3s ease}
+
+  /* Overlay header: lifted out of the flow so the hero photo runs to the very
+     top of the page, transparent over it, then resolving to the normal cream
+     bar once .is-solid is set past the hero. */
+  header.site.over-hero{position:fixed;left:0;right:0;background:transparent;backdrop-filter:none;border-bottom-color:transparent}
+  header.site.over-hero .mark-dark{display:none}
+  header.site.over-hero .mark-light{display:block}
+  header.site.over-hero .nav-links a:not(.btn),
+  header.site.over-hero .nav-phone{color:#fff}
+  header.site.over-hero .nav-phone span{color:rgba(255,255,255,.72)}
+  header.site.over-hero .nav-toggle{color:#fff}
+  /* The nav sits on the photo, so give the type the same light shadow the
+     hero copy uses rather than trusting the image to stay dark up there. */
+  header.site.over-hero .nav-links a:not(.btn),
+  header.site.over-hero .nav-phone{text-shadow:0 1px 3px rgba(0,0,0,.55)}
+  header.site.over-hero.is-solid{position:fixed;background:rgba(237,231,215,.92);backdrop-filter:blur(8px);border-bottom-color:var(--line)}
+  header.site.over-hero.is-solid .mark-dark{display:block}
+  header.site.over-hero.is-solid .mark-light{display:none}
+  header.site.over-hero.is-solid .nav-links a:not(.btn){color:var(--ink);text-shadow:none}
+  header.site.over-hero.is-solid .nav-phone{color:var(--charcoal-deep);text-shadow:none}
+  header.site.over-hero.is-solid .nav-phone span{color:var(--muted)}
+  header.site.over-hero.is-solid .nav-toggle{color:var(--charcoal-deep)}
   .navbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
   .brand{display:flex;align-items:center;text-decoration:none}
   .brand .mark{display:grid;place-items:center;flex:none}
@@ -209,6 +310,10 @@ const schema = {
 
   /* full-bleed overlay hero */
   .ohero{position:relative;min-height:clamp(440px,68vh,600px);display:flex;align-items:flex-end;overflow:hidden}
+  /* Full-bleed variant: runs from the very top of the page (the header floats
+     over it) and stops a little short of the viewport so the next section
+     peeks in and invites the scroll. */
+  .ohero.ohero-full{min-height:clamp(560px,92vh,900px)}
   .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .ohero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,14,13,.85),rgba(15,14,13,.5) 45%,rgba(15,14,13,.1)),linear-gradient(0deg,rgba(15,14,13,.65),transparent 55%)}
   .ohero-inner{position:relative;color:#fff;padding-top:clamp(3rem,10vh,5.5rem);padding-bottom:clamp(2.5rem,7vh,4rem)}
@@ -273,11 +378,11 @@ const schema = {
   .ocard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
   .ocard .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block;transition:transform .5s ease}
   .ocard:hover .shot{transform:scale(1.06)}
-  /* No scrim — the photo shows at full brightness. Legibility comes from a
-     tight dark halo on the glyphs instead, which hugs the text rather than
-     veiling the image. These photos need it: several have bright sky or white
-     siding right behind the copy, where plain white text measures ~1:1. */
-  .ocard-body{text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 6px rgba(0,0,0,.85),0 2px 14px rgba(0,0,0,.6)}
+  /* Footer fade, not a full-card veil: it only covers the band the copy sits
+     in and is fully clear by ~64%, so the building itself stays untouched.
+     A light shadow rides along to protect the heading, which sits highest. */
+  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(18,16,15,.90) 0%,rgba(18,16,15,.84) 26%,rgba(18,16,15,.66) 42%,rgba(18,16,15,.24) 54%,rgba(18,16,15,0) 64%)}
+  .ocard-body{text-shadow:0 1px 3px rgba(0,0,0,.5)}
   .ocard-body{position:relative;z-index:2;width:100%;padding:1.3rem 1.35rem 1.35rem;display:flex;flex-direction:column;gap:.4rem}
   .ocard-body h3{margin:0;font-size:1.3rem;line-height:1.15;color:#fff}
   .ocard-body p{margin:0;color:rgba(255,255,255,.88);font-size:.92rem;line-height:1.45}
@@ -290,6 +395,55 @@ const schema = {
 
   .why{background:var(--cream-2)}
   .alt{background:var(--cream-2)}
+
+  /* ---- Texture: depth on the surfaces that have no photography ---- */
+
+  /* Paper grain over the page background. Content sits above it, so it warms
+     the flat cream areas without touching any photo. */
+  body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.055;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  main,footer{position:relative;z-index:1}
+
+  /* Blueprint grid + one warm lamp glow, on the quote section only. A drawing
+     grid is the right metaphor for a builder, and keeping it to the conversion
+     moment stops it reading as wallpaper. */
+  #contact{position:relative;overflow:hidden}
+  #contact::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:38px 38px;opacity:.5;
+    -webkit-mask-image:radial-gradient(ellipse 70% 80% at 62% 38%,#000 28%,transparent 74%);
+            mask-image:radial-gradient(ellipse 70% 80% at 62% 38%,#000 28%,transparent 74%)}
+  #contact::after{content:'';position:absolute;pointer-events:none;z-index:0;width:640px;height:640px;right:-180px;top:-260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(194,146,74,.26) 0%,rgba(194,146,74,.09) 36%,transparent 66%);
+    animation:glow-breathe 8s ease-in-out infinite}
+  @keyframes glow-breathe{50%{opacity:.72;transform:scale(1.05)}}
+  #contact > .wrap{position:relative;z-index:1}
+
+  /* Dark bands flatten worse than light ones — a near-invisible hatch fixes it. */
+  .trust-strip,.area-band{position:relative}
+  .trust-strip::before,.area-band::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 12px)}
+  .trust-strip > .wrap{position:relative;z-index:1}
+
+  /* ---- Motion ---- */
+
+  html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  html.js .reveal.in{opacity:1;transform:none}
+  html.js .reveal.d1{transition-delay:.1s}
+  html.js .reveal.d2{transition-delay:.2s}
+  html.js .reveal.d3{transition-delay:.3s}
+
+  /* Hover craft: the CTA links read "→", so nudging the whole link forward
+     gives the same cue without wrapping the glyph. */
+  .ocard-body .q,.card-body .q{display:inline-block;transition:transform .2s cubic-bezier(.2,.7,.2,1),color .2s}
+  .ocard-body .q:hover,.card-body .q:hover{transform:translateX(3px)}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    html.js .reveal{opacity:1;transform:none;transition:none}
+    #contact::after{animation:none}
+    .ocard,.ocard .shot,.ocard-body .q,.card-body .q{transition:none}
+  }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
   .checks svg{flex:none;margin-top:3px}

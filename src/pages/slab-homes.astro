@@ -30,9 +30,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom slab homes with flexible floor plans and no wasted square footage — built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Slab Homes' }]} />
-
   <OverlayHero
     eyebrow="Custom Slab Homes | Kansas + Missouri"
     title="Single-Level Living. Built Around You."
@@ -44,7 +43,10 @@ const faqSchema = {
     ctaSecondaryText="See Home Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building Since 2005 · Kansas + Missouri · Custom Floor Plans"
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Slab Homes' }]} />
 
   <!-- WHY A SLAB HOME -->
   <section id="why">

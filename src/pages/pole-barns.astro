@@ -28,9 +28,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom pole barns for storage, workshops, agriculture and equipment — sized and configured around how you use them. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Pole Barns' }]} />
-
   <OverlayHero
     eyebrow="Custom Pole Barns | Kansas + Missouri"
     title="Built for the Work You Need It to Do."
@@ -42,7 +41,10 @@ const faqSchema = {
     ctaSecondaryText="See Pole Barn Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Pole Barns' }]} />
 
   <!-- WHAT WILL YOU USE IT FOR -->
   <section id="why">

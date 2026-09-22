@@ -31,9 +31,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Post-frame construction gives you the freedom to create open, flexible layouts for a true custom home. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Post-Frame Homes' }]} />
-
   <OverlayHero
     eyebrow="Custom Post-Frame Homes | Kansas + Missouri"
     title="A Custom Home With More Flexibility."
@@ -45,7 +44,10 @@ const faqSchema = {
     ctaSecondaryText="Talk Through Your Home"
     ctaSecondaryHref="index.html?type=Post-Frame+Home#contact"
     areaNote="Building Since 2005 · Kansas + Missouri · Custom Floor Plans"
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Post-Frame Homes' }]} />
 
   <!-- WHY POST-FRAME -->
   <section id="why">

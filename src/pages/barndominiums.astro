@@ -30,9 +30,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom barndominiums designed around how you want to live, work and use your property — home, garage and shop under one roof. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Barndominiums' }]} />
-
   <OverlayHero
     eyebrow="Custom Barndominiums | Kansas + Missouri"
     title="Build the Home. Keep the Space."
@@ -44,7 +43,10 @@ const faqSchema = {
     ctaSecondaryText="See Barndominium Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building Since 2005 · Kansas + Missouri · Custom Floor Plans · 5-Year Workmanship Warranty"
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Barndominiums' }]} />
 
   <!-- WHY A BARNDOMINIUM -->
   <section id="why">

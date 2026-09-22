@@ -28,9 +28,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom equestrian barns with the stalls, ventilation and storage designed around your horses and your daily routine. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Equestrian Barns' }]} />
-
   <OverlayHero
     eyebrow="Custom Equestrian Barns | Kansas + Missouri"
     title="Built Around Your Animals and Your Routine."
@@ -42,7 +41,10 @@ const faqSchema = {
     ctaSecondaryText="See Equestrian Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Equestrian Barns' }]} />
 
   <!-- WHAT DOES THE BARN NEED TO DO -->
   <section id="why">

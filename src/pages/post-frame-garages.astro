@@ -28,9 +28,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom post-frame garages for vehicles, RVs and boats — attached or standalone, styled to match your home. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Post-Frame Garages' }]} />
-
   <OverlayHero
     eyebrow="Custom Post-Frame Garages | Kansas + Missouri"
     title="Room for Everything You Park or Store."
@@ -42,7 +41,10 @@ const faqSchema = {
     ctaSecondaryText="See Garage Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Post-Frame Garages' }]} />
 
   <!-- WHAT DO YOU NEED IT TO HOLD -->
   <section id="why">

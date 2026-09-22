@@ -28,9 +28,8 @@ const faqSchema = {
 <Layout
   title={`${self.seoTitle} | ${b.name}`}
   description="Custom hobby shops, workshops and she-sheds — insulated and finish-ready, sized around how you actually work. Built by Yutzy Custom Structures across Kansas & Missouri."
+  heroOverlay
 >
-  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Hobby Shops' }]} />
-
   <OverlayHero
     eyebrow="Custom Hobby Shops | Kansas + Missouri"
     title="The Space You've Been Waiting For."
@@ -42,7 +41,10 @@ const faqSchema = {
     ctaSecondaryText="See Hobby Shop Projects"
     ctaSecondaryHref="#projects"
     areaNote="Building across Kansas and Missouri from Garnett, KS and Fordland, MO."
+    full
   />
+
+  <Breadcrumbs items={[{ label: 'What We Build', href: 'index.html#buildings' }, { label: 'Hobby Shops' }]} />
 
   <!-- WHAT'S THE SPACE FOR -->
   <section id="why">

@@ -359,9 +359,13 @@ const schema = {
      back; translating exactly -50% loops it with no seam. */
   .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
            mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-  .marquee .track{display:flex;align-items:center;gap:2.6rem;width:max-content;animation:marquee-slide 34s linear infinite}
-  @keyframes marquee-slide{to{transform:translateX(-50%)}}
+  .marquee .track{display:flex;align-items:center;gap:3.2rem;width:max-content;animation:marquee-slide 48s linear infinite}
+  /* -25%, matching the four copies in markup: translating by one copy's worth
+     of width, not half the track, is what keeps this seamless regardless of
+     monitor width. */
+  @keyframes marquee-slide{to{transform:translateX(-25%)}}
   .marquee:hover .track{animation-play-state:paused}
+  @media(min-width:900px){.marquee .track{gap:4.4rem}}
   @media (prefers-reduced-motion: reduce){
     .marquee{-webkit-mask-image:none;mask-image:none}
     .marquee .track{animation:none;flex-wrap:wrap;width:auto;justify-content:center;gap:.9rem 2.4rem}

@@ -50,12 +50,18 @@ const faqHighlights = [
   <section class="trust-strip">
     <div class="marquee">
       <div class="track">
+        {/* Four copies, not two. Translating by -25% loops seamlessly only if
+            three copies' worth of width is never less than the viewport —
+            with two copies (translate -50%) a short list like this runs out
+            of content before the loop resets on any wide monitor, which is
+            the gap-then-jump this replaces. Only the first copy is real;
+            the rest are aria-hidden so screen readers hear the list once. */}
         {trustMarks.map((mark) => (
           <span class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> {mark}</span>
         ))}
-        {trustMarks.map((mark) => (
+        {[0, 1, 2].map(() => trustMarks.map((mark) => (
           <span class="badge" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2924a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> {mark}</span>
-        ))}
+        )))}
       </div>
     </div>
   </section>

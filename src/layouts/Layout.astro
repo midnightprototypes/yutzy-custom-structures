@@ -330,7 +330,7 @@ const schema = {
   .hero .ph{min-height:400px;box-shadow:var(--shadow)}
   .badges{border-top:1px solid rgba(255,255,255,.16);margin-top:2.5rem}
   .badges .wrap{display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;padding-top:1.3rem;padding-bottom:.2rem}
-  .badge{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.9);font-weight:600;font-size:.95rem}
+  .badge{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.9);font-weight:600;font-size:.95rem;white-space:nowrap;flex:none}
   .badge svg{flex:none}
 
   /* full-bleed overlay hero */
@@ -354,7 +354,21 @@ const schema = {
   .ohero-area{margin:.5rem 0 0;font-size:.88rem;color:rgba(255,255,255,.72)}
   .ohero-area a{color:#f0d6ab;font-weight:600;text-decoration:none;white-space:nowrap}
   .trust-strip{background:var(--charcoal-deep);color:#fff;padding:1.05rem 0}
-  .badges-row{display:flex;flex-wrap:wrap;gap:.9rem 2.4rem;justify-content:center}
+  /* Trust marks as a marquee rather than a static row, so more of them can
+     sit here without crowding or wrapping. Track is the list twice back to
+     back; translating exactly -50% loops it with no seam. */
+  .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+           mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marquee .track{display:flex;align-items:center;gap:2.6rem;width:max-content;animation:marquee-slide 34s linear infinite}
+  @keyframes marquee-slide{to{transform:translateX(-50%)}}
+  .marquee:hover .track{animation-play-state:paused}
+  @media (prefers-reduced-motion: reduce){
+    .marquee{-webkit-mask-image:none;mask-image:none}
+    .marquee .track{animation:none;flex-wrap:wrap;width:auto;justify-content:center;gap:.9rem 2.4rem}
+    /* the second copy exists only to loop the marquee; hide it once there's
+       no loop to hide */
+    .marquee .track .badge[aria-hidden]{display:none}
+  }
 
   /* icon feature cards with bottom accent bar */
   .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;margin-top:1.6rem}
@@ -456,10 +470,12 @@ const schema = {
   /* The cream sections are the flattest surfaces on the site. A faint hatch on
      the alternating ones plus a soft top edge gives the page a sense of
      stacked planes instead of one continuous sheet of colour. */
-  .alt{position:relative}
-  .alt::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  /* .tex: the same hatch as .alt but without the darker alt background —
+     for cream sections that need depth without changing colour. */
+  .alt,.tex{position:relative}
+  .alt::before,.tex::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
     background-image:repeating-linear-gradient(135deg,rgba(36,42,39,.022) 0 1px,transparent 1px 14px)}
-  .alt > .wrap{position:relative;z-index:1}
+  .alt > .wrap,.tex > .wrap{position:relative;z-index:1}
   /* Hairline lift where one cream plane meets the next. */
   section + section:not(.alt):not(.trust-strip){box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
   .alt{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(36,42,39,.05)}
@@ -468,7 +484,7 @@ const schema = {
   .trust-strip,.area-band{position:relative}
   .trust-strip::before,.area-band::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
     background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 12px)}
-  .trust-strip > .wrap{position:relative;z-index:1}
+  .trust-strip > .marquee{position:relative;z-index:1}
 
   /* ---- Motion ---- */
 
@@ -502,7 +518,7 @@ const schema = {
     /* stage walk off — every step lands on its resting state, not mid-cycle */
     html.js .process li.in .pnum,html.js .process li.in::before{animation:none}
     html.js .process li.in::before{background:var(--red);opacity:1}
-    html.js .process li.in .pnum{color:var(--red-deep);text-shadow:none}
+    html.js .process li.in .pnum{background:transparent;color:var(--red-deep);box-shadow:none}
   }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
@@ -528,7 +544,11 @@ const schema = {
   .process li::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);transform-origin:left}
   html.js .process li.reveal::before{transform:scaleX(0);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
   html.js .process li.reveal.in::before{transform:scaleX(1)}
-  .pnum{display:block;font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--red-deep);margin-bottom:.4rem}
+  /* Fixed padding/radius at rest (background stays transparent) so the chip
+     never changes size when it lights up — only colour and glow move. */
+  .pnum{display:inline-flex;align-items:center;font-family:var(--font-head);font-weight:800;font-size:1.6rem;
+    color:var(--red-deep);background:transparent;border-radius:10px;padding:.1rem .5rem;margin:0 0 .5rem -.5rem;
+    box-shadow:0 0 0 0 rgba(194,146,74,0)}
   html.js .process li.reveal .pnum{opacity:0;transform:translateY(6px);transition:opacity .45s ease .25s,transform .45s cubic-bezier(.2,.7,.2,1) .25s}
   html.js .process li.reveal.in .pnum{opacity:1;transform:none}
 
@@ -537,8 +557,8 @@ const schema = {
      using animation-delay instead would stagger the *reset* too, so the row
      would un-highlight raggedly at the end of each cycle. Colour and glow
      only: transform stays free for the reveal transition above. */
-  html.js .process li.in .pnum{animation:stage-num 15s linear infinite}
-  html.js .process li.in::before{animation:stage-rule 15s linear infinite}
+  html.js .process li.in .pnum{animation:stage-num 10s linear infinite}
+  html.js .process li.in::before{animation:stage-rule 10s linear infinite}
   html.js .process li.in:nth-child(2) .pnum{animation-name:stage-num-2}
   html.js .process li.in:nth-child(2)::before{animation-name:stage-rule-2}
   html.js .process li.in:nth-child(3) .pnum{animation-name:stage-num-3}
@@ -547,16 +567,20 @@ const schema = {
   html.js .process li.in:nth-child(4)::before{animation-name:stage-rule-4}
   html.js .process li.in:nth-child(5) .pnum{animation-name:stage-num-5}
   html.js .process li.in:nth-child(5)::before{animation-name:stage-rule-5}
-  @keyframes stage-num{0%,2%{color:var(--red-deep);text-shadow:none}6%,14%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}18%,100%{color:var(--red-deep);text-shadow:none}}
-  @keyframes stage-num-2{0%,22%{color:var(--red-deep);text-shadow:none}26%,34%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}38%,100%{color:var(--red-deep);text-shadow:none}}
-  @keyframes stage-num-3{0%,42%{color:var(--red-deep);text-shadow:none}46%,54%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}58%,100%{color:var(--red-deep);text-shadow:none}}
-  @keyframes stage-num-4{0%,62%{color:var(--red-deep);text-shadow:none}66%,74%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}78%,100%{color:var(--red-deep);text-shadow:none}}
-  @keyframes stage-num-5{0%,82%{color:var(--red-deep);text-shadow:none}86%,94%{color:var(--red);text-shadow:0 0 14px rgba(178,107,46,.5)}98%,100%{color:var(--red-deep);text-shadow:none}}
-  @keyframes stage-rule{0%,2%{background:var(--red);opacity:.55}6%,14%{background:var(--gold);opacity:1}18%,100%{background:var(--red);opacity:.55}}
-  @keyframes stage-rule-2{0%,22%{background:var(--red);opacity:.55}26%,34%{background:var(--gold);opacity:1}38%,100%{background:var(--red);opacity:.55}}
-  @keyframes stage-rule-3{0%,42%{background:var(--red);opacity:.55}46%,54%{background:var(--gold);opacity:1}58%,100%{background:var(--red);opacity:.55}}
-  @keyframes stage-rule-4{0%,62%{background:var(--red);opacity:.55}66%,74%{background:var(--gold);opacity:1}78%,100%{background:var(--red);opacity:.55}}
-  @keyframes stage-rule-5{0%,82%{background:var(--red);opacity:.55}86%,94%{background:var(--gold);opacity:1}98%,100%{background:var(--red);opacity:.55}}
+  /* 10s cycle, 5 equal 20%-wide turns. Each turn ramps in over 2%, holds a
+     clearly-visible 12%, then settles back to rest before the next turn
+     starts — no gaps in the schedule, no two turns lit at once. The chip
+     fills solid and glows; the rule brightens to gold at the same time. */
+  @keyframes stage-num{0%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}2%,14%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}20%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes stage-num-2{0%,20%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}22%,34%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}40%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes stage-num-3{0%,40%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}42%,54%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}60%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes stage-num-4{0%,60%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}62%,74%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}80%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes stage-num-5{0%,80%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}82%,94%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
+  @keyframes stage-rule{0%{background:var(--red);opacity:.55}2%,14%{background:var(--gold);opacity:1}20%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-2{0%,20%{background:var(--red);opacity:.55}22%,34%{background:var(--gold);opacity:1}40%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-3{0%,40%{background:var(--red);opacity:.55}42%,54%{background:var(--gold);opacity:1}60%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-4{0%,60%{background:var(--red);opacity:.55}62%,74%{background:var(--gold);opacity:1}80%,100%{background:var(--red);opacity:.55}}
+  @keyframes stage-rule-5{0%,80%{background:var(--red);opacity:.55}82%,94%{background:var(--gold);opacity:1}100%{background:var(--red);opacity:.55}}
   .process h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--charcoal-deep)}
   .process p{margin:0;color:var(--muted);font-size:.92rem}
   @media(max-width:900px){.process{grid-template-columns:1fr 1fr}}
@@ -636,9 +660,13 @@ const schema = {
      is simply solid. */
   footer.site::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
     background-image:var(--foot-photo,none);background-size:cover;background-position:center 18%;
-    opacity:.22;
-    -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
-            mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%)}
+    filter:saturate(.82) brightness(.78);opacity:.55;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 78%,transparent 100%);
+            mask-image:linear-gradient(to bottom,#000 0%,#000 78%,transparent 100%)}
+  /* A steady tint under the text columns, independent of the photo's own
+     brightness, so the footer links stay readable over a bright sky. */
+  footer.site::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(30,35,33,.55) 0%,rgba(30,35,33,.7) 60%,var(--charcoal-deep) 100%)}
   footer.site > .wrap,footer.site .foot-legal{position:relative;z-index:1}
   .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.1fr;gap:1.6rem}
   footer.site a{color:#fff;text-decoration:none}

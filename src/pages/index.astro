@@ -390,7 +390,11 @@ const faqHighlights = [
 
 <style>
   .rev-inline{margin:.6rem 0 0}
-  .rev-inline a{color:var(--red-deep);font-weight:700;text-decoration:none}
+  .rev-inline a{color:var(--red-deep);font-weight:700;text-decoration:none;display:inline-block;transition:transform .2s cubic-bezier(.2,.7,.2,1),color .2s}
+  .rev-inline a:hover{color:var(--red-dark);transform:translateX(3px)}
+  /* Kept here rather than in Layout's global block: this rule is scoped, so a
+     global reduced-motion override would lose the specificity contest. */
+  @media (prefers-reduced-motion: reduce){.rev-inline a{transition:none}}
   .rev-badges{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-bottom:2.2rem}
   .rev-badge{display:inline-flex;align-items:center;gap:.5rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem .95rem;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;box-shadow:0 1px 0 rgba(0,0,0,.03)}
   .rev-badge:hover{border-color:var(--red)}
@@ -402,7 +406,10 @@ const faqHighlights = [
   .rev-count{color:var(--muted)}
 
   /* Intent-first "what are you building" grid — four even paths, deliberately equal weight */
-  .intent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  /* Two across on desktop, not four. At four these were ~250px wide against a
+     400px height — a portrait slot that crops landscape building shots badly
+     and reads as squashed. Two gives each photo real width. */
+  .intent-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
   /* .ocard (overlay photo cards) lives in Layout.astro — shared with the
      building pages. Only the grid that lays them out is page-specific. */
   .not-sure{max-width:640px;margin:2.4rem auto 0;text-align:center;color:var(--muted)}
@@ -411,8 +418,8 @@ const faqHighlights = [
   @media(max-width:900px){.intent-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.intent-grid{grid-template-columns:1fr}}
 
-  /* featured-projects grid — four across like the intent grid, not 3+1 */
-  .proj-cards{grid-template-columns:repeat(4,1fr)}
+  /* featured-projects grid — matches the intent grid, two across */
+  .proj-cards{grid-template-columns:repeat(2,1fr);gap:1.5rem}
   @media(max-width:900px){.proj-cards{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.proj-cards{grid-template-columns:1fr}}
 

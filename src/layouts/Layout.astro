@@ -179,7 +179,7 @@ const schema = {
   // up without touching 24 templates. Hero content is deliberately skipped —
   // it's visible at load, so revealing it would just flash.
   (function () {
-    var groups = ['.sec-head', '.ocard', '.card', '.process > *', '.quote-wrap', '.faq-item', '.loc-card'];
+    var groups = ['.sec-head', '.ocard', '.card', '.feat-card', '.process > li', '.quote-wrap', '.faq-item', '.loc-card', '.rev-badge'];
     var targets = [];
     document.querySelectorAll('main section').forEach(function (sec) {
       if (sec.classList.contains('ohero') || sec.querySelector('.ohero')) return;
@@ -192,9 +192,10 @@ const schema = {
           // content at opacity 0.
           if (el.getBoundingClientRect().top < window.innerHeight * 0.95) return;
           el.classList.add('reveal');
-          if (i % 4 === 1) el.classList.add('d1');
-          else if (i % 4 === 2) el.classList.add('d2');
-          else if (i % 4 === 3) el.classList.add('d3');
+          // Stagger across the row; caps at d5 so a five-step process still
+          // reads as a sequence rather than restarting its delays midway.
+          var step = i % 6;
+          if (step) el.classList.add('d' + step);
           targets.push(el);
         });
       });
@@ -210,6 +211,19 @@ const schema = {
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     targets.forEach(function (el) { io.observe(el); });
+
+    // Safety net. These elements start at opacity 0, so if the observer ever
+    // fails to fire the content would be invisible rather than merely
+    // un-animated. Sweep anything that's on screen and still hidden.
+    function sweep() {
+      targets.forEach(function (el) {
+        if (el.classList.contains('in')) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+      });
+    }
+    setTimeout(sweep, 2500);
+    window.addEventListener('load', function () { setTimeout(sweep, 400); });
   })();
 </script>
 
@@ -315,6 +329,10 @@ const schema = {
      peeks in and invites the scroll. */
   .ohero.ohero-full{min-height:clamp(560px,92vh,900px)}
   .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* The page's one ambient loop: a slow push on the hero. `alternate` means it
+     eases back out rather than snapping to the start of the next cycle. */
+  .ohero-full .ohero-bg{transform-origin:52% 58%;animation:hero-push 26s ease-in-out infinite alternate}
+  @keyframes hero-push{from{transform:scale(1)}to{transform:scale(1.08)}}
   .ohero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,14,13,.85),rgba(15,14,13,.5) 45%,rgba(15,14,13,.1)),linear-gradient(0deg,rgba(15,14,13,.65),transparent 55%)}
   .ohero-inner{position:relative;color:#fff;padding-top:clamp(3rem,10vh,5.5rem);padding-bottom:clamp(2.5rem,7vh,4rem)}
   .ohero-eye{color:#f0d6ab}
@@ -333,7 +351,12 @@ const schema = {
   .feat-icon{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:12px;background:rgba(178,107,46,.10);color:var(--red);margin-bottom:.9rem}
   .feat-card h3{margin:0 0 .35rem;font-size:1.12rem;color:var(--charcoal-deep)}
   .feat-card p{margin:0;color:var(--muted);font-size:.94rem}
-  .feat-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--red)}
+  .feat-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--red);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .feat-card{transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s}
+  .feat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cfc5ad}
+  .feat-card:hover .feat-bar{transform:scaleY(1.6)}
+  .feat-icon{transition:background .3s,color .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
+  .feat-card:hover .feat-icon{background:var(--red);color:#fff;transform:translateY(-2px)}
   @media(max-width:900px){.feat-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
 
@@ -381,7 +404,7 @@ const schema = {
   /* Footer fade, not a full-card veil: it only covers the band the copy sits
      in and is fully clear by ~64%, so the building itself stays untouched.
      A light shadow rides along to protect the heading, which sits highest. */
-  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(18,16,15,.90) 0%,rgba(18,16,15,.84) 26%,rgba(18,16,15,.66) 42%,rgba(18,16,15,.24) 54%,rgba(18,16,15,0) 64%)}
+  .ocard::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(30,40,44,.90) 0%,rgba(30,40,44,.84) 26%,rgba(32,43,47,.66) 42%,rgba(34,46,50,.24) 54%,rgba(34,46,50,0) 64%)}
   .ocard-body{text-shadow:0 1px 3px rgba(0,0,0,.5)}
   .ocard-body{position:relative;z-index:2;width:100%;padding:1.3rem 1.35rem 1.35rem;display:flex;flex-direction:column;gap:.4rem}
   .ocard-body h3{margin:0;font-size:1.3rem;line-height:1.15;color:#fff}
@@ -400,7 +423,7 @@ const schema = {
 
   /* Paper grain over the page background. Content sits above it, so it warms
      the flat cream areas without touching any photo. */
-  body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.055;mix-blend-mode:multiply;
+  body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.075;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   main,footer{position:relative;z-index:1}
 
@@ -419,6 +442,17 @@ const schema = {
   @keyframes glow-breathe{50%{opacity:.72;transform:scale(1.05)}}
   #contact > .wrap{position:relative;z-index:1}
 
+  /* The cream sections are the flattest surfaces on the site. A faint hatch on
+     the alternating ones plus a soft top edge gives the page a sense of
+     stacked planes instead of one continuous sheet of colour. */
+  .alt{position:relative}
+  .alt::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:repeating-linear-gradient(135deg,rgba(36,42,39,.022) 0 1px,transparent 1px 14px)}
+  .alt > .wrap{position:relative;z-index:1}
+  /* Hairline lift where one cream plane meets the next. */
+  section + section:not(.alt):not(.trust-strip){box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+  .alt{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(36,42,39,.05)}
+
   /* Dark bands flatten worse than light ones — a near-invisible hatch fixes it. */
   .trust-strip,.area-band{position:relative}
   .trust-strip::before,.area-band::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
@@ -429,9 +463,16 @@ const schema = {
 
   html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
   html.js .reveal.in{opacity:1;transform:none}
-  html.js .reveal.d1{transition-delay:.1s}
-  html.js .reveal.d2{transition-delay:.2s}
-  html.js .reveal.d3{transition-delay:.3s}
+  html.js .reveal.d1{transition-delay:.09s}
+  html.js .reveal.d2{transition-delay:.18s}
+  html.js .reveal.d3{transition-delay:.27s}
+  html.js .reveal.d4{transition-delay:.36s}
+  html.js .reveal.d5{transition-delay:.45s}
+  html.js .process li.reveal.d1::before,html.js .process li.reveal.d1 .pnum{transition-delay:.09s}
+  html.js .process li.reveal.d2::before,html.js .process li.reveal.d2 .pnum{transition-delay:.18s}
+  html.js .process li.reveal.d3::before,html.js .process li.reveal.d3 .pnum{transition-delay:.27s}
+  html.js .process li.reveal.d4::before,html.js .process li.reveal.d4 .pnum{transition-delay:.36s}
+  html.js .process li.reveal.d5::before,html.js .process li.reveal.d5 .pnum{transition-delay:.45s}
 
   /* Hover craft: the CTA links read "→", so nudging the whole link forward
      gives the same cue without wrapping the glyph. */
@@ -442,7 +483,11 @@ const schema = {
     html{scroll-behavior:auto}
     html.js .reveal{opacity:1;transform:none;transition:none}
     #contact::after{animation:none}
-    .ocard,.ocard .shot,.ocard-body .q,.card-body .q{transition:none}
+    .ohero-full .ohero-bg{animation:none}
+    .ocard,.ocard .shot,.ocard-body .q,.card-body .q,.feat-card,.feat-icon,.feat-bar,.rev-inline a{transition:none}
+    /* land on the finished state: rules drawn, numbers in place */
+    html.js .process li.reveal::before,html.js .process li.reveal.in::before{transform:scaleX(1);transition:none}
+    html.js .process li.reveal .pnum{opacity:1;transform:none;transition:none}
   }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
@@ -462,8 +507,15 @@ const schema = {
 
   /* reusable timeline (How It Works / building-page process sections) */
   .process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem}
-  .process li{border-top:3px solid var(--red);padding-top:1rem}
+  /* The rule above each step draws across and the number lands after it, so
+     the row reads left to right like a sequence being laid out. */
+  .process li{position:relative;padding-top:1rem}
+  .process li::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);transform-origin:left}
+  html.js .process li.reveal::before{transform:scaleX(0);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  html.js .process li.reveal.in::before{transform:scaleX(1)}
   .pnum{display:block;font-family:var(--font-head);font-weight:800;font-size:1.6rem;color:var(--red-deep);margin-bottom:.4rem}
+  html.js .process li.reveal .pnum{opacity:0;transform:translateY(6px);transition:opacity .45s ease .25s,transform .45s cubic-bezier(.2,.7,.2,1) .25s}
+  html.js .process li.reveal.in .pnum{opacity:1;transform:none}
   .process h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--charcoal-deep)}
   .process p{margin:0;color:var(--muted);font-size:.92rem}
   @media(max-width:900px){.process{grid-template-columns:1fr 1fr}}

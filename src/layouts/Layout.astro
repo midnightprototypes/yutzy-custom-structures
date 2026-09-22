@@ -228,6 +228,32 @@ const schema = {
     setTimeout(sweep, 2500);
     window.addEventListener('load', function () { setTimeout(sweep, 400); });
   })();
+
+  // Stage-walk trigger for the How It Works numbers and the Why Yutzy icons:
+  // one class, added once, to the whole group — not per-item like the reveal
+  // system above. Both walks are a shared CSS timeline split across several
+  // elements, and that only stays in sync if all of them start it at the same
+  // instant. Tying the start to each item's own scroll-in (as the general
+  // reveal system does) works on a desktop row, where every item enters the
+  // viewport in the same frame, but breaks once the group stacks to one
+  // column on mobile — each item then starts its "shared" timeline several
+  // seconds apart, and two end up lit at once. A single trigger on the
+  // container fixes it regardless of layout, and still ties the start of the
+  // sequence to scrolling the section into view.
+  (function () {
+    var groups = document.querySelectorAll('.process, .feat-grid');
+    if (!groups.length) return;
+    if (!('IntersectionObserver' in window)) {
+      groups.forEach(function (el) { el.classList.add('walked'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('walked'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -15% 0px', threshold: 0.2 });
+    groups.forEach(function (el) { io.observe(el); });
+  })();
 </script>
 
 <style is:global>
@@ -304,6 +330,15 @@ const schema = {
   .brand{display:flex;align-items:center;text-decoration:none}
   .brand .mark{display:grid;place-items:center;flex:none}
   .brand .mark img{height:52px;width:auto;display:block}
+  /* Only the footer still shows the wordmark text (the header dropped it back
+     when the logo went to mark-only) — it needs its own layout since the
+     shared .brand rule above is row-based for the header's mark+text-beside
+     days and never got a stacked variant. Real text, not just the mark, for
+     NAP/SEO — kept on purpose. */
+  footer.site .brand{flex-direction:column;align-items:flex-start;gap:.5rem}
+  footer.site .brandtext{display:block;line-height:1.2}
+  footer.site .brandtext b{display:block;font-family:var(--font-head);font-size:1.05rem;letter-spacing:.01em}
+  footer.site .brandtext small{display:block;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.2rem}
   .nav-links{display:flex;gap:1.6rem;font-weight:500;font-size:.95rem}
   .nav-links a:not(.btn){text-decoration:none;color:var(--ink)}
   .nav-links a:hover{color:var(--red-dark)}
@@ -330,8 +365,15 @@ const schema = {
   /* Full-bleed variant: runs from the very top of the page (the header floats
      over it) and stops a little short of the viewport so the next section
      peeks in and invites the scroll. */
-  .ohero.ohero-full{min-height:clamp(560px,92vh,900px)}
-  .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* Slightly shorter than before — tall enough to still feel full-bleed, but
+     short enough that the trust-strip band right after it clears the first
+     viewport too, so the floating mobile buttons land on the cream section
+     below the strip instead of sitting on top of it. */
+  .ohero.ohero-full{min-height:clamp(520px,84vh,840px)}
+  /* Bottom-weighted crop: on any viewport wide enough that object-fit:cover
+     has to trim top and bottom, this keeps the ground in front of the
+     building instead of splitting the loss evenly with the sky. */
+  .ohero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 92%}
   /* The page's one ambient loop: a slow push on the hero. `alternate` means it
      eases back out rather than snapping to the start of the next cycle. */
   /* Anchored low, near the garage-door/gravel line, and starting zoomed in —
@@ -343,14 +385,28 @@ const schema = {
   @keyframes hero-push{from{transform:scale(1.12)}to{transform:scale(1)}}
   .ohero-scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,14,13,.85),rgba(15,14,13,.5) 45%,rgba(15,14,13,.1)),linear-gradient(0deg,rgba(15,14,13,.65),transparent 55%)}
   .ohero-inner{position:relative;color:#fff;padding-top:clamp(3rem,10vh,5.5rem);padding-bottom:clamp(2.5rem,7vh,4rem)}
+  /* The hero's actual height is content-driven on a narrow phone (headline +
+     subhead + two stacked buttons + phone line + area note easily out-tall
+     the min-height floor above), which is what was pushing the trust-strip
+     below the fold no matter how far that floor came down. Tightens the
+     rhythm specifically on mobile instead. */
+  @media(max-width:640px){
+    .ohero-inner{padding-top:clamp(1.1rem,3vh,1.6rem);padding-bottom:clamp(.65rem,1.7vh,.9rem)}
+    .ohero-title{margin:.3rem 0 .5rem}
+    .ohero-sub{font-size:1rem;margin:0 0 .7rem}
+    .hero-cta{gap:.45rem}
+    .ohero-phone{margin:.5rem 0 0}
+    .ohero-area{margin:.25rem 0 0}
+  }
   .ohero-eye{color:#f0d6ab}
-  .ohero-title{color:#fff;font-size:clamp(2.6rem,6.8vw,5.5rem);line-height:.98;letter-spacing:-.02em;margin:.6rem 0 1rem;max-width:19ch;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+  .ohero-title{color:#fff;font-size:clamp(2.6rem,6.8vw,5.5rem);line-height:.98;letter-spacing:-.02em;margin:.6rem 0 1rem;max-width:19ch;text-shadow:0 2px 4px rgba(0,0,0,.6),0 4px 26px rgba(0,0,0,.45)}
   .ohero-sub{font-size:1.2rem;color:rgba(255,255,255,.9);max-width:46ch;margin:0 0 1.8rem}
   .ohero-phone{margin:1.1rem 0 0;font-size:.92rem;color:rgba(255,255,255,.72)}
   .ohero-phone a{color:#fff;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
   .ohero-area{margin:.5rem 0 0;font-size:.88rem;color:rgba(255,255,255,.72)}
   .ohero-area a{color:#f0d6ab;font-weight:600;text-decoration:none;white-space:nowrap}
   .trust-strip{background:var(--charcoal-deep);color:#fff;padding:1.05rem 0}
+  @media(max-width:640px){.trust-strip{padding:.8rem 0}}
   /* Trust marks as a marquee rather than a static row, so more of them can
      sit here without crowding or wrapping. Track is the list twice back to
      back; translating exactly -50% loops it with no seam. */
@@ -383,15 +439,20 @@ const schema = {
   .feat-card:hover .feat-bar{transform:scaleY(1.6)}
   .feat-icon{transition:background .3s,color .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
   .feat-card:hover .feat-icon{background:var(--red);color:#fff;transform:translateY(-2px)}
-  /* Same idea as the How It Works stage-walk: one shared 10s timeline, each
-     card's 25% turn baked into its own keyframe percentages rather than an
-     animation-delay (which would stagger the *reset* too and the row would
-     un-highlight raggedly). Reuses the hover look — filled cedar, white icon,
-     soft glow — so the auto-cycle and the hover state read as the same idea. */
-  .feat-grid .feat-card.in:nth-child(1) .feat-icon{animation:feat-glow-1 10s linear infinite}
-  .feat-grid .feat-card.in:nth-child(2) .feat-icon{animation:feat-glow-2 10s linear infinite}
-  .feat-grid .feat-card.in:nth-child(3) .feat-icon{animation:feat-glow-3 10s linear infinite}
-  .feat-grid .feat-card.in:nth-child(4) .feat-icon{animation:feat-glow-4 10s linear infinite}
+  /* Same idea as the How It Works stage-walk, including the same fix: keyed
+     off the whole grid's own scroll-into-view moment (.feat-grid.walked, set
+     once below) rather than each card's individual .in, which desynced badly
+     once the grid stacks to one column at the mobile breakpoint — every card
+     started its "shared" timeline at a different scroll moment, so two could
+     end up lit together. One shared trigger ties the start of the whole
+     sequence to scrolling the section into view, then it loops on its own.
+     Each card's 25% turn is baked into its own keyframe percentages rather
+     than an animation-delay (which would stagger the *reset* too). Reuses
+     the hover look — filled cedar, white icon, soft glow. */
+  .feat-grid.walked .feat-card:nth-child(1) .feat-icon{animation:feat-glow-1 8s linear infinite}
+  .feat-grid.walked .feat-card:nth-child(2) .feat-icon{animation:feat-glow-2 8s linear infinite}
+  .feat-grid.walked .feat-card:nth-child(3) .feat-icon{animation:feat-glow-3 8s linear infinite}
+  .feat-grid.walked .feat-card:nth-child(4) .feat-icon{animation:feat-glow-4 8s linear infinite}
   @keyframes feat-glow-1{0%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}2%,17%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}25%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
   @keyframes feat-glow-2{0%,25%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}27%,42%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}50%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
   @keyframes feat-glow-3{0%,50%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}52%,67%{background:var(--red);color:#fff;box-shadow:0 0 18px 3px rgba(194,146,74,.5)}75%,100%{background:rgba(178,107,46,.10);color:var(--red);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
@@ -531,10 +592,10 @@ const schema = {
     html.js .process li.reveal::before,html.js .process li.reveal.in::before{transform:scaleX(1);transition:none}
     html.js .process li.reveal .pnum{opacity:1;transform:none;transition:none}
     /* stage walk off — every step lands on its resting state, not mid-cycle */
-    html.js .process li.in .pnum,html.js .process li.in::before{animation:none}
-    html.js .process li.in::before{background:var(--red);opacity:1}
-    html.js .process li.in .pnum{background:transparent;color:var(--red-deep);box-shadow:none}
-    .feat-grid .feat-card.in .feat-icon{animation:none;background:rgba(178,107,46,.10);color:var(--red);box-shadow:none}
+    html.js .process.walked li .pnum,html.js .process.walked li::before{animation:none}
+    html.js .process.walked li::before{background:var(--red);opacity:1}
+    html.js .process.walked li .pnum{background:transparent;color:var(--red-deep);box-shadow:none}
+    .feat-grid.walked .feat-card .feat-icon{animation:none;background:rgba(178,107,46,.10);color:var(--red);box-shadow:none}
   }
   .checks{list-style:none;padding:0;margin:0;display:grid;gap:1rem}
   .checks li{display:flex;gap:.8rem;align-items:flex-start}
@@ -573,20 +634,31 @@ const schema = {
      using animation-delay instead would stagger the *reset* too, so the row
      would un-highlight raggedly at the end of each cycle. Colour and glow
      only: transform stays free for the reveal transition above. */
-  html.js .process li.in .pnum{animation:stage-num 10s linear infinite}
-  html.js .process li.in::before{animation:stage-rule 10s linear infinite}
-  html.js .process li.in:nth-child(2) .pnum{animation-name:stage-num-2}
-  html.js .process li.in:nth-child(2)::before{animation-name:stage-rule-2}
-  html.js .process li.in:nth-child(3) .pnum{animation-name:stage-num-3}
-  html.js .process li.in:nth-child(3)::before{animation-name:stage-rule-3}
-  html.js .process li.in:nth-child(4) .pnum{animation-name:stage-num-4}
-  html.js .process li.in:nth-child(4)::before{animation-name:stage-rule-4}
-  html.js .process li.in:nth-child(5) .pnum{animation-name:stage-num-5}
-  html.js .process li.in:nth-child(5)::before{animation-name:stage-rule-5}
-  /* 10s cycle, 5 equal 20%-wide turns. Each turn ramps in over 2%, holds a
-     clearly-visible 12%, then settles back to rest before the next turn
-     starts — no gaps in the schedule, no two turns lit at once. The chip
-     fills solid and glows; the rule brightens to gold at the same time. */
+  /* Keyed off the WHOLE process list's own scroll-into-view moment
+     (.process.walked, set once by a dedicated observer below) rather than
+     each <li>'s individual .in. That used to be per-card, which looked fine
+     on a desktop row where every card enters the viewport in the same
+     frame — but at the mobile breakpoint .process stacks into one column,
+     so each <li> now scrolls into view (and starts its own "shared" 10s
+     timeline) several seconds apart, and two steps end up lit at once. One
+     shared trigger for the whole group fixes it regardless of layout, and
+     ties the start of the whole sequence to scrolling the section into
+     view, which then loops (replays) on its own from there. */
+  html.js .process.walked li .pnum{animation:stage-num 8s linear infinite}
+  html.js .process.walked li::before{animation:stage-rule 8s linear infinite}
+  html.js .process.walked li:nth-child(2) .pnum{animation-name:stage-num-2}
+  html.js .process.walked li:nth-child(2)::before{animation-name:stage-rule-2}
+  html.js .process.walked li:nth-child(3) .pnum{animation-name:stage-num-3}
+  html.js .process.walked li:nth-child(3)::before{animation-name:stage-rule-3}
+  html.js .process.walked li:nth-child(4) .pnum{animation-name:stage-num-4}
+  html.js .process.walked li:nth-child(4)::before{animation-name:stage-rule-4}
+  html.js .process.walked li:nth-child(5) .pnum{animation-name:stage-num-5}
+  html.js .process.walked li:nth-child(5)::before{animation-name:stage-rule-5}
+  /* 5 equal 20%-wide turns regardless of the cycle's actual duration. Each
+     turn ramps in over 2%, holds a clearly-visible 12%, then settles back to
+     rest before the next turn starts — no gaps in the schedule, no two turns
+     lit at once. The chip fills solid and glows; the rule brightens to gold
+     at the same time. */
   @keyframes stage-num{0%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}2%,14%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}20%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
   @keyframes stage-num-2{0%,20%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}22%,34%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}40%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}
   @keyframes stage-num-3{0%,40%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}42%,54%{background:var(--red);color:#fff;box-shadow:0 0 20px 3px rgba(194,146,74,.55)}60%,100%{background:transparent;color:var(--red-deep);box-shadow:0 0 0 0 rgba(194,146,74,0)}}

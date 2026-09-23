@@ -48,6 +48,11 @@ const schema = {
   <meta property="og:image" content={new URL(image, Astro.site)} />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <!-- Vercel Web Analytics + Speed Insights. No-op until each is switched on
+       in the project's Vercel dashboard (Analytics / Speed Insights tabs);
+       safe to ship ahead of that toggle. -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
   <!-- Set before paint so reveal-on-scroll never flashes its visible state. -->
   <script is:inline>document.documentElement.classList.add('js');</script>
 </head>

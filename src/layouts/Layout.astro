@@ -375,13 +375,13 @@ const schema = {
   /* full-bleed overlay hero */
   .ohero{position:relative;min-height:clamp(440px,68vh,600px);display:flex;align-items:flex-end;overflow:hidden}
   /* Full-bleed variant: runs from the very top of the page (the header floats
-     over it) and stops a little short of the viewport so the next section
-     peeks in and invites the scroll. */
-  /* Slightly shorter than before — tall enough to still feel full-bleed, but
-     short enough that the trust-strip band right after it clears the first
-     viewport too, so the floating mobile buttons land on the cream section
-     below the strip instead of sitting on top of it. */
-  .ohero.ohero-full{min-height:clamp(520px,84vh,840px)}
+     over it). Sized so the trust-strip band right after it lands flush with
+     the bottom of the first viewport — hero + strip together fill the screen
+     on load, rather than leaving a sliver of the next section peeking in.
+     The 58px is the trust-strip's own rendered height (padding + content) at
+     this breakpoint; keep it in sync with the mobile override below if that
+     strip's padding ever changes. */
+  .ohero.ohero-full{min-height:clamp(520px,calc(100vh - 58px),840px)}
   /* Bottom-weighted crop: on any viewport wide enough that object-fit:cover
      has to trim top and bottom, this keeps the ground in front of the
      building instead of splitting the loss evenly with the sky. */
@@ -407,6 +407,9 @@ const schema = {
      base .ohero-title rule above — equal specificity means source order
      decides the winner, not the media query. */
   @media(max-width:640px){
+    /* Trust-strip padding shrinks at this breakpoint (see .trust-strip
+       below), so the flush-to-bottom offset shrinks with it. */
+    .ohero.ohero-full{min-height:clamp(480px,calc(100vh - 50px),840px)}
     .ohero-inner{padding-top:clamp(1.1rem,3vh,1.6rem);padding-bottom:clamp(.65rem,1.7vh,.9rem)}
     /* Big Shoulders Display's taller ascent/descent needs a smaller mobile
        clamp floor than the old Archivo hero title to hold the same

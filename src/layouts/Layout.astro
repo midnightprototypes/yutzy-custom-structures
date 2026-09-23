@@ -35,7 +35,6 @@ const schema = {
   <link rel="preload" href="/fonts/archivo-700.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/archivo-800.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin />
-  {heroOverlay && <link rel="preload" href="/fonts/sage-grotesk-400.woff2" as="font" type="font/woff2" crossorigin />}
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -270,7 +269,6 @@ const schema = {
     --shadow:0 10px 30px rgba(26,26,26,.12);
     --font-head:"Archivo","Archivo Fallback",system-ui,sans-serif;
     --font-body:"Barlow","Barlow Fallback",system-ui,-apple-system,sans-serif;
-    --font-hero:"Sage Grotesk","Sage Grotesk Fallback",var(--font-head);
   }
   /* Self-hosted fonts with font-display:swap. The text renders immediately in a
      metric-matched fallback and always upgrades to the web font once it finishes
@@ -283,16 +281,9 @@ const schema = {
   @font-face{font-family:"Barlow";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/barlow-400.woff2") format("woff2")}
   @font-face{font-family:"Barlow";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/barlow-600.woff2") format("woff2")}
   @font-face{font-family:"Barlow";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/barlow-700.woff2") format("woff2")}
-  /* Display face for the hero headline only (--font-hero), not the sitewide
-     heading font. Scoped to .ohero-title so it doesn't touch H2/H3, the
-     footer wordmark, FAQ, or anywhere else --font-head is used. Sage
-     Grotesk — Konrad "Koxu" Łukasiak, free for commercial use, sourced from
-     the design catalog's Fontesk set (fontesk.com/sage-grotesk-font). */
-  @font-face{font-family:"Sage Grotesk";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/sage-grotesk-400.woff2") format("woff2")}
   /* Metric-matched fallbacks so the pre-load text matches the web font's footprint. */
   @font-face{font-family:"Archivo Fallback";src:local("Arial");size-adjust:122.79%;ascent-override:71.50%;descent-override:17.10%;line-gap-override:0%}
   @font-face{font-family:"Barlow Fallback";src:local("Arial");size-adjust:116.22%;ascent-override:86.04%;descent-override:17.21%;line-gap-override:0%}
-  @font-face{font-family:"Sage Grotesk Fallback";src:local("Arial");size-adjust:159.26%;ascent-override:50.23%;descent-override:12.56%;line-gap-override:12.56%}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--cream);line-height:1.6}
@@ -408,15 +399,7 @@ const schema = {
     .ohero-area{margin:.25rem 0 0}
   }
   .ohero-eye{color:#f0d6ab}
-  /* Trial: Anton instead of the sitewide Archivo, hero title only. Tighter
-     letter-spacing isn't needed on a condensed face the way it was on
-     Archivo — a touch of positive tracking instead — and the line-height
-     comes down slightly further since Anton's caps sit tall in its own
-     metrics. */
-  /* Sage Grotesk runs noticeably wider per character than Anton did (it was
-     designed as a wide/thick headline face on purpose, not condensed) — sized
-     down from Anton's tuning accordingly, or it overflows/wraps too eagerly. */
-  .ohero-title{color:#fff;font-family:var(--font-hero);font-weight:400;font-size:clamp(2.3rem,5.8vw,4.6rem);line-height:1.03;letter-spacing:-.005em;margin:.6rem 0 1rem;max-width:19ch;text-shadow:0 2px 4px rgba(0,0,0,.6),0 4px 26px rgba(0,0,0,.45)}
+  .ohero-title{color:#fff;font-size:clamp(2.6rem,6.8vw,5.5rem);line-height:.98;letter-spacing:-.02em;margin:.6rem 0 1rem;max-width:19ch;text-shadow:0 2px 4px rgba(0,0,0,.6),0 4px 26px rgba(0,0,0,.45)}
   .ohero-sub{font-size:1.2rem;color:rgba(255,255,255,.9);max-width:46ch;margin:0 0 1.8rem}
   .ohero-phone{margin:1.1rem 0 0;font-size:.92rem;color:rgba(255,255,255,.72)}
   .ohero-phone a{color:#fff;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}

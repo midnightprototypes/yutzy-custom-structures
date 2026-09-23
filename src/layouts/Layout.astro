@@ -1,10 +1,13 @@
 ---
 import { business } from '../data/site';
 const b = business;
-interface Props { title: string; description: string; image?: string; heroOverlay?: boolean; }
+interface Props { title: string; description: string; image?: string; heroOverlay?: boolean; deferMobileBar?: boolean; }
 // heroOverlay: the page opens with a full-bleed hero, so the header lifts out
 // of the flow and sits on the photo until you scroll past it.
-const { title, description, image = b.logo, heroOverlay = false } = Astro.props;
+// deferMobileBar: the hero already has its own Start Your Project button, so
+// the floating mobile call/start bar stays hidden until that hero scrolls
+// out of view instead of duplicating it immediately.
+const { title, description, image = b.logo, heroOverlay = false, deferMobileBar = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const schema = {
   "@context": "https://schema.org",
@@ -119,7 +122,7 @@ const schema = {
   <div class="wrap foot-legal">© {new Date().getFullYear()} {b.name}. All rights reserved.</div>
 </footer>
 
-<div class="mobile-bar">
+<div class={`mobile-bar${deferMobileBar ? ' mobile-bar-defer' : ''}`}>
   <a class="mobile-call" href={`tel:${b.phoneMainHref}`}>
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.1a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>
     Call
@@ -153,10 +156,12 @@ const schema = {
     if (!h) return;
     var hero = document.querySelector('.ohero');
     var nav = document.getElementById('site-nav');
+    var mobileBar = document.querySelector('.mobile-bar-defer');
     var pastHero = false;
 
     function apply() {
       h.classList.toggle('is-solid', pastHero || (nav && nav.classList.contains('open')));
+      if (mobileBar) mobileBar.classList.toggle('show', pastHero);
     }
 
     if (hero && 'IntersectionObserver' in window) {
@@ -788,11 +793,14 @@ const schema = {
        now that neither has to squeeze against the other. */
     .mobile-bar{display:flex;justify-content:space-between;align-items:center;
       position:fixed;left:1rem;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom));z-index:60}
-    .mobile-call,.mobile-start{flex:none;display:flex;align-items:center;gap:.45rem;
-      border-radius:999px;padding:.8rem 1.15rem;font-weight:800;font-size:.95rem;
-      text-decoration:none;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}
+    .mobile-call,.mobile-start{flex:none;display:flex;align-items:center;justify-content:center;
+      gap:.45rem;min-width:148px;border-radius:999px;padding:.8rem 1.15rem;font-weight:800;
+      font-size:.95rem;text-decoration:none;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}
     .mobile-call{background:var(--charcoal-deep)}
     .mobile-start{background:var(--red-dark)}
+    .mobile-bar-defer{opacity:0;transform:translateY(10px);pointer-events:none;
+      transition:opacity .3s ease,transform .3s ease}
+    .mobile-bar-defer.show{opacity:1;transform:translateY(0);pointer-events:auto}
     body{padding-bottom:calc(4.6rem + env(safe-area-inset-bottom))}
   }
 </style>

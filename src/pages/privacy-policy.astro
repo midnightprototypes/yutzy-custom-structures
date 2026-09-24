@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/site';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+const b = business;
+// Ported from the previous WordPress site's /privacy-policy page so that page
+// keeps working after launch (it's indexed by Google). Contact details are
+// pulled from site.ts rather than copied from the old page, which still
+// listed a stale 1-800 number and address.
+---
+<Layout
+  title="Privacy Policy | Yutzy Custom Structures"
+  description="How Yutzy Custom Structures collects, uses, and protects the personal information you share through this website."
+>
+  <Breadcrumbs items={[{ label: 'Privacy Policy' }]} />
+
+  <section class="pagehead">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#f0d6ab">Legal</span>
+      <h1>Privacy Policy</h1>
+      <p>Protecting your personal information is a priority. This policy explains what we collect through this website and how we use it.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      <p class="lead-p">This Statement of Privacy applies to {b.name} and this website, and governs the data we collect and how we use it. Please review it before using the site or submitting any personal information. By using our website, you consent to the practices described on this page.</p>
+
+      <h2>Information collection, use, and sharing</h2>
+      <p>We are the owners of the information collected on this site. We only have access to information that you willingly give us through our contact and quote forms or other direct contact from you. We will not sell or lease this information to anyone.</p>
+      <p>We use your contact information to get back to you regarding the reason you contacted us. We will not share your information with any party outside of our organization, other than as necessary to complete your request — for example, passing details to a financing partner when you ask about financing.</p>
+      <p>Unless you tell us not to, we may contact you in the future to tell you about new products or services, or changes to this policy. You may opt out of any future communications from us at any time.</p>
+
+      <h2>Cookies and analytics</h2>
+      <p>Cookies are small files that a site transfers to your device through your web browser (when you allow it) so the site can recognize your browser and remember certain information. We use cookies and third-party analytics services, such as Google, to understand how visitors use our site and to improve it over time. This may include showing our ads to people who have previously visited our site.</p>
+      <p>If you do not want a website to store cookies on your device, most web browsers let you disable them in your settings. Some parts of our site may not work properly if cookies are turned off.</p>
+
+      <h2>Lead and quote forms</h2>
+      <p>When you submit a quote request or contact form, the information you provide is sent to our customer relationship system so our team can follow up with you about your project. We use it only to respond to your request and to keep in touch about your build.</p>
+
+      <h2>Consent</h2>
+      <p>By using our website, you consent to this policy. We reserve the right to update this policy and modify these terms at any time. Any updates will be posted on this page.</p>
+
+      <h2>Contact us</h2>
+      <p>If you have any questions about this privacy policy, or feel we are not abiding by it, please contact us:</p>
+      <p>
+        {b.name}<br />
+        {b.address.street}, {b.address.city}, {b.address.region} {b.address.zip}<br />
+        Kansas: <a href={`tel:${b.phoneMainHref}`}>{b.phoneMain}</a><br />
+        Missouri: <a href={`tel:${b.phoneMOHref}`}>{b.phoneMO}</a>
+      </p>
+
+      <p style="margin-top:2rem;text-align:center">
+        <a class="btn btn-red" href="index.html#contact">Start Your Project</a>
+        &nbsp;
+        <a class="btn btn-outline" href="index.html">Back to Home</a>
+      </p>
+    </div>
+  </section>
+</Layout>

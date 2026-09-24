@@ -1,4 +1,24 @@
 {
+  "redirects": [
+    { "source": "/barndominiums", "destination": "/barndominiums.html", "permanent": true },
+    { "source": "/hobby-shops", "destination": "/hobby-shops.html", "permanent": true },
+    { "source": "/post-frame-buildings/horse-barns", "destination": "/equestrian-barns.html", "permanent": true },
+    { "source": "/post-frame-buildings/pole-barn-garages", "destination": "/post-frame-garages.html", "permanent": true },
+    { "source": "/post-frame-buildings/post-frame-barns", "destination": "/pole-barns.html", "permanent": true },
+    { "source": "/post-frame-buildings", "destination": "/#buildings", "permanent": true },
+    { "source": "/residential-homes", "destination": "/post-frame-homes.html", "permanent": true },
+    { "source": "/barn-building-company-johnson-county", "destination": "/pole-barn-builders-overland-park-ks.html", "permanent": true },
+    { "source": "/missouri-post-frame-builders", "destination": "/pole-barn-builders-kansas-city-mo.html", "permanent": true },
+    { "source": "/premier-pole-barn-builders-in-missouri", "destination": "/pole-barn-builders-kansas-city-mo.html", "permanent": true },
+    { "source": "/pole-barn-builders-near-me-allen-county", "destination": "/pole-barns.html", "permanent": true },
+    { "source": "/kansas", "destination": "/#area", "permanent": true },
+    { "source": "/contact-us", "destination": "/#contact", "permanent": true },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html", "permanent": true },
+    { "source": "/color-visualizer", "destination": "/", "permanent": true },
+    { "source": "/sitemap", "destination": "/", "permanent": true },
+    { "source": "/thank-you", "destination": "/", "permanent": true },
+    { "source": "/hello-world", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/fonts/(.*)",

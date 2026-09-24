@@ -23,3 +23,6 @@ resources/hero/compare-*.png
 
 # git-bash transient temp files
 .msys*
+
+# raw Gemini generation dumps (messy names); final webp + prompts are the record
+resources/hero/Gemini_Generated_Image_*

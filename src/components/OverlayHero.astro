@@ -7,19 +7,29 @@ import { business } from '../data/site';
 const b = business;
 interface Props {
   eyebrow?: string; title: string; subtitle?: string;
-  image: string; alt: string; ctaHref?: string;
+  image: string; mobileImage?: string; alt: string; ctaHref?: string;
   ctaText?: string; ctaSecondaryText?: string; ctaSecondaryHref?: string;
   areaNote?: string; areaNoteHref?: string; full?: boolean;
 }
 const {
-  eyebrow, title, subtitle, image, alt,
+  eyebrow, title, subtitle, image, mobileImage, alt,
   ctaHref = 'index.html#contact', ctaText = 'Start Your Project',
   ctaSecondaryText, ctaSecondaryHref,
   areaNote, areaNoteHref, full = false,
 } = Astro.props;
+// mobileImage: art-directed 9:16 crop for portrait phones/tablets. A single
+// 16:9 cropped to a phone loses the building off the edge, so when it's set we
+// render a <picture> that swaps to the tall crop below 1100px in portrait.
 ---
 <section class={`ohero${full ? ' ohero-full' : ''}`}>
-  <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
+  {mobileImage ? (
+    <picture class="ohero-art">
+      <source media="(max-width:1100px) and (orientation:portrait)" srcset={mobileImage} />
+      <img class="ohero-bg" src={image} alt={alt} width="2560" height="1429" fetchpriority="high" decoding="async" />
+    </picture>
+  ) : (
+    <img class="ohero-bg" src={image} alt={alt} width="1400" height="875" fetchpriority="high" decoding="async" />
+  )}
   <div class="ohero-scrim"></div>
   <div class="wrap ohero-inner">
     {eyebrow && <span class="eyebrow ohero-eye">{eyebrow}</span>}

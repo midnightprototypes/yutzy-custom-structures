@@ -1,45 +1,39 @@
-# Yutzy hero — 9:16 mobile (gray-canvas outpaint)
+# Yutzy hero — 9:16 mobile (straight photo, no gray canvas)
 
-**Attach:** `hero-mobile-9x16-composite.png` (1152×2048).
+**Attach:** `hero-source-sharpened.jpg` (3800×2138 — the Real-ESRGAN-sharpened full-frame photo).
 **Model:** Gemini Pro / 2K output (Flash's ~1 MP is too soft for a 3× phone).
 
-## What this is
+Gemini does the recomposition itself, so the prompt spells out where the building sits.
+Building placed **high** in the frame so the lower ~60% is open dusk ground for the headline,
+subhead and buttons. (The gray-canvas alternative — `hero-mobile-9x16-composite.png` + the
+prompt in git history — is still here if you ever want locked placement instead.)
 
-The source (`public/images/hero.webp`, 1900×1069) is a wide landscape shot where the
-building nearly fills the frame — great for desktop, wrong shape for a phone. This
-composite keeps the **real building pixels** placed in the upper third of a 9:16 canvas
-and grays out the sky above and a large foreground below for Gemini to paint. The
-building, its lights, the stone, the timber trusses and the tree line are the locked
-photo region; only the flat gray gets filled.
-
-## Placement (measured against the live mobile hero)
-
-- Roofline (gable peak) ~12% down · building base ~35% down · building fills the full width.
-- The lower ~60% (grayed) becomes the dusk foreground the 2-line headline, subhead and
-  buttons sit over. Yutzy's mobile hero overlays text on the lower half with a dark scrim,
-  so a long, low-contrast foreground here is exactly what we want.
-- **Tunable:** to make the building larger, regenerate the composite with a lighter side-crop
-  (see `hero-README.md`); to raise/lower it, change `ROOF_CANVAS`.
+After you approve a 9:16, use `hero-desktop-16x9-prompt.md` (Option B) to extend it to 16:9.
 
 ---
 
 ## Prompt
 
-Photorealistic photograph, 9:16 portrait, golden-hour dusk. Fill the flat gray areas of the attached image with continuous scenery that matches the photo. Do not modify, move, resize or redraw anything in the existing photo region: the sage-green vertical steel post-frame building, its cedar timber-frame gable trusses and knee braces, the two bronze-brown overhead garage doors with their rows of windows, the stacked-stone wainscot, the warm glowing gooseneck barn lights, the shed-roof porch with timber posts on the right, the dark lower wing on the left, and the trees and dusk sky must stay exactly as they are, at the same size and in the same place.
+Photorealistic photograph, 9:16 portrait, golden-hour dusk, recomposed from the attached photo for a mobile website hero with text over the lower half.
 
-Below the building, extend the ground toward the camera as a real rural property in eastern Kansas at dusk: mowed green lawn directly at the base of the building, giving way to a clean gravel driveway approach that reads as leading up to the overhead doors, squared to the building — the drive's edges in the same perspective as the building's base, so it looks properly set in front of it, not turned. No hard border or curbing: the gravel thins and mixes into the grass along its edges like a natural drive. The building meets the ground with a soft contact shadow along its base. Natural ground texture, but no single distracting object.
+Keep the building exactly as it appears in the attached photo: the same sage-green vertical steel post-frame building, its cedar timber-frame gable trusses and knee braces, the two bronze-brown overhead garage doors with their rows of windows, the stacked-stone wainscot, the warm glowing gooseneck barn lights, the shed-roof porch with timber posts on the right, and the darker lower wing on the left — the same proportions, colors, three-quarter camera angle, eye level and warm dusk lighting. Do not redraw, restyle, simplify or reproportion any part of it.
 
-Above the building, continue the same clear dusk sky upward: the soft blue-to-warm gradient of early evening, matching the existing sky's color and light exactly, clean and uncluttered, with at most a few faint high clouds. Keep the same camera height, eye level and horizon.
+Composition: place the building high in the frame. Its roofline (the gable peak) should sit about 11% of the way down from the top edge and its base about 40% of the way down, well above the middle of the frame; everything below that is open ground for text. The building should span about 88% of the frame width, roughly centered, with a little open space on each side. It is fine to trim the far left and right edges of the original scene to achieve this.
 
-The lower half of the frame stays gradually darker and lower in contrast toward the bottom edge — the warm dusk light falling off into cooler evening shadow across the foreground — so white text laid over the bottom of the image stays readable. No bright, pale or washed-out ground in the lower half; no bright gravel patches. Keep the same warm dusk lighting direction and color as on the building. Blend every edge seamlessly, with no visible seam between the photo and the filled areas.
+Above the building: continue the same clear dusk sky upward to the top edge — the soft blue-to-warm gradient of early evening, matching the photo's sky color and light exactly, clean and uncluttered, at most a few faint high clouds.
 
-No people, vehicles, animals, fences, roads, additional driveways, landscaping or flower beds, power lines or poles, text, signage, or additional buildings. No vignette or frame. No watermark.
+Behind the building: keep the dark evening tree line from the photo along a low, flat eastern Kansas horizon.
+
+Below the building, down to the bottom edge: extend the ground toward the camera as a real rural property at dusk. Mowed green lawn at the base of the building gives way to a clean gravel driveway approach that reads as leading up to the overhead doors, squared to the building — its edges in the same perspective as the building's base, so it looks properly set in front of it, not turned. No hard border or curbing: the gravel thins and mixes into the grass along its edges like a natural drive. The building meets the ground with a soft contact shadow along its base.
+
+A broad, soft falloff of the evening light crosses the near foreground, so the lower half of the frame gets gradually darker and lower in contrast toward the bottom edge and white text laid over it stays readable. Everywhere the warm light reaches, keep the same dusk lighting direction and color as on the building. No bright, pale or washed-out ground in the lower half; no bright gravel patches.
+
+No people, vehicles, animals, fences, roads or extra driveways, utility poles or power lines, landscaping or flower beds, text, signage, or additional buildings. No vignette or frame. No watermark.
 
 ---
 
 ## After Gemini
 
-1. Approve the 9:16 result (regenerate if the drive reads crooked or the foreground is too bright).
-2. Upscale 2×: `python upscale/rrdb_upscale.py <gemini-9x16>.png upscale/hero-mobile-esrgan-2x.png`
-3. Crop sky off the top only if the building needs to sit higher (see playbook Step 6).
-4. Export WebP q90 → `public/images/hero-mobile.webp`. Ping me to wire the art-directed `<picture>`.
+1. Approve the 9:16 result. If the building isn't high enough or the drive reads crooked, nudge the percentages and regenerate.
+2. Upscale 2×: `python upscale/rrdb_upscale.py <gemini-9x16>.png upscale/hero-mobile-esrgan-2x.png` (input must have even width & height — pad if needed, see hero-README).
+3. Export WebP q90 → `public/images/hero-mobile.webp`. Ping me to wire the art-directed `<picture>`.

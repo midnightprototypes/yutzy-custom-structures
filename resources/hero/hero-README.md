@@ -7,26 +7,28 @@ Yutzy provides the camera original later, re-run from Step 1 for a sharper resul
 
 ## Files here
 
+Mobile approach chosen: **straight photo + prompt** (Gemini recomposes; we tell it where to
+place the building), not the gray canvas. The composite is kept as an alternative.
+
 | File | What it is |
 |---|---|
-| `hero-mobile-9x16-composite.png` | Gray-canvas composite for Gemini (mobile 9:16). Real building locked, sky+foreground grayed to fill. |
-| `hero-mobile-9x16-prompt.md` | Tuned Gemini fill prompt for the composite above. |
-| `hero-desktop-16x9-prompt.md` | Desktop plan — Option A (keep native + sharpen, recommended) and Option B (outpaint from mobile). |
+| `hero-source-sharpened.jpg` | The Real-ESRGAN-sharpened full-frame photo (3800×2138). **Feed this to Gemini** for the mobile 9:16. |
+| `hero-mobile-9x16-prompt.md` | Straight-photo Gemini prompt — building placed high, dusk foreground below for text. |
+| `hero-desktop-16x9-prompt.md` | Desktop plan — Option A (sharpen native, DONE/installed) and Option B (9:16 → 16:9 outpaint). |
+| `hero-mobile-9x16-composite.png` | Gray-canvas alternative (locked placement) if you ever want it instead. |
 | `upscale/rrdb_upscale.py` | Real-ESRGAN x2plus (self-contained RRDBNet). `python rrdb_upscale.py in out.png`. |
 | `upscale/RealESRGAN_x2plus.pth` | Weights (~64 MB, gitignored — carried by the skill, not source-controlled). |
-| `upscale/hero-desktop-esrgan-2x.png` | 2× upscale of the desktop photo (gitignored intermediate). |
 | `HERO-PHOTO-PLAYBOOK.md` | The full playbook. |
 
 ## Where this project stands
 
 - **Step 1 (pick flagship):** done — current hero photo.
-- **Step 2 (mobile composite):** done — `hero-mobile-9x16-composite.png`.
-- **Step 3 (Gemini mobile):** TODO — run `hero-mobile-9x16-prompt.md` in Gemini Pro/2K.
-- **Step 4 (desktop):** Option A recommended — sharpen the native photo, no Gemini (see below).
-- **Step 5 (upscale):** desktop upscale run here; mobile upscale after Gemini.
-- **Step 6 (crop):** as needed.
-- **Step 7 (install `<picture>`):** TODO — `OverlayHero.astro` currently renders a single `<img>`;
-  add an optional `mobileImage` + art-directed `<picture>` once both images exist. Ping to wire it.
+- **Step 4/5 (desktop):** DONE — native photo sharpened 2× and installed as `public/images/hero.webp` (2560×1440 WebP).
+- **Step 2/3 (mobile):** ready for you — feed `hero-source-sharpened.jpg` to Gemini Pro/2K with `hero-mobile-9x16-prompt.md`.
+- **9:16 → 16:9:** after you approve + adjust the mobile, run Option B in `hero-desktop-16x9-prompt.md`.
+- **Step 5 (mobile upscale):** after Gemini — `upscale/rrdb_upscale.py`.
+- **Step 7 (install `<picture>`):** TODO — `OverlayHero.astro` renders a single `<img>`; add an
+  optional `mobileImage` + art-directed `<picture>` once the mobile image exists. Ping to wire it.
 
 ## Regenerating the mobile composite (tunable)
 

@@ -4,30 +4,25 @@ Unlike D&M (whose source was a small shed that had to be dropped into an invente
 Yutzy's source photo is **already a premium 16:9 landscape at the highest resolution we
 have** (1900×1069). So the desktop path is different — and simpler.
 
-## Option A — keep the native photo, just sharpen it  ← recommended
+## Option A — keep the native photo, just sharpen it  ← DONE (installed)
 
-No Gemini. The real photo is the best desktop asset; we only make it crisper.
+No Gemini. The real photo is the best desktop asset; we only made it crisper.
+Real-ESRGAN 2× → 3800×2138, downscaled to 2560px WebP q88, now live at
+`public/images/hero.webp`. The building stays big, dramatic and real; the siding grooves,
+timber braces and stone are sharper than the old compressed copy. Nothing invented. This is
+the sharpest possible version of the shot, and it's the current desktop hero.
 
-1. `python upscale/rrdb_upscale.py upscale/hero-desktop-src.webp upscale/hero-desktop-esrgan-2x.png`
-   (2× → 3800×2138; Real-ESRGAN cleans the web-compression softness in the siding grooves,
-   timber braces and stone).
-2. Downscale to ~2560 wide and export WebP q88 → `public/images/hero.webp` (replaces the
-   current one). 2560px covers a 2× retina desktop hero without bloating the page.
+To reproduce: `python upscale/rrdb_upscale.py upscale/hero-desktop-src-even.png upscale/hero-desktop-esrgan-2x.png`
+(source padded to even dims first), crop to 3800×2138, resize to 2560w, export WebP q88.
 
-Why recommended: the building stays big, dramatic and real; nothing is invented; it's the
-sharpest possible version of the shot you already approved. The current live desktop hero
-already uses this framing and works — this just upgrades its resolution.
+## Option B — derive 16:9 from the approved mobile (9:16 → 16:9 outpaint)
 
-Trade-off: the building fills center-right, so the left-aligned desktop headline sits over
-the sky/tree area on the left with the scrim carrying it (as it does today). If you want a
-cleaner, more open left side for the headline, use Option B instead.
-
-## Option B — derive 16:9 from the approved mobile (outpaint left)
-
-The playbook's canonical flow. Use this only if you want desktop to exactly match the mobile
-image (same invented dusk foreground) and a wide-open left third for the headline. The
-building ends up smaller, anchored in the right third — and it's a Gemini re-gen, so slightly
-lower fidelity than Option A.
+This is the "go from 9:16 to 16:9" step. Run it after you've approved the mobile 9:16 and made
+your adjustments, when you want a desktop image that exactly matches the mobile (same dusk
+foreground) with a wide-open left third for the headline. The building ends up smaller,
+anchored in the right third — and it's a Gemini re-gen, so slightly lower fidelity than the
+sharpened native in Option A, which is what's live now. Use whichever you prefer as the
+desktop hero.
 
 **Attach:** the approved 9:16 Gemini result. **Model:** Gemini Pro / 2K.
 

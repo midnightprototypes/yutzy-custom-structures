@@ -24,11 +24,14 @@ place the building), not the gray canvas. The composite is kept as an alternativ
 
 - **Step 1 (pick flagship):** done — current hero photo.
 - **Step 4/5 (desktop):** DONE — native photo sharpened 2× and installed as `public/images/hero.webp` (2560×1440 WebP).
-- **Step 2/3 (mobile):** ready for you — feed `hero-source-sharpened.jpg` to Gemini Pro/2K with `hero-mobile-9x16-prompt.md`.
-- **9:16 → 16:9:** after you approve + adjust the mobile, run Option B in `hero-desktop-16x9-prompt.md`.
-- **Step 5 (mobile upscale):** after Gemini — `upscale/rrdb_upscale.py`.
+- **Step 2/3 (mobile):** mobile 9:16 generated from the straight prompt — good result.
+- **9:16 → 16:9:** Option B in `hero-desktop-16x9-prompt.md` — **outpaint to the RIGHT** (the side
+  with room; the left is crowded and won't generate), then **mirror both** final images so the
+  building faces the same way and the open text room lands on the left for the desktop headline.
+- **Step 5 (mobile upscale):** after mirroring — `upscale/rrdb_upscale.py` (even dims).
 - **Step 7 (install `<picture>`):** TODO — `OverlayHero.astro` renders a single `<img>`; add an
-  optional `mobileImage` + art-directed `<picture>` once the mobile image exists. Ping to wire it.
+  optional `mobileImage` + art-directed `<picture>` once both mirrored images exist. Send me the
+  two Gemini results and I'll mirror, upscale, and wire it.
 
 ## Regenerating the mobile composite (tunable)
 

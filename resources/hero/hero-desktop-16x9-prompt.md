@@ -15,27 +15,46 @@ the sharpest possible version of the shot, and it's the current desktop hero.
 To reproduce: `python upscale/rrdb_upscale.py upscale/hero-desktop-src-even.png upscale/hero-desktop-esrgan-2x.png`
 (source padded to even dims first), crop to 3800×2138, resize to 2560w, export WebP q88.
 
-## Option B — derive 16:9 from the approved mobile (9:16 → 16:9 outpaint)
+## Option B — derive 16:9 from the approved mobile (9:16 → 16:9 outpaint, then mirror)
 
-This is the "go from 9:16 to 16:9" step. Run it after you've approved the mobile 9:16 and made
-your adjustments, when you want a desktop image that exactly matches the mobile (same dusk
-foreground) with a wide-open left third for the headline. The building ends up smaller,
-anchored in the right third — and it's a Gemini re-gen, so slightly lower fidelity than the
-sharpened native in Option A, which is what's live now. Use whichever you prefer as the
-desktop hero.
+This is the "go from 9:16 to 16:9" step. Run it after you've approved the mobile 9:16.
+
+**Why extend right, then mirror:** in this photo the building's left side is crowded (the dark
+wing + close trees), so Gemini has nothing real to continue on the left — it comes out empty or
+invented. The right side has open room, so we outpaint **to the right** (where it generates
+cleanly), which leaves the building on the left and open space on the right. Then we **mirror
+the finished image horizontally**, which flips the building to the right and the open space to
+the left — exactly where the left-aligned desktop headline needs its clearance. Mirroring is a
+lossless flip; the building has no text or handed detail, so it reads fine reversed.
 
 **Attach:** the approved 9:16 Gemini result. **Model:** Gemini Pro / 2K.
 
 ---
 
-Expand this image into a 16:9 landscape photograph by extending the scene to the left. Keep everything already in the image exactly as it is, unchanged in every detail and at the same size: the sage-green steel post-frame building, its cedar timber-frame gable trusses, the bronze-brown overhead doors, the stacked-stone wainscot, the glowing gooseneck lights, the porch, the gravel drive it sits on, the lawn, the tree line, the dusk sky and the cloud/shadow falloff across the foreground.
+Expand this image into a 16:9 landscape photograph by extending the scene to the right. Keep everything already in the image exactly as it is, unchanged in every detail and at the same size: the sage-green steel post-frame building, its cedar timber-frame gable trusses, the bronze-brown overhead doors, the stacked-stone wainscot, the glowing gooseneck lights, the porch, the gravel drive it sits on, the lawn, the tree line, the dusk sky and the dusk falloff across the foreground.
 
-Keep the existing image anchored to the right edge of the frame at its full height, so the building stays in the right third: about 68% to 98% of the way across, its roof about 12% down and its base about 35% down. Do not crop, move or rescale it; only add new scenery to its left.
+Keep the existing image anchored to the left edge of the frame at its full height, so the building stays in the left third: about 2% to 32% of the way across, its roofline about 11% down and its base about 40% down. Do not crop, move or rescale it; only add new scenery to its right.
 
-To the left, continue the same scene seamlessly: the same blue-to-warm dusk sky, a flat eastern Kansas horizon with a low line of distant trees at exactly the same height as in the image, the mowed lawn and, in the foreground, the same clean gravel/grass ground carrying the same dusk falloff so it grows gradually darker toward the bottom edge.
+To the right, continue the same scene seamlessly: the same blue-to-warm dusk sky, a flat eastern Kansas horizon with a low line of distant trees at exactly the same height as in the image, the mowed lawn and, in the foreground, the same clean gravel/grass ground carrying the same dusk falloff so it grows gradually darker toward the bottom edge.
 
-The left 60% of the frame must stay open and quiet: dusk sky over field, with no buildings, trees, poles, fence posts, animals or bright patches on the horizon or in the foreground. Same warm dusk light from the same direction as on the building. Blend seamlessly with no visible seam. No additional buildings, fences, roads, utility poles, vehicles, people, text or signage. No vignette or frame. No watermark.
+The right 60% of the frame must stay open and quiet: dusk sky over field, with no buildings, trees, poles, fence posts, animals or bright patches on the horizon or in the foreground. Same warm dusk light from the same direction as on the building. Blend seamlessly with no visible seam. No additional buildings, fences, roads, utility poles, vehicles, people, text or signage. No vignette or frame. No watermark.
 
 ---
 
-Then upscale the 16:9 result 2× and export WebP q88 → `public/images/hero.webp`.
+## Mirror + finish (both images)
+
+To keep mobile and desktop consistent, mirror **both** final photos horizontally so the
+building faces the same way in each and the open text room lands on the left:
+
+```
+python - <<'PY'
+from PIL import Image, ImageOps
+for f in ["hero-desktop-16x9.png", "hero-mobile-9x16.png"]:
+    ImageOps.mirror(Image.open(f)).save(f.replace(".png","-mirrored.png"))
+PY
+```
+
+Then upscale each mirrored result 2× (`upscale/rrdb_upscale.py`, even dims) and export WebP q88
+→ `public/images/hero.webp` (desktop) and `public/images/hero-mobile.webp` (mobile).
+
+Or just send me the two Gemini results and I'll mirror, upscale, and wire the `<picture>`.

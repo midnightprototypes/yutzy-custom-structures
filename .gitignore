@@ -15,3 +15,8 @@ node_modules/
 
 # scratch
 .tmp*
+
+# Hero pipeline: keep the script + composite + prompts; drop weights & image intermediates
+resources/hero/upscale/*
+!resources/hero/upscale/rrdb_upscale.py
+resources/hero/compare-*.png

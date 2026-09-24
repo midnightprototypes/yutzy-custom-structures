@@ -401,6 +401,10 @@ const schema = {
   @media (max-width:1100px) and (orientation:portrait){
     .ohero-art .ohero-bg{object-position:50% 50%}
   }
+  /* Anchor the ambient zoom on the building (right side) so it grows in place
+     instead of drifting the building during the zoomed-in phase. Higher
+     specificity than the .ohero-full .ohero-bg origin below, so it wins. */
+  .ohero-full .ohero-art .ohero-bg{transform-origin:85% 62%}
   /* The page's one ambient loop: a slow push on the hero. `alternate` means it
      eases back out rather than snapping to the start of the next cycle. */
   /* Anchored low, near the garage-door/gravel line, and starting zoomed in —
